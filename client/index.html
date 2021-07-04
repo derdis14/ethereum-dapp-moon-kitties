@@ -1,27 +1,38 @@
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Academy kitties </title>
-  <script type="text/javascript" src="assets/js/jquery-3.4.1.js"></script>
-  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-  <script src="assets/bootstrap/js/popper.js"></script>
-  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 
-  <link rel="stylesheet" href="assets/css/mystyle.css">
-  <link rel="stylesheet" href="assets/css/cats.css">
-  <link rel="stylesheet" href="assets/css/colors.css">
-  <link rel="stylesheet" href="assets/css/factory.css">
-  <link rel="stylesheet" href="assets/css/frontend.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academy kitties </title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+
+    <link rel="stylesheet" href="assets/css/mystyle.css">
+    <link rel="stylesheet" href="assets/css/cats.css">
+    <link rel="stylesheet" href="assets/css/colors.css">
+    <link rel="stylesheet" href="assets/css/factory.css">
+    <link rel="stylesheet" href="assets/css/frontend.css">
 </head>
-  <body>
+
+<body>
     <div class="container p-5" style="margin-top: 12vh;margin-bottom: 10vh;">
         <div align="center">
-        <h1 class="c-white">Kitties-Factory</h1>
-        <p class="c-white">Create your custom Kitty</p>
-    </div>
         <div class="row">
-            <div class="col-lg-4 catBox m-2 light-b-shadow">
+            <h1 class="c-white">Kitties-Factory</h1>
+            <p class="c-white">Create your custom Kitty</p>
+        </div>
+            <div class="col-lg-4 catBox m-2 light-b-shadow position-relative d-flex justify-content-center text-center">
+                <!-- CAT HTML -->
                 <div class="cat">
                     <div class="cat__ear">
                         <div id="leftEar" class="cat__ear--left">
@@ -73,44 +84,39 @@
                         <div id="tail" class="cat__tail"></div>
                     </div>
                 </div>
-                <br>
-                <div class="dnaDiv" id="catDNA">
-                    <b>
+                <div class="dnaDiv position-absolute bottom-0 start-50 translate-middle-x" id="catDNA">
+                    <b class="">
                         DNA:
                         <!-- Colors -->
-                         <span id="dnabody"></span>
-                         <span id="dnamouth"></span>
-                         <span id="dnaeyes"></span>
-                         <span id="dnaears"></span>
-                        
-                         <!-- Cattributes -->
-                         <span id="dnashape"></span>
-                         <span id="dnadecoration"></span>
-                         <span id="dnadecorationMid"></span>
-                         <span id="dnadecorationSides"></span>
-                         <span id="dnadanimation"></span>
-                         <span id="dnaspecial"></span>
+                        <span id="dnabody"></span>
+                        <span id="dnamouth"></span>
+                        <span id="dnaeyes"></span>
+                        <span id="dnaears"></span>
+
+                        <!-- Cattributes -->
+                        <span id="dnashape"></span>
+                        <span id="dnadecoration"></span>
+                        <span id="dnadecorationMid"></span>
+                        <span id="dnadecorationSides"></span>
+                        <span id="dnadanimation"></span>
+                        <span id="dnaspecial"></span>
                     </b>
                 </div>
             </div>
-            <div class="col-lg-7 cattributes m-2 light-b-shadow">
 
-<!-- Cat colors -->
-<div id="catColors">
-                <div class="form-group">
-                    <label for="formControlRange"><b>Head and body</b><span class="badge badge-dark ml-2" id="headcode"></span></label>
-                    <input type="range" min="10" max="98" class="form-control-range" id="bodycolor">
+            <div class="col-lg-6 cattributes m-2 light-b-shadow">
+                <!-- Cat colors -->
+                <div id="catColors">
+                    <div class="mb-3">
+                        <label for="bodycolor"><b>Head and body</b><span class="badge bg-dark ms-2"
+                                id="headcode"></span></label>
+                        <input type="range" min="10" max="98" class="form-range" id="bodycolor">
+                    </div>
                 </div>
             </div>
-
-            </div>
-
-            </div>
-            <br>
-
         </div>
-
-
+        <br>
+    </div>
 
     </div>
     <footer align="left">
