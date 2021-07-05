@@ -23,36 +23,36 @@ body {
   background: #ffcc80;
   z-index: 20;
 }
+
 .cat__head-dots {
   position: absolute;
-  left: 101px;
-  height: 48px;
-  top: 1px;
-  width: 14px;
-  background: #ffb74d;
-  -webkit-border-radius: 0 0 50% 50%;
-  border-radius: 0 0 50% 50%;
+  top: -20px;
+  left: 94px;
+  font-size: 38px;
+  color: #ffffff;
+  opacity: 0.6;
 }
 
-.cat__head-dots_first {
+.star1 {
   position: absolute;
-  content: "";
-  top: 1px;
-  width: 14px;
-  height: 35px;
-  background: #ffb74d;
-  left: -20px;
-  border-radius: 50% 0 50% 50%;
+  left: -1px;
+  transform: rotate(0deg);
 }
-.cat__head-dots_second {
+
+.star2 {
   position: absolute;
-  content: "";
-  top: 1px;
-  width: 14px;
-  height: 35px;
-  background: #ffb74d;
-  left: 20px;
-  border-radius: 0 50% 50% 50%;
+  top: 15px;
+  left: -22px;
+  font-size: 85%;
+  transform: rotate(0deg);
+}
+
+.star3 {
+  position: absolute;
+  top: 25px;
+  left: +27px;
+  font-size: 65%;
+  transform: rotate(0deg);
 }
 
 .cat__ear {
@@ -88,8 +88,8 @@ body {
 }
 .cat__eye {
   position: absolute;
-  top: 35px;
-  left: -16px;
+  top: 25px;
+  left: -8px;
   display: flex;
 }
 .cat__eye--left,
@@ -98,12 +98,12 @@ body {
   height: 49px;
   background: #fff;
   border-radius: 50%;
-  margin: 38px;
+  margin: 34px;
   z-index: 100;
 }
 .cat__eye span {
   position: absolute;
-  top: 41px;
+  top: 36px;
   width: 42px;
   height: 42px;
   background: #373737;
@@ -131,10 +131,10 @@ body {
   background: #fff;
 }
 .cat__eye span.pupil-left {
-  left: 42px;
+  left: 37px;
 }
 .cat__eye span.pupil-right {
-  left: 166px;
+  left: 154px;
 }
 .cat__nose {
   position: absolute;
@@ -187,9 +187,9 @@ body {
 .cat__whiskers-right::after,
 .cat__whiskers-left::before,
 .cat__whiskers-right::before {
-  width: 32px;
-  height: 5px;
-  background: #373737;
+  width: 35px;
+  height: 4px;
+  background: #fff;
 }
 .cat__whiskers-left::before,
 .cat__whiskers-right::before,
@@ -200,8 +200,9 @@ body {
   left: 0;
 }
 .cat__whiskers-left {
-  top: 112px;
-  left: -18px;
+  top: 131px;
+  left: 14px;
+  z-index: 300;
 }
 .cat__whiskers-left::before {
   top: -16px;
@@ -212,8 +213,9 @@ body {
   transform: rotate(-15deg);
 }
 .cat__whiskers-right {
-  top: 108px;
-  left: 205px;
+  top: 126px;
+  left: 169px;
+  z-index: 300;
 }
 .cat__whiskers-right::before {
   top: -16px;
@@ -266,7 +268,7 @@ body {
   content: "";
   position: absolute;
   top: 40px;
-  left: 148px;
+  left: 143px;
   width: 35px;
   height: 32px;
   background: #ffcc80;
