@@ -1,25 +1,50 @@
+const OUTER_COLOR_OFFSET = 20;
+const INNER_COLOR_OFFSET = 200;
 
-//Random color
-function getColor() {
-    var randomColor = Math.floor(Math.random() * 16777215).toString(16);
-    return randomColor
+function outerColor(code) {
+    //This changes the color of the cat
+    const color = OUTER_COLOR_OFFSET + parseInt(code) - 10;
+    $(`.cat__head,
+    .cat__chest,
+    .cat__ear--right,
+    .cat__ear--left,
+    .cat__paw-left,
+    .cat__paw-right,
+    .cat__paw-left_inner,
+    .cat__paw-right_inner,
+    .cat__tail`).css("background", `rgb(${color}, ${color}, ${color})`)
+    $(".cat__nose").css("border-top-color", `rgb(${color}, ${color}, ${color})`)
+    $(`.cat__mouth-left,
+    .cat__mouth-right`).css("border-left-color", `rgb(${color}, ${color}, ${color})`)
+    $(`.cat__mouth-left,
+    .cat__mouth-right`).css("border-bottom-color", `rgb(${color}, ${color}, ${color})`)
+
+    $('#outercode').html('code: '+code) //This updates the text of the badge next to the slider
+    $('#dnaouter').html(code) //This updates the DNA text below the cat
 }
 
-function genColors(){
-    var colors = []
-    for(var i = 10; i < 99; i ++){
-      var color = getColor()
-      colors[i] = color
-    }
-    return colors
+function innerColor(code) {
+    //This changes the color of the cat
+    const color = INNER_COLOR_OFFSET + parseInt(code) - 10;
+    $(`.cat__mouth-contour,
+    .cat__chest_inner,
+    .cat__ear--left-inside,
+    .cat__ear--right-inside`).css('background', `rgb(${color}, ${color}, ${color})`)
+    $('.cat__head-dots').css('color', `rgb(${color}, ${color}, ${color})`)
+
+    $('#innercode').html('code: '+code) //This updates the text of the badge next to the slider
+    $('#dnainner').html(code) //This updates the DNA text below the cat
 }
 
-//This function code needs to modified so that it works with Your cat code.
-function headColor(color,code) {
-    $('.cat__head, .cat__chest').css('background', '#' + color)  //This changes the color of the cat
-    $('#headcode').html('code: '+code) //This updates text of the badge next to the slider
-    $('#dnabody').html(code) //This updates the body color part of the DNA that is displayed below the cat
+function eyesColor(code) {
+    //This changes the color of the cat
+    const color = parseInt(code) - 100;
+    $(".cat__eye span").css("background",`hsl(${color}, 100%, 25%)`)
+
+    $('#eyescode').html('code: '+code) //This updates the text of the badge next to the slider
+    $('#dnaeyes').html(code) //This updates the DNA text below the cat
 }
+
 
 
 //###################################################

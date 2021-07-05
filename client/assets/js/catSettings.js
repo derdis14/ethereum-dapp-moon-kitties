@@ -1,11 +1,8 @@
-
-var colors = Object.values(allColors())
-
 var defaultDNA = {
-    "headcolor" : 10,
-    "mouthColor" : 13,
-    "eyesColor" : 96,
-    "earsColor" : 10,
+    //Colors
+    "outerColor" : 30,
+    "innerColor" : 30,
+    "eyesColor" : 300,
     //Cattributes
     "eyesShape" : 1,
     "decorationPattern" : 1,
@@ -17,27 +14,15 @@ var defaultDNA = {
 
 // when page load
 $( document ).ready(function() {
-  $('#dnabody').html(defaultDNA.headColor);
-  $('#dnamouth').html(defaultDNA.mouthColor);
-  $('#dnaeyes').html(defaultDNA.eyesColor);
-  $('#dnaears').html(defaultDNA.earsColor);
-
-//   $('#dnashape').html(defaultDNA.eyesShape)
-//   $('#dnadecoration').html(defaultDNA.decorationPattern)
-//   $('#dnadecorationMid').html(defaultDNA.decorationMidcolor)
-//   $('#dnadecorationSides').html(defaultDNA.decorationSidescolor)
-//   $('#dnaanimation').html(defaultDNA.animation)
-//   $('#dnaspecial').html(defaultDNA.lastNum)
-
   renderCat(defaultDNA)
 });
 
 function getDna(){
     var dna = ''
-    dna += $('#dnabody').html()
-    dna += $('#dnamouth').html()
+    dna += $('#dnaouter').html()
+    dna += $('#dnainner').html()
     dna += $('#dnaeyes').html()
-    dna += $('#dnaears').html()
+
     dna += $('#dnashape').html()
     dna += $('#dnadecoration').html()
     dna += $('#dnadecorationMid').html()
@@ -49,12 +34,21 @@ function getDna(){
 }
 
 function renderCat(dna){
-    headColor(colors[dna.headcolor],dna.headcolor)
-    $('#bodycolor').val(dna.headcolor)
+    $('#outercolor').val(dna.outerColor).change()
+    $('#innercolor').val(dna.innerColor).change()
+    $('#eyescolor').val(dna.eyesColor).change()
 }
 
 // Changing cat colors
-$('#bodycolor').change(()=>{
-    var colorVal = $('#bodycolor').val()
-    headColor(colors[colorVal],colorVal)
+$('#outercolor').change(()=>{
+    var val = $('#outercolor').val()
+    outerColor(val)
+})
+$('#innercolor').change(()=>{
+  var val = $('#innercolor').val()
+  innerColor(val)
+})
+$('#eyescolor').change(()=>{
+  var val = $('#eyescolor').val()
+  eyesColor(val)
 })
