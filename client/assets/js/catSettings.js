@@ -1,7 +1,7 @@
 var defaultDNA = {
     //Colors
-    "outerColor" : 30,
-    "innerColor" : 30,
+    "outerColor" : 20,
+    "innerColor" : 20,
     "eyesColor" : 300,
     //Cattributes
     "eyesShape" : 1,

@@ -1,9 +1,6 @@
-const OUTER_COLOR_OFFSET = 20;
-const INNER_COLOR_OFFSET = 200;
-
 function outerColor(code) {
     //This changes the color of the cat
-    const color = OUTER_COLOR_OFFSET + parseInt(code) - 10;
+    const color = parseInt(code);
     $(`.cat__head,
     .cat__chest,
     .cat__ear--right,
@@ -12,25 +9,18 @@ function outerColor(code) {
     .cat__paw-right,
     .cat__paw-left_inner,
     .cat__paw-right_inner,
-    .cat__tail`).css("background", `rgb(${color}, ${color}, ${color})`)
-    $(".cat__nose").css("border-top-color", `rgb(${color}, ${color}, ${color})`)
-    $(`.cat__mouth-left,
-    .cat__mouth-right`).css("border-left-color", `rgb(${color}, ${color}, ${color})`)
-    $(`.cat__mouth-left,
-    .cat__mouth-right`).css("border-bottom-color", `rgb(${color}, ${color}, ${color})`)
+    .cat__tail`).css("background", `hsl(0,0%,${color}%)`)
 
     $('#outercode').html('code: '+code) //This updates the text of the badge next to the slider
     $('#dnaouter').html(code) //This updates the DNA text below the cat
 }
 
 function innerColor(code) {
-    //This changes the color of the cat
-    const color = INNER_COLOR_OFFSET + parseInt(code) - 10;
+    const color = parseInt(code);
     $(`.cat__mouth-contour,
     .cat__chest_inner,
     .cat__ear--left-inside,
-    .cat__ear--right-inside`).css('background', `rgb(${color}, ${color}, ${color})`)
-    $('.cat__head-dots').css('color', `rgb(${color}, ${color}, ${color})`)
+    .cat__ear--right-inside`).css('background', `hsl(0,0%,${color}%)`)
 
     $('#innercode').html('code: '+code) //This updates the text of the badge next to the slider
     $('#dnainner').html(code) //This updates the DNA text below the cat
@@ -39,7 +29,7 @@ function innerColor(code) {
 function eyesColor(code) {
     //This changes the color of the cat
     const color = parseInt(code) - 100;
-    $(".cat__eye span").css("background",`hsl(${color}, 100%, 25%)`)
+    $(".cat__eye span").css("background",`hsl(${color}, 100%, 40%)`)
 
     $('#eyescode').html('code: '+code) //This updates the text of the badge next to the slider
     $('#dnaeyes').html(code) //This updates the DNA text below the cat
