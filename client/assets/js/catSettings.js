@@ -8,7 +8,8 @@ const defaultDNA = {
   decoration2: 0,
   decoration3: 0,
   decorationsRotation: 35,
-  animation: 1,
+  animationcat: 1,
+  animationdecorations: 1,
 };
 
 // when page load
@@ -24,6 +25,8 @@ function renderCat(dna) {
   $("#decoration2").prop("checked", Boolean(dna.decoration2)).change();
   $("#decoration3").prop("checked", Boolean(dna.decoration3)).change();
   $("#decorationsrotation").val(dna.decorationsRotation).change();
+  $("#animationcat").val(dna.animationcat).change();
+  $("#animationdecorations").val(dna.animationdecorations).change();
 }
 
 // On changed color settings
@@ -56,4 +59,12 @@ $("#decoration3").change(() => {
 $("#decorationsrotation").change(() => {
   const val = $("#decorationsrotation").val();
   decorationsRotation(val);
+});
+$("#animationcat").change(() => {
+  const val = $("#animationcat").val();
+  animationCat(val);
+});
+$("#animationdecorations").change(() => {
+  const val = $("#animationdecorations").val();
+  animationDecorations(val);
 });

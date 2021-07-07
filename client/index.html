@@ -24,6 +24,7 @@
 
     <link rel="stylesheet" href="assets/css/mystyle.css" />
     <link rel="stylesheet" href="assets/css/cats.css" />
+    <link rel="stylesheet" href="assets/css/animations.css" />
     <link rel="stylesheet" href="assets/css/colors.css" />
     <link rel="stylesheet" href="assets/css/factory.css" />
     <link rel="stylesheet" href="assets/css/frontend.css" />
@@ -95,8 +96,9 @@
 
                 <div class="cat__paw-right"></div>
                 <div class="cat__paw-right_inner"></div>
-
-                <div id="tail" class="cat__tail"></div>
+                <div class="cat__tailBase">
+                  <div id="tail" class="cat__tail"></div>
+                </div>
               </div>
             </div>
             <!-- DNA -->
@@ -115,7 +117,8 @@
                 <span id="dnadecoration2"></span>
                 <span id="dnadecoration3"></span>
                 <span id="dnadecorationsrotation"></span>
-                <span id="dnadanimation"></span>
+                <span id="dnaanimationcat"></span>
+                <span id="dnaanimationdecorations"></span>
               </b>
             </div>
           </div>
@@ -222,6 +225,43 @@
                 class="form-range"
                 id="decorationsrotation"
               />
+            </div>
+            <div class="mb-3">
+              <div class="row">
+                <label for="animationcat"><b>Animations</b></label>
+                <div class="col">
+                  <label for="animationcat"
+                    ><b>Cat</b
+                    ><span
+                      class="badge bg-dark ms-2"
+                      id="animationcatcode"
+                    ></span
+                  ></label>
+                  <input
+                    type="range"
+                    min="0"
+                    max="3"
+                    class="form-range animation"
+                    id="animationcat"
+                  />
+                </div>
+                <div class="col">
+                  <label for="animationdecorations"
+                    ><b>Decorations</b
+                    ><span
+                      class="badge bg-dark ms-2"
+                      id="animationdecorationscode"
+                    ></span
+                  ></label>
+                  <input
+                    type="range"
+                    min="0"
+                    max="2"
+                    class="form-range animation"
+                    id="animationdecorations"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>

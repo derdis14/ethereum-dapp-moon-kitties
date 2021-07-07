@@ -63,3 +63,104 @@ function decorationsRotation(code) {
   $("#decorationsrotationcode").html("code: " + code); //This updates the text of the badge next to the slider
   $("#dnadecorationsrotation").html(code); //This updates the DNA text below the cat
 }
+
+/* ANIMATIONS */
+
+function shiningStars() {
+  $(".star1").addClass("shiningStarV1");
+  $(".star2").addClass("shiningStarV2");
+  $(".star3").addClass("shiningStarV3");
+}
+
+function shiningAndRotatingStars() {
+  $(".star1").addClass("shiningStarV1Rotating");
+  $(".star2").addClass("shiningStarV2Rotating");
+  $(".star3").addClass("shiningStarV3Rotating");
+}
+
+function removeAnimationsDecorations() {
+  $(".cat__head-dots > *").removeClass(`
+    shiningStarV1 shiningStarV2 shiningStarV3
+    shiningStarV1Rotating shiningStarV2Rotating shiningStarV3Rotating
+  `);
+}
+
+function playfulMotions() {
+  $(".cat__tailBase").addClass("playingTail");
+  $("#head").addClass("playingHead");
+  $("#rightEar").addClass("playingRightEar");
+  $("#leftEar").addClass("playingLeftEar");
+}
+
+function tenseMotions() {
+  $(".cat__tailBase").addClass("tensingTail");
+  $("#rightEar").addClass("tensingRightEar");
+  $("#leftEar").addClass("tensingLeftEar");
+}
+
+function jumpMotions() {
+  $(".cat").addClass("jumpingCat");
+  $(
+    ".cat__paw-left_inner, .cat__paw-left, .cat__paw-right_inner, .cat__paw-right"
+  ).addClass("jumpingLegs");
+  $(".cat__tailBase").addClass("jumpingTail");
+  $("#rightEar").addClass("jumpingRightEar");
+  $("#leftEar").addClass("jumpingLeftEar");
+}
+
+function removeAnimationsCat() {
+  $("#head").removeClass("playingHead");
+  $("#rightEar").removeClass("playingRightEar tensingRightEar jumpingRightEar");
+  $("#leftEar").removeClass("playingLeftEar tensingLeftEar jumpingLeftEar");
+  $(".cat__tailBase").removeClass("playingTail tensingTail jumpingTail");
+  $(".cat").removeClass("jumpingCat");
+  $(
+    ".cat__paw-left_inner, .cat__paw-left, .cat__paw-right_inner, .cat__paw-right"
+  ).removeClass("jumpingLegs");
+}
+
+function animationCat(code) {
+  //This changes the animation of the cat
+  removeAnimationsCat();
+  const animation = parseInt(code);
+  switch (animation) {
+    case 1:
+      playfulMotions();
+      break;
+
+    case 2:
+      tenseMotions();
+      break;
+
+    case 3:
+      jumpMotions();
+      break;
+
+    default:
+      break;
+  }
+
+  $("#animationcatcode").html("code: " + code); //This updates the text of the badge next to the slider
+  $("#dnaanimationcat").html(code); //This updates the DNA text below the cat
+}
+
+function animationDecorations(code) {
+  //This changes the animation of the decorations
+  removeAnimationsDecorations();
+  const animation = parseInt(code);
+  switch (animation) {
+    case 1:
+      shiningStars();
+      break;
+
+    case 2:
+      shiningAndRotatingStars();
+      break;
+
+    default:
+      break;
+  }
+
+  $("#animationdecorationscode").html("code: " + code); //This updates the text of the badge next to the slider
+  $("#dnaanimationdecorations").html(code); //This updates the DNA text below the cat
+}

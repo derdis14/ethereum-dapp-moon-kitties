@@ -1,0 +1,319 @@
+/* Shining stars */
+.shiningStarV1 {
+  animation: shineStarV1 8s infinite;
+}
+.shiningStarV2 {
+  animation: shineStarV2 9s infinite;
+}
+.shiningStarV3 {
+  animation: shineStarV3 7s infinite;
+}
+
+/* Shining stars rotating*/
+.shiningStarV1Rotating {
+  animation: shineStarV1 8s infinite, rotateStar 20s linear infinite;
+}
+.shiningStarV2Rotating {
+  animation: shineStarV2 9s infinite, rotateStar 20s linear infinite;
+}
+.shiningStarV3Rotating {
+  animation: shineStarV3 7s infinite, rotateStar 20s linear infinite;
+}
+
+/* Playful motions */
+.playingTail {
+  animation: playTail 5s infinite;
+}
+.playingHead {
+  animation: playHead 7s infinite;
+}
+.playingRightEar {
+  animation: playRightEar 7s infinite;
+}
+.playingLeftEar {
+  animation: playLeftEar 7s infinite;
+}
+
+/* Tense motions */
+.tensingTail {
+  animation: tenseTail 7s infinite;
+}
+.tensingRightEar {
+  animation: tenseRightEar 7s infinite;
+}
+.tensingLeftEar {
+  animation: tenseLeftEar 7s infinite;
+}
+
+/* Jump motions*/
+.jumpingCat {
+  animation: jumpCat 6s infinite;
+}
+.jumpingLegs {
+  animation: jumpLegs 6s infinite;
+}
+.jumpingTail {
+  animation: jumpTail 6s infinite;
+}
+.jumpingRightEar {
+  animation: jumpRightEar 6s infinite;
+}
+.jumpingLeftEar {
+  animation: jumpLeftEar 6s infinite;
+}
+
+/* KEYFRAMES */
+
+@keyframes shineStarV1 {
+  0%,
+  5%,
+  100% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.6;
+  }
+  60% {
+    opacity: 0.1;
+  }
+  90% {
+    opacity: 1;
+  }
+}
+
+@keyframes shineStarV2 {
+  30%,
+  35% {
+    opacity: 0;
+  }
+  70% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.1;
+  }
+  20% {
+    opacity: 1;
+  }
+}
+
+@keyframes shineStarV3 {
+  60%,
+  65% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.6;
+  }
+  20% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes rotateStar {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes playTail {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  33% {
+    transform: rotate(-2deg);
+  }
+
+  66% {
+    transform: rotate(2deg);
+  }
+}
+
+@keyframes playHead {
+  0%,
+  55%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  60%,
+  65% {
+    transform: rotate(5deg);
+  }
+
+  66%,
+  95% {
+    transform: rotate(0deg);
+  }
+
+  96%,
+  99% {
+    transform: rotate(-5deg);
+  }
+}
+
+@keyframes playRightEar {
+  0%,
+  55%,
+  100% {
+    transform: rotate(170deg);
+  }
+
+  60%,
+  65% {
+    transform: rotate(178deg);
+  }
+
+  66%,
+  95% {
+    transform: rotate(170deg);
+  }
+
+  96%,
+  99% {
+    transform: rotate(160deg);
+  }
+}
+
+@keyframes playLeftEar {
+  0%,
+  55%,
+  100% {
+    transform: scale(-1, 1) rotate(170deg);
+  }
+
+  60%,
+  65% {
+    transform: scale(-1, 1) rotate(162deg);
+  }
+
+  66%,
+  95% {
+    transform: scale(-1, 1) rotate(170deg);
+  }
+
+  96%,
+  99% {
+    transform: scale(-1, 1) rotate(180deg);
+  }
+}
+
+@keyframes tenseTail {
+  0%,
+  20%,
+  80%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  22%,
+  77% {
+    transform: rotate(-10deg);
+  }
+}
+
+@keyframes tenseRightEar {
+  0%,
+  20%,
+  80%,
+  100% {
+    transform: rotate(170deg);
+  }
+
+  22%,
+  77% {
+    transform: rotate(160deg);
+  }
+}
+
+@keyframes tenseLeftEar {
+  0%,
+  20%,
+  80%,
+  100% {
+    transform: scale(-1, 1) rotate(170deg);
+  }
+
+  22%,
+  77% {
+    transform: scale(-1, 1) rotate(160deg);
+  }
+}
+
+@keyframes jumpCat {
+  0%,
+  20%,
+  28%,
+  100% {
+    transform: none;
+  }
+
+  22%,
+  23% {
+    transform: translateY(-25px);
+  }
+}
+
+@keyframes jumpLegs {
+  0%,
+  20%,
+  28%,
+  100% {
+    transform: none;
+  }
+
+  22%,
+  23% {
+    transform: translateY(5px);
+  }
+}
+
+@keyframes jumpTail {
+  0%,
+  20%,
+  28%,
+  100% {
+    transform: none;
+  }
+
+  22%,
+  23% {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes jumpRightEar {
+  0%,
+  20%,
+  28%,
+  100% {
+    transform: rotate(170deg);
+  }
+
+  22%,
+  23% {
+    transform: rotate(173deg);
+  }
+}
+
+@keyframes jumpLeftEar {
+  0%,
+  20%,
+  28%,
+  100% {
+    transform: scale(-1, 1) rotate(170deg);
+  }
+
+  22%,
+  23% {
+    transform: scale(-1, 1) rotate(173deg);
+  }
+}
