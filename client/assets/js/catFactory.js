@@ -1,3 +1,5 @@
+/* COLORS */
+
 function outerColor(code) {
   //This changes the color of the cat
   const color = parseInt(code);
@@ -35,55 +37,29 @@ function eyesColor(code) {
   $("#dnaeyes").html(code); //This updates the DNA text below the cat
 }
 
-//###################################################
-//Functions below will be used later on in the project
-//###################################################
-function eyeVariation(num) {
-  $("#dnashape").html(num);
-  switch (num) {
-    case 1:
-      normalEyes();
-      $("#eyeName").html("Basic");
-      break;
+/* CATTRIBUTES */
+
+function decorationsVisiblity(idOfDeco, isChecked) {
+  let code = "0";
+  //This sets the visibility of the decorations
+  if (isChecked) {
+    code = "1";
+    $(`.star${idOfDeco}`).css("visibility", "visible");
+  } else {
+    $(`.star${idOfDeco}`).css("visibility", "hidden");
   }
+
+  //This updates text of the badge next to the slider
+  $(`#decorationscode${idOfDeco}`).html(code);
+  //This updates the DNA text that is displayed below the cat
+  $(`#dnadecoration${idOfDeco}`).html(code);
 }
 
-function decorationVariation(num) {
-  $("#dnadecoration").html(num);
-  switch (num) {
-    case 1:
-      $("#decorationName").html("Basic");
-      normaldecoration();
-      break;
-  }
-}
+function decorationsRotation(code) {
+  //This changes the rotation of the decorations
+  const rotation = parseInt(code) - 10;
+  $(".cat__head-dots > *").css("transform", `rotate(${rotation}deg)`);
 
-async function normalEyes() {
-  await $(".cat__eye").find("span").css("border", "none");
-}
-
-async function normaldecoration() {
-  //Remove all style from other decorations
-  //In this way we can also use normalDecoration() to reset the decoration style
-  $(".cat__head-dots").css({
-    transform: "rotate(0deg)",
-    height: "48px",
-    width: "14px",
-    top: "1px",
-    "border-radius": "0 0 50% 50%",
-  });
-  $(".cat__head-dots_first").css({
-    transform: "rotate(0deg)",
-    height: "35px",
-    width: "14px",
-    top: "1px",
-    "border-radius": "50% 0 50% 50%",
-  });
-  $(".cat__head-dots_second").css({
-    transform: "rotate(0deg)",
-    height: "35px",
-    width: "14px",
-    top: "1px",
-    "border-radius": "0 50% 50% 50%",
-  });
+  $("#decorationsrotationcode").html("code: " + code); //This updates the text of the badge next to the slider
+  $("#dnadecorationsrotation").html(code); //This updates the DNA text below the cat
 }

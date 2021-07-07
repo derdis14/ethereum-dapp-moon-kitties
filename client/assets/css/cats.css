@@ -34,14 +34,12 @@ body {
 }
 
 .star1 {
-  display: inherit;
   position: absolute;
   left: -1px;
   transform: rotate(0deg);
 }
 
 .star2 {
-  display: inherit;
   position: absolute;
   top: 15px;
   left: -22px;
@@ -50,7 +48,6 @@ body {
 }
 
 .star3 {
-  display: inherit;
   position: absolute;
   top: 25px;
   left: +27px;

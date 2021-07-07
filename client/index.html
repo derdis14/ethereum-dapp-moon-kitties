@@ -49,7 +49,7 @@
               text-center
             "
           >
-            <!-- CAT HTML -->
+            <!-- CAT -->
             <div class="cat">
               <div class="cat__ear">
                 <div id="leftEar" class="cat__ear--left">
@@ -62,6 +62,7 @@
 
               <div id="head" class="cat__head">
                 <div id="midDot" class="cat__head-dots">
+                  <!-- https://www.htmlsymbols.xyz/unicode/U+1F7C4 -->
                   <span class="star1">&#128964;</span>
                   <span class="star2">&#128964;</span>
                   <span class="star3">&#128964;</span>
@@ -98,36 +99,29 @@
                 <div id="tail" class="cat__tail"></div>
               </div>
             </div>
+            <!-- DNA -->
             <div
-              class="
-                dnaDiv
-                position-absolute
-                bottom-0
-                start-50
-                translate-middle-x
-              "
+              class="dnaDiv position-absolute bottom-0 start-0 px-1"
               id="catDNA"
             >
-              <b class="">
+              <b>
                 DNA:
                 <!-- Colors -->
                 <span id="dnaouter"></span>
                 <span id="dnainner"></span>
                 <span id="dnaeyes"></span>
-
                 <!-- Cattributes -->
-                <span id="dnashape"></span>
-                <span id="dnadecoration"></span>
-                <span id="dnadecorationMid"></span>
-                <span id="dnadecorationSides"></span>
+                <span id="dnadecoration1"></span>
+                <span id="dnadecoration2"></span>
+                <span id="dnadecoration3"></span>
+                <span id="dnadecorationsrotation"></span>
                 <span id="dnadanimation"></span>
-                <span id="dnaspecial"></span>
               </b>
             </div>
           </div>
-
+          <!-- DNA SETTER -->
           <div class="col-lg-6 cattributes m-2 light-b-shadow">
-            <!-- Cat colors -->
+            <!-- Set colors -->
             <div id="catColors">
               <div class="mb-3">
                 <label for="outercolor"
@@ -168,6 +162,66 @@
                   id="eyescolor"
                 />
               </div>
+            </div>
+            <!-- Set cattributes -->
+            <div class="mb-3">
+              <label for="decorationsVisibility">
+                <b>Decorations Visibility</b>
+                <span class="badge bg-dark ms-2">
+                  <span>code: </span>
+                  <span id="decorationscode1"></span>
+                  <span id="decorationscode2"></span>
+                  <span id="decorationscode3"></span>
+                </span>
+              </label>
+              <div id="decorationsVisibility">
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="decoration1"
+                  />
+                  <label class="form-check-label" for="decoration1"
+                    >Star 1</label
+                  >
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="decoration2"
+                  />
+                  <label class="form-check-label" for="decoration2"
+                    >Star 2</label
+                  >
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="decoration3"
+                  />
+                  <label class="form-check-label" for="decoration3"
+                    >Star 3</label
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="decorationsrotation"
+                ><b>Decorations Rotation</b
+                ><span
+                  class="badge bg-dark ms-2"
+                  id="decorationsrotationcode"
+                ></span
+              ></label>
+              <input
+                type="range"
+                min="10"
+                max="55"
+                class="form-range"
+                id="decorationsrotation"
+              />
             </div>
           </div>
         </div>
