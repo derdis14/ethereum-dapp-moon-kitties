@@ -15,6 +15,7 @@ const defaultDNA = {
 // when page load
 $(document).ready(function () {
   renderCat(defaultDNA);
+  setEyesTrackCursor(true);
 });
 
 function renderCat(dna) {
@@ -68,3 +69,13 @@ $("#animationdecorations").change(() => {
   const val = $("#animationdecorations").val();
   animationDecorations(val);
 });
+
+// Sets if cat eyes track mouse cursor
+function setEyesTrackCursor(val) {
+  if (val) {
+    document.addEventListener("mousemove", eyesTrackCursor);
+  } else {
+    document.removeEventListener("mousemove", eyesTrackCursor);
+    $(".pupil-left, .pupil-right").css("transform", "none");
+  }
+}

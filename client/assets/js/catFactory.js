@@ -164,3 +164,29 @@ function animationDecorations(code) {
   $("#animationdecorationscode").html("code: " + code); //This updates the text of the badge next to the slider
   $("#dnaanimationdecorations").html(code); //This updates the DNA text below the cat
 }
+
+function eyesTrackCursor(e) {
+  const cursorX = e.pageX;
+  const cursorY = e.pageY;
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+
+  const catPosition = $(".cat__nose").offset();
+  const offsetX = width / 2 - catPosition.left;
+  const offsetY = height / 2 - catPosition.top;
+  const maxMove = 2; // in px
+
+  let moveX = ((cursorX - width / 2 + offsetX) / (width / 2)) * maxMove;
+  let moveY = ((cursorY - height / 2 + offsetY) / (height / 2)) * maxMove;
+  if (moveX > maxMove) {
+    moveX = maxMove;
+  }
+  if (moveY > maxMove) {
+    moveY = maxMove;
+  }
+
+  $(".pupil-left, .pupil-right").css(
+    "transform",
+    `translate(${moveX}px, ${moveY}px`
+  );
+}
