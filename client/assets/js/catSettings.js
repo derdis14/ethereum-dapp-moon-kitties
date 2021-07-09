@@ -79,3 +79,32 @@ function setEyesTrackCursor(val) {
     $(".pupil-left, .pupil-right").css("transform", "none");
   }
 }
+
+function defaultKitty() {
+  renderCat(defaultDNA);
+}
+
+function randomKitty() {
+  const dna = randomDNA();
+  renderCat(dna);
+}
+
+function randomDNA() {
+  const dna = {};
+  dna.outerColor = randomValueOfRangeInput("outercolor");
+  dna.innerColor = randomValueOfRangeInput("innercolor");
+  dna.eyesColor = randomValueOfRangeInput("eyescolor");
+  dna.decoration1 = Math.round(Math.random());
+  dna.decoration2 = Math.round(Math.random());
+  dna.decoration3 = Math.round(Math.random());
+  dna.decorationsRotation = randomValueOfRangeInput("decorationsrotation");
+  dna.animationcat = randomValueOfRangeInput("animationcat");
+  dna.animationdecorations = randomValueOfRangeInput("animationdecorations");
+  return dna;
+}
+
+function randomValueOfRangeInput(id) {
+  const minVal = parseInt($(`#${id}`).attr("min"));
+  const maxVal = parseInt($(`#${id}`).attr("max"));
+  return String(Math.round(Math.random() * (maxVal - minVal) + minVal));
+}
