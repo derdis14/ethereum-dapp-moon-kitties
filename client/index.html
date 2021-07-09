@@ -122,144 +122,179 @@
               </b>
             </div>
           </div>
+
           <!-- DNA SETTER -->
           <div class="col-lg-6 cattributes m-2 light-b-shadow">
-            <!-- Set colors -->
-            <div id="catColors">
-              <div class="mb-3">
-                <label for="outercolor"
-                  ><b>Outer Color</b
-                  ><span class="badge bg-dark ms-2" id="outercode"></span
-                ></label>
-                <input
-                  type="range"
-                  min="10"
-                  max="90"
-                  class="form-range"
-                  id="outercolor"
-                />
+            <!-- Tabs -->
+            <nav>
+              <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button
+                  class="nav-link active"
+                  id="catColors-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#catColors"
+                  type="button"
+                  role="tab"
+                >
+                  <b>Colors</b>
+                </button>
+                <button
+                  class="nav-link"
+                  id="cattributes-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#cattributes"
+                  type="button"
+                  role="tab"
+                >
+                  <b>Cattributes</b>
+                </button>
               </div>
-              <div class="mb-3">
-                <label for="innercolor"
-                  ><b>Inner Color</b
-                  ><span class="badge bg-dark ms-2" id="innercode"></span
-                ></label>
-                <input
-                  type="range"
-                  min="10"
-                  max="90"
-                  class="form-range"
-                  id="innercolor"
-                />
-              </div>
-              <div class="mb-3">
-                <label for="eyescolor"
-                  ><b>Eyes Color</b
-                  ><span class="badge bg-dark ms-2" id="eyescode"></span
-                ></label>
-                <input
-                  type="range"
-                  min="100"
-                  max="460"
-                  class="form-range"
-                  id="eyescolor"
-                />
-              </div>
-            </div>
-            <!-- Set cattributes -->
-            <div class="mb-3">
-              <label for="decorationsVisibility">
-                <b>Decorations Visibility</b>
-                <span class="badge bg-dark ms-2">
-                  <span>code: </span>
-                  <span id="decorationscode1"></span>
-                  <span id="decorationscode2"></span>
-                  <span id="decorationscode3"></span>
-                </span>
-              </label>
-              <div id="decorationsVisibility">
-                <div class="form-check form-check-inline">
+            </nav>
+            <!-- Tabs content -->
+            <div class="tab-content mt-3" id="nav-tabContent">
+              <!-- Set colors -->
+              <div
+                id="catColors"
+                class="tab-pane fade show active"
+                role="tabpanel"
+              >
+                <div class="mb-3">
+                  <label for="outercolor"
+                    ><b>Outer Color</b
+                    ><span class="badge bg-dark ms-2" id="outercode"></span
+                  ></label>
                   <input
-                    class="form-check-input"
-                    type="checkbox"
-                    id="decoration1"
+                    type="range"
+                    min="10"
+                    max="90"
+                    class="form-range"
+                    id="outercolor"
                   />
-                  <label class="form-check-label" for="decoration1"
-                    >Star 1</label
-                  >
                 </div>
-                <div class="form-check form-check-inline">
+                <div class="mb-3">
+                  <label for="innercolor"
+                    ><b>Inner Color</b
+                    ><span class="badge bg-dark ms-2" id="innercode"></span
+                  ></label>
                   <input
-                    class="form-check-input"
-                    type="checkbox"
-                    id="decoration2"
+                    type="range"
+                    min="10"
+                    max="90"
+                    class="form-range"
+                    id="innercolor"
                   />
-                  <label class="form-check-label" for="decoration2"
-                    >Star 2</label
-                  >
                 </div>
-                <div class="form-check form-check-inline">
+                <div class="mb-3">
+                  <label for="eyescolor"
+                    ><b>Eyes Color</b
+                    ><span class="badge bg-dark ms-2" id="eyescode"></span
+                  ></label>
                   <input
-                    class="form-check-input"
-                    type="checkbox"
-                    id="decoration3"
+                    type="range"
+                    min="100"
+                    max="460"
+                    class="form-range"
+                    id="eyescolor"
                   />
-                  <label class="form-check-label" for="decoration3"
-                    >Star 3</label
-                  >
                 </div>
               </div>
-            </div>
-            <div class="mb-3">
-              <label for="decorationsrotation"
-                ><b>Decorations Rotation</b
-                ><span
-                  class="badge bg-dark ms-2"
-                  id="decorationsrotationcode"
-                ></span
-              ></label>
-              <input
-                type="range"
-                min="10"
-                max="55"
-                class="form-range"
-                id="decorationsrotation"
-              />
-            </div>
-            <div class="mb-3">
-              <div class="row">
-                <label for="animationcat"><b>Animations</b></label>
-                <div class="col">
-                  <label for="animationcat"
-                    ><b>Cat</b
+              <!-- Set cattributes -->
+              <div id="cattributes" class="tab-pane fade" role="tabpanel">
+                <div class="mb-3">
+                  <label for="decorationsVisibility">
+                    <b>Decorations Visibility</b>
+                    <span class="badge bg-dark ms-2">
+                      <span>code: </span>
+                      <span id="decorationscode1"></span>
+                      <span id="decorationscode2"></span>
+                      <span id="decorationscode3"></span>
+                    </span>
+                  </label>
+                  <div id="decorationsVisibility">
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="decoration1"
+                      />
+                      <label class="form-check-label" for="decoration1"
+                        >Star 1</label
+                      >
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="decoration2"
+                      />
+                      <label class="form-check-label" for="decoration2"
+                        >Star 2</label
+                      >
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="decoration3"
+                      />
+                      <label class="form-check-label" for="decoration3"
+                        >Star 3</label
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="decorationsrotation"
+                    ><b>Decorations Rotation</b
                     ><span
                       class="badge bg-dark ms-2"
-                      id="animationcatcode"
+                      id="decorationsrotationcode"
                     ></span
                   ></label>
                   <input
                     type="range"
-                    min="0"
-                    max="3"
-                    class="form-range animation"
-                    id="animationcat"
+                    min="10"
+                    max="55"
+                    class="form-range"
+                    id="decorationsrotation"
                   />
                 </div>
-                <div class="col">
-                  <label for="animationdecorations"
-                    ><b>Decorations</b
-                    ><span
-                      class="badge bg-dark ms-2"
-                      id="animationdecorationscode"
-                    ></span
-                  ></label>
-                  <input
-                    type="range"
-                    min="0"
-                    max="2"
-                    class="form-range animation"
-                    id="animationdecorations"
-                  />
+                <div class="mb-3">
+                  <div class="row">
+                    <label for="animationcat"><b>Animations</b></label>
+                    <div class="col">
+                      <label for="animationcat"
+                        ><b>Cat</b
+                        ><span
+                          class="badge bg-dark ms-2"
+                          id="animationcatcode"
+                        ></span
+                      ></label>
+                      <input
+                        type="range"
+                        min="0"
+                        max="3"
+                        class="form-range animation"
+                        id="animationcat"
+                      />
+                    </div>
+                    <div class="col">
+                      <label for="animationdecorations"
+                        ><b>Decorations</b
+                        ><span
+                          class="badge bg-dark ms-2"
+                          id="animationdecorationscode"
+                        ></span
+                      ></label>
+                      <input
+                        type="range"
+                        min="0"
+                        max="2"
+                        class="form-range animation"
+                        id="animationdecorations"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
