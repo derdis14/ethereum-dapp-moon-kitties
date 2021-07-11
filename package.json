@@ -1,0 +1,29 @@
+{
+  "name": "crypto-kitties-dapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/derdis14/ethereum-dapp-crypto-kitties.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/derdis14/ethereum-dapp-crypto-kitties/issues"
+  },
+  "homepage": "https://github.com/derdis14/ethereum-dapp-crypto-kitties#readme",
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.2.0"
+  },
+  "devDependencies": {
+    "prettier-plugin-solidity": "^1.0.0-beta.15"
+  }
+}
