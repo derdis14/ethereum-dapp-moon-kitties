@@ -25,6 +25,7 @@
     <script src="assets/js/web3.min.js">
       /* v1.4.0 */
     </script>
+    <script src="assets/js/abis.js"></script>
 
     <link rel="stylesheet" href="assets/css/mystyle.css" />
     <link rel="stylesheet" href="assets/css/cats.css" />
@@ -35,6 +36,16 @@
 
   <body>
     <main>
+      <div class="row">
+        <button
+          id="connect-metamask-btn"
+          type="button"
+          class="btn btn-warning light-b-shadow"
+          onclick="connectMetamask()"
+        >
+          <b>Connect MetaMask</b>
+        </button>
+      </div>
       <div class="container p-5" style="margin-top: 12vh; margin-bottom: 10vh">
         <div align="center">
           <h1 class="text-white">Kitties-Factory</h1>
