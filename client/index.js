@@ -50,3 +50,14 @@ async function connectMetamask() {
     { from: userAddress }
   );
 }
+
+async function createKitty() {
+  try {
+    const res = await kittiesContract.methods
+      .createKittyGen0(getDNAString())
+      .send();
+    return res;
+  } catch (err) {
+    alert("createKitty: failed");
+  }
+}

@@ -108,3 +108,17 @@ function randomValueOfRangeInput(id) {
   const maxVal = parseInt($(`#${id}`).attr("max"));
   return String(Math.round(Math.random() * (maxVal - minVal) + minVal));
 }
+
+function getDNAString() {
+  let dna = "";
+  dna += $("#dnaouter").html();
+  dna += $("#dnainner").html();
+  dna += $("#dnaeyes").html();
+  dna += $("#dnadecoration1").html();
+  dna += $("#dnadecoration2").html();
+  dna += $("#dnadecoration3").html();
+  dna += $("#dnadecorationsrotation").html();
+  dna += $("#dnaanimationcat").html();
+  dna += $("#dnaanimationdecorations").html();
+  return dna;
+}
