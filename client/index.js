@@ -29,6 +29,8 @@ async function connectMetamask() {
     return;
   }
 
+  $("#onchain-alert").empty();
+
   // will start the MetaMask extension
   const accounts = await window.ethereum.request({
     method: "eth_requestAccounts",
@@ -49,15 +51,76 @@ async function connectMetamask() {
     KITTIES_CONTRACT_ADDRESS,
     { from: userAddress }
   );
+
+  // set up contract event listeners
+  kittiesContract.events
+    .Birth({ filter: { owner: userAddress } })
+    .on("data", function (event) {
+      console.log("Birth data!", event);
+      const kittyId = event.returnValues.kittyId;
+      const genes = event.returnValues.genes;
+      const mumId = event.returnValues.mumId;
+      const dadId = event.returnValues.dadId;
+      const owner = event.returnValues.owner;
+      const transactionHash = event.transactionHash;
+      onchainAlertMsgSuccess(
+        `<strong>Birth successful.</strong>
+        kittyId: ${kittyId}, genes: ${genes}, mumId: ${mumId}, dadId: ${dadId}, owner: ${owner},
+        transactionHash: ${transactionHash}`
+      );
+    })
+    .on("connected", function (subscriptionId) {
+      console.log("Birth connected!", subscriptionId);
+    })
+    .on("changed", function (event) {
+      console.log("Birth changed!", event);
+    })
+    .on("error", function (error, receipt) {
+      console.error("Birth error!", error);
+    });
 }
 
 async function createKitty() {
+  $("#onchain-alert").empty();
   try {
     const res = await kittiesContract.methods
       .createKittyGen0(getDNAString())
       .send();
     return res;
   } catch (err) {
-    alert("createKitty: failed");
+    console.error(err);
+    onchainAlertMsgDanger(
+      `<strong>createKitty:</strong> Failed. ${
+        userAddress === undefined
+          ? "Please connect MetaMask!"
+          : "See console for details!"
+      }`
+    );
   }
+}
+
+function onchainAlertMsgSuccess(msg) {
+  onchainAlertMsg("success", msg);
+}
+
+function onchainAlertMsgDanger(msg) {
+  onchainAlertMsg("danger", msg);
+}
+
+function onchainAlertMsg(type, msg) {
+  const alertHtml = `
+    <div
+    class="alert alert-${type} alert-dismissible fade show text-start"
+    role="alert"
+    >
+    ${msg}
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+    ></button>
+    </div>
+  `;
+
+  $("#onchain-alert").html(alertHtml);
 }
