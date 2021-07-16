@@ -27,6 +27,23 @@ contract Kitties is ERC721Enumerable, Ownable {
     uint256 genes
   );
 
+  // Breads a new kitty from two other kitties.
+  function breed(uint256 mumId, uint256 dadId) public {
+    // '_isApprovedOrOwner' includes check whether token exists
+    require(
+      _isApprovedOrOwner(msg.sender, mumId) &&
+        _isApprovedOrOwner(msg.sender, dadId),
+      "Unauthorized"
+    );
+
+    Kitty storage mum = _kitties[mumId];
+    Kitty storage dad = _kitties[dadId];
+    uint16 newGeneration = _mixGeneration(mum.generation, dad.generation);
+    uint256 newGenes = _mixGenes(mum.genes, dad.genes);
+
+    _createKitty(mumId, dadId, newGeneration, newGenes, ownerOf(mumId));
+  }
+
   // Creates a generation 0 kitty.
   function createKittyGen0(uint256 genes) public onlyOwner {
     require(
@@ -65,6 +82,25 @@ contract Kitties is ERC721Enumerable, Ownable {
   }
 
   // ----- NONPUBLIC FUNCTIONS -----
+
+  function _mixGenes(uint256 genes1, uint256 genes2)
+    internal
+    pure
+    returns (uint256)
+  {
+    // Example DNA: 20 20 300 | 1 0 0 35 1 1
+    uint256 genes1Part1 = genes1 / 10000000;
+    uint256 genes2Part2 = genes2 % 10000000;
+    return genes1Part1 * 10000000 + genes2Part2;
+  }
+
+  function _mixGeneration(uint16 generation1, uint16 generation2)
+    internal
+    pure
+    returns (uint16)
+  {
+    return (generation1 + generation2) / 2 + 1;
+  }
 
   function _createKitty(
     uint256 mumId,
