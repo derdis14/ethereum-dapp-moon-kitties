@@ -85,13 +85,90 @@ contract Kitties is ERC721Enumerable, Ownable {
 
   function _mixGenes(uint256 genes1, uint256 genes2)
     internal
-    pure
+    view
     returns (uint256)
   {
-    // Example DNA: 20 20 300 | 1 0 0 35 1 1
-    uint256 genes1Part1 = genes1 / 10000000;
-    uint256 genes2Part2 = genes2 % 10000000;
-    return genes1Part1 * 10000000 + genes2Part2;
+    // example genes: 20203001003511
+    // in 7 parts: 20 20 300 100 35 1 1
+    uint256 mixedGenes;
+    uint16[7] memory mixedGenesParts;
+    uint8 index = 6;
+
+    // the binary representation of this random number (0-255) decides
+    // which parts are inherited from genes1 and which from genes2
+    uint8 randomBinary = uint8(block.timestamp);
+    uint8 maskBinary = 1;
+    uint16 factor;
+
+    // variables for random intermediate inheritance and mutation
+    uint8 randomPart = randomBinary % 3;
+    uint16 randomPartValue;
+
+    // inherit genes parts from 'genes1' and 'genes2'
+    for (uint8 i = 0; i <= 6; i++) {
+      if (index == 3 || index == 2) {
+        factor = 1000;
+      } else if (index == 6 || index == 5) {
+        factor = 10;
+      } else {
+        factor = 100;
+      }
+
+      // random dominant-recessive inheritance
+      if ((randomBinary & maskBinary) == 0) {
+        mixedGenesParts[index] = uint16(genes1 % factor);
+      } else {
+        mixedGenesParts[index] = uint16(genes2 % factor);
+      }
+
+      // random intermediate inheritance for one color genes part
+      if (index == randomPart) {
+        randomPartValue =
+          (uint16(genes1 % factor) + uint16(genes2 % factor)) /
+          2;
+        mixedGenesParts[index] = randomPartValue;
+      }
+
+      if (i != 6) {
+        genes1 /= factor;
+        genes2 /= factor;
+        maskBinary *= 2;
+        index--;
+      }
+    }
+
+    // random mutation for one genes part
+    randomPart = randomBinary % 7;
+    randomPartValue = 0;
+    if (randomPart == 0 || randomPart == 1) {
+      randomPartValue = 10 + (randomBinary % 81);
+    } else if (randomPart == 2) {
+      randomPartValue = 100 + randomBinary;
+    } else if (randomPart == 3) {
+      randomPartValue = uint16(10**(randomBinary % 3));
+    } else if (randomPart == 4) {
+      randomPartValue = 10 + (randomBinary % 46);
+    } else if (randomPart == 5 || randomPart == 6) {
+      randomPartValue = randomBinary % 4;
+    }
+    mixedGenesParts[randomPart] = randomPartValue;
+
+    // assemble 'mixedGenes'
+    for (uint8 i = 0; i <= 6; i++) {
+      mixedGenes += mixedGenesParts[i];
+      if (i != 6) {
+        if (i == 1 || i == 2) {
+          factor = 1000;
+        } else if (i == 4 || i == 5) {
+          factor = 10;
+        } else {
+          factor = 100;
+        }
+        mixedGenes *= factor;
+      }
+    }
+
+    return mixedGenes;
   }
 
   function _mixGeneration(uint16 generation1, uint16 generation2)
