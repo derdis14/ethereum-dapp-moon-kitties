@@ -19,9 +19,14 @@ $(document).ready(function () {
     console.warn(
       "MetaMask account has been changed. Please reconnect MetaMask."
     );
-    $("#connect-metamask-btn").show();
+    resetMetamaskBtn();
   });
 });
+
+function resetMetamaskBtn() {
+  $("#connect-metamask-btn").show();
+  $(window).scrollTop(0);
+}
 
 async function connectMetamask() {
   if (typeof window.ethereum == "undefined") {
@@ -123,4 +128,10 @@ function onchainAlertMsg(type, msg) {
   `;
 
   $("#onchain-alert").html(alertHtml);
+}
+
+function showNavHomeTab() {
+  const tabEl = document.querySelector("#nav-home-tab");
+  const tab = new bootstrap.Tab(tabEl);
+  tab.show();
 }
