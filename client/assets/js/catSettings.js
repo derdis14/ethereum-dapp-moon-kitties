@@ -1,24 +1,24 @@
 const defaultDNA = {
-  //Colors
+  // colors
   outerColor: 20,
   innerColor: 20,
   eyesColor: 300,
-  //Cattributes
+  // cattributes
   decoration1: 1,
   decoration2: 0,
   decoration3: 0,
   decorationsRotation: 35,
-  animationcat: 1,
-  animationdecorations: 1,
+  animationCat: 1,
+  animationDecorations: 1,
 };
 
-// when page load
+// when page loads
 $(document).ready(function () {
-  renderCat(defaultDNA);
+  renderCatFactory(defaultDNA);
   setEyesTrackCursor(true);
 });
 
-function renderCat(dna) {
+function renderCatFactory(dna) {
   $("#outercolor").val(dna.outerColor).change();
   $("#innercolor").val(dna.innerColor).change();
   $("#eyescolor").val(dna.eyesColor).change();
@@ -26,11 +26,11 @@ function renderCat(dna) {
   $("#decoration2").prop("checked", Boolean(dna.decoration2)).change();
   $("#decoration3").prop("checked", Boolean(dna.decoration3)).change();
   $("#decorationsrotation").val(dna.decorationsRotation).change();
-  $("#animationcat").val(dna.animationcat).change();
-  $("#animationdecorations").val(dna.animationdecorations).change();
+  $("#animationcat").val(dna.animationCat).change();
+  $("#animationdecorations").val(dna.animationDecorations).change();
 }
 
-// On changed color settings
+// event listeners for factory kitty
 $("#outercolor").change(() => {
   const val = $("#outercolor").val();
   outerColor(val);
@@ -43,8 +43,6 @@ $("#eyescolor").change(() => {
   const val = $("#eyescolor").val();
   eyesColor(val);
 });
-
-// On changed cattributes settings
 $("#decoration1").change(() => {
   const isChecked = $("#decoration1").is(":checked");
   decorationsVisiblity(1, isChecked ? 1 : 0);
@@ -70,7 +68,7 @@ $("#animationdecorations").change(() => {
   animationDecorations(val);
 });
 
-// Sets if cat eyes track mouse cursor
+// Sets whether eyes of factory cat track mouse cursor.
 function setEyesTrackCursor(val) {
   if (val) {
     document.addEventListener("mousemove", eyesTrackCursor);
@@ -81,12 +79,12 @@ function setEyesTrackCursor(val) {
 }
 
 function defaultKitty() {
-  renderCat(defaultDNA);
+  renderCatFactory(defaultDNA);
 }
 
 function randomKitty() {
   const dna = randomDNA();
-  renderCat(dna);
+  renderCatFactory(dna);
 }
 
 function randomDNA() {
@@ -98,8 +96,8 @@ function randomDNA() {
   dna.decoration2 = Math.round(Math.random());
   dna.decoration3 = Math.round(Math.random());
   dna.decorationsRotation = randomValueOfRangeInput("decorationsrotation");
-  dna.animationcat = randomValueOfRangeInput("animationcat");
-  dna.animationdecorations = randomValueOfRangeInput("animationdecorations");
+  dna.animationCat = randomValueOfRangeInput("animationcat");
+  dna.animationDecorations = randomValueOfRangeInput("animationdecorations");
   return dna;
 }
 
@@ -109,6 +107,7 @@ function randomValueOfRangeInput(id) {
   return String(Math.round(Math.random() * (maxVal - minVal) + minVal));
 }
 
+// Returns DNA of current factory kitty.
 function getDNAString() {
   let dna = "";
   dna += $("#dnaouter").html();
