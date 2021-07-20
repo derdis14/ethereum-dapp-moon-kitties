@@ -1,37 +1,38 @@
 /* COLORS */
 
-function outerColor(code) {
-  //This changes the color of the cat
+function outerColor(code, kittyId = "") {
   const color = parseInt(code);
-  $(`#head,
-    #chest,
-    #ear--right,
-    #ear--left,
-    #paw-left,
-    #paw-right,
-    #paw-left_inner,
-    #paw-right_inner,
-    #tail`).css("background", `hsl(0,0%,${color}%)`);
+  //This changes the color of the cat
+  $(`#head${kittyId},
+    #chest${kittyId},
+    #ear--right${kittyId},
+    #ear--left${kittyId},
+    #paw-left${kittyId},
+    #paw-right${kittyId},
+    #paw-left_inner${kittyId},
+    #paw-right_inner${kittyId},
+    #tail${kittyId}`).css("background", `hsl(0,0%,${color}%)`);
 
   $("#outercode").html("code: " + code); //This updates the text of the badge next to the slider
   $("#dnaouter").html(code); //This updates the DNA text below the cat
 }
 
-function innerColor(code) {
+function innerColor(code, kittyId = "") {
   const color = parseInt(code);
-  $(`#mouth-contour,
-    #chest_inner,
-    #ear--left-inside,
-    #ear--right-inside`).css("background", `hsl(0,0%,${color}%)`);
+  //This changes the color of the cat
+  $(`#mouth-contour${kittyId},
+    #chest_inner${kittyId},
+    #ear--left-inside${kittyId},
+    #ear--right-inside${kittyId}`).css("background", `hsl(0,0%,${color}%)`);
 
   $("#innercode").html("code: " + code); //This updates the text of the badge next to the slider
   $("#dnainner").html(code); //This updates the DNA text below the cat
 }
 
-function eyesColor(code) {
-  //This changes the color of the cat
+function eyesColor(code, kittyId = "") {
   const color = parseInt(code) - 100;
-  $("#eye span").css("background", `hsl(${color}, 100%, 40%)`);
+  //This changes the color of the cat
+  $(`#eye${kittyId} span`).css("background", `hsl(${color}, 100%, 40%)`);
 
   $("#eyescode").html("code: " + code); //This updates the text of the badge next to the slider
   $("#dnaeyes").html(code); //This updates the DNA text below the cat
@@ -39,14 +40,14 @@ function eyesColor(code) {
 
 /* CATTRIBUTES */
 
-function decorationsVisiblity(idOfDeco, isChecked) {
+function decorationsVisiblity(idOfDeco, isChecked, kittyId = "") {
   let code = "0";
   //This sets the visibility of the decorations
   if (isChecked) {
     code = "1";
-    $(`#head-dots > .star${idOfDeco}`).css("visibility", "visible");
+    $(`#head-dots${kittyId} > .star${idOfDeco}`).css("visibility", "visible");
   } else {
-    $(`#head-dots > .star${idOfDeco}`).css("visibility", "hidden");
+    $(`#head-dots${kittyId} > .star${idOfDeco}`).css("visibility", "hidden");
   }
 
   //This updates text of the badge next to the slider
@@ -55,10 +56,10 @@ function decorationsVisiblity(idOfDeco, isChecked) {
   $(`#dnadecoration${idOfDeco}`).html(code);
 }
 
-function decorationsRotation(code) {
-  //This changes the rotation of the decorations
+function decorationsRotation(code, kittyId = "") {
   const rotation = parseInt(code) - 10;
-  $("#head-dots > *").css("transform", `rotate(${rotation}deg)`);
+  //This changes the rotation of the decorations
+  $(`#head-dots${kittyId} > *`).css("transform", `rotate(${rotation}deg)`);
 
   $("#decorationsrotationcode").html("code: " + code); //This updates the text of the badge next to the slider
   $("#dnadecorationsrotation").html(code); //This updates the DNA text below the cat
@@ -66,76 +67,78 @@ function decorationsRotation(code) {
 
 /* ANIMATIONS */
 
-function shiningStars() {
-  $("#head-dots > .star1").addClass("shiningStarV1");
-  $("#head-dots > .star2").addClass("shiningStarV2");
-  $("#head-dots > .star3").addClass("shiningStarV3");
+function shiningStars(kittyId = "") {
+  $(`#head-dots${kittyId} > .star1`).addClass("shiningStarV1");
+  $(`#head-dots${kittyId} > .star2`).addClass("shiningStarV2");
+  $(`#head-dots${kittyId} > .star3`).addClass("shiningStarV3");
 }
 
-function shiningAndRotatingStars() {
-  $("#head-dots > .star1").addClass("shiningStarV1Rotating");
-  $("#head-dots > .star2").addClass("shiningStarV2Rotating");
-  $("#head-dots > .star3").addClass("shiningStarV3Rotating");
+function shiningAndRotatingStars(kittyId = "") {
+  $(`#head-dots${kittyId} > .star1`).addClass("shiningStarV1Rotating");
+  $(`#head-dots${kittyId} > .star2`).addClass("shiningStarV2Rotating");
+  $(`#head-dots${kittyId} > .star3`).addClass("shiningStarV3Rotating");
 }
 
-function removeAnimationsDecorations() {
-  $("#head-dots > *").removeClass(`
+function removeAnimationsDecorations(kittyId = "") {
+  $(`#head-dots${kittyId} > *`).removeClass(`
     shiningStarV1 shiningStarV2 shiningStarV3
     shiningStarV1Rotating shiningStarV2Rotating shiningStarV3Rotating
   `);
 }
 
-function playfulMotions() {
-  $("#tail-base").addClass("playingTail");
-  $("#head").addClass("playingHead");
-  $("#ear--right").addClass("playingRightEar");
-  $("#ear--left").addClass("playingLeftEar");
+function playfulMotions(kittyId = "") {
+  $(`#tail-base${kittyId}`).addClass("playingTail");
+  $(`#head${kittyId}`).addClass("playingHead");
+  $(`#ear--right${kittyId}`).addClass("playingRightEar");
+  $(`#ear--left${kittyId}`).addClass("playingLeftEar");
 }
 
-function tenseMotions() {
-  $("#tail-base").addClass("tensingTail");
-  $("#ear--right").addClass("tensingRightEar");
-  $("#ear--left").addClass("tensingLeftEar");
+function tenseMotions(kittyId = "") {
+  $(`#tail-base${kittyId}`).addClass("tensingTail");
+  $(`#ear--right${kittyId}`).addClass("tensingRightEar");
+  $(`#ear--left${kittyId}`).addClass("tensingLeftEar");
 }
 
-function jumpMotions() {
-  $("#cat").addClass("jumpingCat");
-  $("#paw-left_inner, #paw-left, #paw-right_inner, #paw-right").addClass(
-    "jumpingLegs"
-  );
-  $("#tail-base").addClass("jumpingTail");
-  $("#ear--right").addClass("jumpingRightEar");
-  $("#ear--left").addClass("jumpingLeftEar");
+function jumpMotions(kittyId = "") {
+  $(`#cat${kittyId}`).addClass("jumpingCat");
+  $(
+    `#paw-left_inner${kittyId}, #paw-left${kittyId}, #paw-right_inner${kittyId}, #paw-right${kittyId}`
+  ).addClass("jumpingLegs");
+  $(`#tail-base${kittyId}`).addClass("jumpingTail");
+  $(`#ear--right${kittyId}`).addClass("jumpingRightEar");
+  $(`#ear--left${kittyId}`).addClass("jumpingLeftEar");
 }
 
-function removeAnimationsCat() {
-  $("#head").removeClass("playingHead");
-  $("#ear--right").removeClass(
+function removeAnimationsCat(kittyId = "") {
+  $(`#head${kittyId}`).removeClass("playingHead");
+  $(`#ear--right${kittyId}`).removeClass(
     "playingRightEar tensingRightEar jumpingRightEar"
   );
-  $("#ear--left").removeClass("playingLeftEar tensingLeftEar jumpingLeftEar");
-  $("#tail-base").removeClass("playingTail tensingTail jumpingTail");
-  $("#cat").removeClass("jumpingCat");
-  $("#paw-left_inner, #paw-left, #paw-right_inner, #paw-right").removeClass(
-    "jumpingLegs"
+  $(`#ear--left${kittyId}`).removeClass(
+    "playingLeftEar tensingLeftEar jumpingLeftEar"
   );
+  $(`#tail-base${kittyId}`).removeClass("playingTail tensingTail jumpingTail");
+  $(`#cat${kittyId}`).removeClass("jumpingCat");
+  $(
+    `#paw-left_inner${kittyId}, #paw-left${kittyId}, #paw-right_inner${kittyId}, #paw-right${kittyId}`
+  ).removeClass("jumpingLegs");
 }
 
-function animationCat(code) {
+function animationCat(code, kittyId = "") {
   //This changes the animation of the cat
-  removeAnimationsCat();
+  removeAnimationsCat(kittyId);
   const animation = parseInt(code);
   switch (animation) {
     case 1:
-      playfulMotions();
+      playfulMotions(kittyId);
       break;
 
     case 2:
-      tenseMotions();
+      tenseMotions(kittyId);
       break;
 
     case 3:
-      jumpMotions();
+      jumpMotions(kittyId);
       break;
 
     default:
@@ -146,17 +149,17 @@ function animationCat(code) {
   $("#dnaanimationcat").html(code); //This updates the DNA text below the cat
 }
 
-function animationDecorations(code) {
+function animationDecorations(code, kittyId = "") {
   //This changes the animation of the decorations
-  removeAnimationsDecorations();
+  removeAnimationsDecorations(kittyId);
   const animation = parseInt(code);
   switch (animation) {
     case 1:
-      shiningStars();
+      shiningStars(kittyId);
       break;
 
     case 2:
-      shiningAndRotatingStars();
+      shiningAndRotatingStars(kittyId);
       break;
 
     default:
@@ -173,7 +176,7 @@ function eyesTrackCursor(e) {
   const width = window.innerWidth;
   const height = window.innerHeight;
 
-  const catPosition = $("#nose").offset();
+  const catPosition = $(`#nose`).offset();
   const offsetX = width / 2 - catPosition.left;
   const offsetY = height / 2 - catPosition.top;
   const maxMove = 2; // in px
@@ -187,7 +190,7 @@ function eyesTrackCursor(e) {
     moveY = maxMove;
   }
 
-  $("#pupil-left, #pupil-right").css(
+  $(`#pupil-left, #pupil-right`).css(
     "transform",
     `translate(${moveX}px, ${moveY}px`
   );
