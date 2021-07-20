@@ -91,8 +91,8 @@ html {
   left: -8px;
   display: flex;
 }
-.cat__eye--left,
-.cat__eye--right {
+.cat__eye-left,
+.cat__eye-right {
   width: 49px;
   height: 49px;
   background: #fff;
@@ -130,10 +130,12 @@ html {
   border-radius: 50%;
   background: #fff;
 }
-.cat__eye span.pupil-left {
+.cat__pupil-left {
+  position: absolute;
   left: 37px;
 }
-.cat__eye span.pupil-right {
+.cat__pupil-right {
+  position: absolute;
   left: 154px;
 }
 .cat__nose {
@@ -319,7 +321,7 @@ html {
   z-index: 1;
   transform: rotate(-45deg);
 }
-.cat__tailBase {
+.cat__tail-base {
   position: absolute;
   top: 48px;
   left: 140px;

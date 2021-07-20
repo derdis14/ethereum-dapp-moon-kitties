@@ -76,7 +76,7 @@ function setEyesTrackCursor(val) {
     document.addEventListener("mousemove", eyesTrackCursor);
   } else {
     document.removeEventListener("mousemove", eyesTrackCursor);
-    $(".pupil-left, .pupil-right").css("transform", "none");
+    $("#pupil-left, #pupil-right").css("transform", "none");
   }
 }
 

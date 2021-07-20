@@ -3,15 +3,15 @@
 function outerColor(code) {
   //This changes the color of the cat
   const color = parseInt(code);
-  $(`.cat__head,
-    .cat__chest,
-    .cat__ear--right,
-    .cat__ear--left,
-    .cat__paw-left,
-    .cat__paw-right,
-    .cat__paw-left_inner,
-    .cat__paw-right_inner,
-    .cat__tail`).css("background", `hsl(0,0%,${color}%)`);
+  $(`#head,
+    #chest,
+    #ear--right,
+    #ear--left,
+    #paw-left,
+    #paw-right,
+    #paw-left_inner,
+    #paw-right_inner,
+    #tail`).css("background", `hsl(0,0%,${color}%)`);
 
   $("#outercode").html("code: " + code); //This updates the text of the badge next to the slider
   $("#dnaouter").html(code); //This updates the DNA text below the cat
@@ -19,10 +19,10 @@ function outerColor(code) {
 
 function innerColor(code) {
   const color = parseInt(code);
-  $(`.cat__mouth-contour,
-    .cat__chest_inner,
-    .cat__ear--left-inside,
-    .cat__ear--right-inside`).css("background", `hsl(0,0%,${color}%)`);
+  $(`#mouth-contour,
+    #chest_inner,
+    #ear--left-inside,
+    #ear--right-inside`).css("background", `hsl(0,0%,${color}%)`);
 
   $("#innercode").html("code: " + code); //This updates the text of the badge next to the slider
   $("#dnainner").html(code); //This updates the DNA text below the cat
@@ -31,7 +31,7 @@ function innerColor(code) {
 function eyesColor(code) {
   //This changes the color of the cat
   const color = parseInt(code) - 100;
-  $(".cat__eye span").css("background", `hsl(${color}, 100%, 40%)`);
+  $("#eye span").css("background", `hsl(${color}, 100%, 40%)`);
 
   $("#eyescode").html("code: " + code); //This updates the text of the badge next to the slider
   $("#dnaeyes").html(code); //This updates the DNA text below the cat
@@ -44,9 +44,9 @@ function decorationsVisiblity(idOfDeco, isChecked) {
   //This sets the visibility of the decorations
   if (isChecked) {
     code = "1";
-    $(`.star${idOfDeco}`).css("visibility", "visible");
+    $(`#head-dots > .star${idOfDeco}`).css("visibility", "visible");
   } else {
-    $(`.star${idOfDeco}`).css("visibility", "hidden");
+    $(`#head-dots > .star${idOfDeco}`).css("visibility", "hidden");
   }
 
   //This updates text of the badge next to the slider
@@ -58,7 +58,7 @@ function decorationsVisiblity(idOfDeco, isChecked) {
 function decorationsRotation(code) {
   //This changes the rotation of the decorations
   const rotation = parseInt(code) - 10;
-  $(".cat__head-dots > *").css("transform", `rotate(${rotation}deg)`);
+  $("#head-dots > *").css("transform", `rotate(${rotation}deg)`);
 
   $("#decorationsrotationcode").html("code: " + code); //This updates the text of the badge next to the slider
   $("#dnadecorationsrotation").html(code); //This updates the DNA text below the cat
@@ -67,56 +67,58 @@ function decorationsRotation(code) {
 /* ANIMATIONS */
 
 function shiningStars() {
-  $(".star1").addClass("shiningStarV1");
-  $(".star2").addClass("shiningStarV2");
-  $(".star3").addClass("shiningStarV3");
+  $("#head-dots > .star1").addClass("shiningStarV1");
+  $("#head-dots > .star2").addClass("shiningStarV2");
+  $("#head-dots > .star3").addClass("shiningStarV3");
 }
 
 function shiningAndRotatingStars() {
-  $(".star1").addClass("shiningStarV1Rotating");
-  $(".star2").addClass("shiningStarV2Rotating");
-  $(".star3").addClass("shiningStarV3Rotating");
+  $("#head-dots > .star1").addClass("shiningStarV1Rotating");
+  $("#head-dots > .star2").addClass("shiningStarV2Rotating");
+  $("#head-dots > .star3").addClass("shiningStarV3Rotating");
 }
 
 function removeAnimationsDecorations() {
-  $(".cat__head-dots > *").removeClass(`
+  $("#head-dots > *").removeClass(`
     shiningStarV1 shiningStarV2 shiningStarV3
     shiningStarV1Rotating shiningStarV2Rotating shiningStarV3Rotating
   `);
 }
 
 function playfulMotions() {
-  $(".cat__tailBase").addClass("playingTail");
+  $("#tail-base").addClass("playingTail");
   $("#head").addClass("playingHead");
-  $("#rightEar").addClass("playingRightEar");
-  $("#leftEar").addClass("playingLeftEar");
+  $("#ear--right").addClass("playingRightEar");
+  $("#ear--left").addClass("playingLeftEar");
 }
 
 function tenseMotions() {
-  $(".cat__tailBase").addClass("tensingTail");
-  $("#rightEar").addClass("tensingRightEar");
-  $("#leftEar").addClass("tensingLeftEar");
+  $("#tail-base").addClass("tensingTail");
+  $("#ear--right").addClass("tensingRightEar");
+  $("#ear--left").addClass("tensingLeftEar");
 }
 
 function jumpMotions() {
-  $(".cat").addClass("jumpingCat");
-  $(
-    ".cat__paw-left_inner, .cat__paw-left, .cat__paw-right_inner, .cat__paw-right"
-  ).addClass("jumpingLegs");
-  $(".cat__tailBase").addClass("jumpingTail");
-  $("#rightEar").addClass("jumpingRightEar");
-  $("#leftEar").addClass("jumpingLeftEar");
+  $("#cat").addClass("jumpingCat");
+  $("#paw-left_inner, #paw-left, #paw-right_inner, #paw-right").addClass(
+    "jumpingLegs"
+  );
+  $("#tail-base").addClass("jumpingTail");
+  $("#ear--right").addClass("jumpingRightEar");
+  $("#ear--left").addClass("jumpingLeftEar");
 }
 
 function removeAnimationsCat() {
   $("#head").removeClass("playingHead");
-  $("#rightEar").removeClass("playingRightEar tensingRightEar jumpingRightEar");
-  $("#leftEar").removeClass("playingLeftEar tensingLeftEar jumpingLeftEar");
-  $(".cat__tailBase").removeClass("playingTail tensingTail jumpingTail");
-  $(".cat").removeClass("jumpingCat");
-  $(
-    ".cat__paw-left_inner, .cat__paw-left, .cat__paw-right_inner, .cat__paw-right"
-  ).removeClass("jumpingLegs");
+  $("#ear--right").removeClass(
+    "playingRightEar tensingRightEar jumpingRightEar"
+  );
+  $("#ear--left").removeClass("playingLeftEar tensingLeftEar jumpingLeftEar");
+  $("#tail-base").removeClass("playingTail tensingTail jumpingTail");
+  $("#cat").removeClass("jumpingCat");
+  $("#paw-left_inner, #paw-left, #paw-right_inner, #paw-right").removeClass(
+    "jumpingLegs"
+  );
 }
 
 function animationCat(code) {
@@ -171,7 +173,7 @@ function eyesTrackCursor(e) {
   const width = window.innerWidth;
   const height = window.innerHeight;
 
-  const catPosition = $(".cat__nose").offset();
+  const catPosition = $("#nose").offset();
   const offsetX = width / 2 - catPosition.left;
   const offsetY = height / 2 - catPosition.top;
   const maxMove = 2; // in px
@@ -185,7 +187,7 @@ function eyesTrackCursor(e) {
     moveY = maxMove;
   }
 
-  $(".pupil-left, .pupil-right").css(
+  $("#pupil-left, #pupil-right").css(
     "transform",
     `translate(${moveX}px, ${moveY}px`
   );
