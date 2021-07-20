@@ -9,9 +9,6 @@ html {
   box-sizing: border-box;
   overflow-y: scroll;
 }
-body {
-  background: #607d8b;
-}
 
 .cat__head {
   position: relative;
