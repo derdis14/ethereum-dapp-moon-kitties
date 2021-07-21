@@ -16,7 +16,6 @@
 
 .nav-link {
   padding: 17px 55px;
-  margin-right: 25px;
 }
 
 .nav-link b {
@@ -67,6 +66,10 @@ body {
 
   body {
     padding-top: 88px;
+  }
+
+  #menu .nav-link {
+    padding: 8px 0;
   }
 }
 
