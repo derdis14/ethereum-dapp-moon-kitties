@@ -14,10 +14,14 @@ contract Kitties is ERC721Enumerable, Ownable {
   Kitty[] private _kitties;
 
   // Cap of how many generation 0 kitties can be created.
-  uint8 public constant GEN0_CAP = 21;
+  uint8 public constant GEN0_CAP = 210;
   uint8 private _gen0Counter;
+  // Price to create generation 0 kitty.
+  uint256 public gen0Price;
 
-  constructor() ERC721("Kitties", "KITS") {}
+  constructor(uint256 gen0Price_) ERC721("Kitties", "KITS") {
+    gen0Price = gen0Price_;
+  }
 
   event Birth(
     address indexed owner,
@@ -45,13 +49,27 @@ contract Kitties is ERC721Enumerable, Ownable {
   }
 
   // Creates a generation 0 kitty.
-  function createKittyGen0(uint256 genes) public onlyOwner {
-    require(
-      _gen0Counter <= GEN0_CAP,
-      "All generation 0 kitties have already been created."
-    );
+  function createKittyGen0(uint256 genes) public payable {
+    require(_gen0Counter <= GEN0_CAP, "All gen-0 kitties have been created.");
+    if (msg.sender != owner()) {
+      require(msg.value == gen0Price, "Tx value doesn't match kitty price.");
+    }
+
     _gen0Counter++;
-    _createKitty(0, 0, 0, genes, owner());
+    _createKitty(0, 0, 0, genes, msg.sender);
+  }
+
+  // Sets price for a generation 0 kitty.
+  function setGen0Price(uint256 price) public onlyOwner {
+    gen0Price = price;
+  }
+
+  // Withdraws ether balance of this smart contract.
+  function withdrawBalance() public onlyOwner {
+    uint256 balance = address(this).balance;
+    require(balance > 0, "Balance is zero.");
+
+    payable(msg.sender).transfer(balance);
   }
 
   // Returns how many generation 0 kitties have already been created.

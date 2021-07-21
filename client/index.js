@@ -88,9 +88,15 @@ async function connectMetamask() {
 async function createKitty() {
   $("#onchain-alert").empty();
   try {
+    let price = "0";
+    const owner = await kittiesContract.methods.owner().call();
+    if (userAddress != owner) {
+      price = await kittiesContract.methods.gen0Price().call();
+    }
+
     const res = await kittiesContract.methods
       .createKittyGen0(getDNAString())
-      .send();
+      .send({ value: price });
     return res;
   } catch (err) {
     console.error(err);
