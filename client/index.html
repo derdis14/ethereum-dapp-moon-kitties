@@ -76,7 +76,7 @@
                   <b>Home</b>
                 </button>
                 <button
-                  class="nav-link"
+                  class="nav-link active"
                   id="nav-my-kitties-tab"
                   data-bs-toggle="pill"
                   data-bs-target="#nav-my-kitties"
@@ -86,7 +86,7 @@
                   <b>My Kitties</b>
                 </button>
                 <button
-                  class="nav-link active"
+                  class="nav-link"
                   id="nav-factory-tab"
                   data-bs-toggle="pill"
                   data-bs-target="#nav-factory"
@@ -121,14 +121,29 @@
         </div>
 
         <!-- MY KITTIES PAGE -->
-        <div class="tab-pane fade" id="nav-my-kitties" role="tabpanel">
-          <p>Content My Kitties</p>
+        <div
+          class="tab-pane fade show active"
+          id="nav-my-kitties"
+          role="tabpanel"
+        >
+          <div class="container p-5 mt-5">
+            <div align="center" class="mb-4">
+              <h1>Kitties-Collection</h1>
+              <p>Your kitties</p>
+            </div>
+            <div align="center" class="container">
+              <div
+                id="kitties-collection"
+                class="row g-5 justify-content-center m-2"
+              ></div>
+            </div>
+          </div>
         </div>
 
         <!-- FACTORY PAGE -->
-        <div class="tab-pane fade show active" id="nav-factory" role="tabpanel">
+        <div class="tab-pane fade" id="nav-factory" role="tabpanel">
           <div class="container p-5 mt-5">
-            <div align="center">
+            <div align="center" class="mb-4">
               <h1>Kitties-Factory</h1>
               <p>Create your custom kitty</p>
             </div>
