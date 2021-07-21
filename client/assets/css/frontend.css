@@ -73,6 +73,16 @@ body {
   }
 }
 
+.topBar {
+  display: block;
+  width: 100%;
+  border-radius: 0%;
+}
+
+.alert {
+  border-radius: 0;
+}
+
 main {
   flex: 1 0 auto;
 }

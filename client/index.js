@@ -95,13 +95,14 @@ async function createKitty() {
   } catch (err) {
     console.error(err);
     onchainAlertMsgDanger(
-      `<strong>createKitty:</strong> Failed. ${
+      `<strong>Action failed.</strong> ${
         userAddress === undefined
           ? "Please connect MetaMask!"
-          : "See console for details!"
+          : "See console log for details!"
       }`
     );
   }
+  $(window).scrollTop(0);
 }
 
 function onchainAlertMsgSuccess(msg) {

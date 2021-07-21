@@ -106,12 +106,13 @@
       <button
         id="connect-metamask-btn"
         type="button"
-        class="btn btn-warning light-b-shadow"
+        class="btn btn-warning light-b-shadow topBar"
         onclick="connectMetamask()"
-        style="display: block; width: 100%; border-radius: 0%"
       >
         <div class="text-white lead">Enter Web 3.0</div>
       </button>
+      <!-- On-chain Alert Message -->
+      <div id="onchain-alert" class="topBar"></div>
 
       <div class="tab-content">
         <!-- HOME PAGE -->
@@ -421,10 +422,6 @@
                   <b>Create Kitty</b>
                 </button>
               </div>
-            </div>
-            <!-- On-chain Alert Message -->
-            <div class="row justify-content-center">
-              <div id="onchain-alert" class="col-lg-10 my-4"></div>
             </div>
           </div>
         </div>
