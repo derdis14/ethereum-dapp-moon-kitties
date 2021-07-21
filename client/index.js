@@ -135,3 +135,12 @@ function showNavHomeTab() {
   const tab = new bootstrap.Tab(tabEl);
   tab.show();
 }
+
+// close collapsed navbar on any click
+$(document).ready(function () {
+  document.addEventListener("click", function () {
+    if ($("#navbarNavAltMarkup").hasClass("show") && window.innerWidth < 992) {
+      $(".navbar-toggler").click();
+    }
+  });
+});
