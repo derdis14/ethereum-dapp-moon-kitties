@@ -40,11 +40,10 @@ function eyesColor(code, kittyId = "") {
 
 /* CATTRIBUTES */
 
-function decorationsVisiblity(idOfDeco, isChecked, kittyId = "") {
-  let code = "0";
+function decorationsVisiblity(idOfDeco, code, kittyId = "") {
+  const val = parseInt(code);
   //This sets the visibility of the decorations
-  if (isChecked) {
-    code = "1";
+  if (val > 0) {
     $(`#head-dots${kittyId} > .star${idOfDeco}`).css("visibility", "visible");
   } else {
     $(`#head-dots${kittyId} > .star${idOfDeco}`).css("visibility", "hidden");

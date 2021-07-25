@@ -47,15 +47,15 @@ $("#eyescolor").change(() => {
 // On changed cattributes settings
 $("#decoration1").change(() => {
   const isChecked = $("#decoration1").is(":checked");
-  decorationsVisiblity(1, isChecked);
+  decorationsVisiblity(1, isChecked ? 1 : 0);
 });
 $("#decoration2").change(() => {
   const isChecked = $("#decoration2").is(":checked");
-  decorationsVisiblity(2, isChecked);
+  decorationsVisiblity(2, isChecked ? 1 : 0);
 });
 $("#decoration3").change(() => {
   const isChecked = $("#decoration3").is(":checked");
-  decorationsVisiblity(3, isChecked);
+  decorationsVisiblity(3, isChecked ? 1 : 0);
 });
 $("#decorationsrotation").change(() => {
   const val = $("#decorationsrotation").val();
