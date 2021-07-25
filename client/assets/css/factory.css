@@ -14,7 +14,8 @@
 .cat {
   /* border: 1px solid red; */
   padding-left: 20px;
-  padding-right: 26px;
+  padding-right: 20px;
   padding-top: 30px;
   padding-bottom: 80px;
+  margin: auto;
 }

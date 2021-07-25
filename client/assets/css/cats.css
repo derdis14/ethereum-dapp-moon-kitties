@@ -60,6 +60,7 @@ body {
 
 .cat__ear {
   position: relative;
+  left: -4px;
 }
 .cat__ear--left,
 .cat__ear--right {
@@ -189,7 +190,8 @@ body {
 }
 .cat__whiskers-left,
 .cat__whiskers-right {
-  position: relative;
+  position: absolute;
+  top: 131px;
 }
 .cat__whiskers-left,
 .cat__whiskers-right,
@@ -210,7 +212,6 @@ body {
   left: 0;
 }
 .cat__whiskers-left {
-  top: 131px;
   left: 14px;
   z-index: 300;
 }
@@ -223,7 +224,6 @@ body {
   transform: rotate(-15deg);
 }
 .cat__whiskers-right {
-  top: 126px;
   left: 169px;
   z-index: 300;
 }
@@ -237,6 +237,7 @@ body {
 }
 .cat__body {
   position: relative;
+  left: -4px;
 }
 .cat__chest {
   position: absolute;
