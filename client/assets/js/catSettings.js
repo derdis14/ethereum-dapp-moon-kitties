@@ -14,6 +14,8 @@ const defaultDNA = {
 
 // when page loads
 $(document).ready(function () {
+  const factoryCatHtml = newCatHtml("");
+  $("#factoryCatContainer").html(factoryCatHtml);
   renderCatFactory(defaultDNA);
   setEyesTrackCursor(true);
 });
