@@ -95,13 +95,21 @@ footer {
 
 .catContainer {
   margin: auto;
-  border: 5px solid var(--bs-light);
+  border-bottom: 7px solid var(--bs-light);
   border-radius: 0.25rem;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
   transition: 0.5s ease-in-out;
 }
 .catContainer:hover {
   box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.45);
+}
+
+/* https://www.schemecolor.com/olympic-medals-color-scheme.php */
+.goldBorder {
+  border-color: #d6af36;
+}
+.silverBorder {
+  border-color: #a7a7ad;
 }
 
 .egg {
