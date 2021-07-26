@@ -112,8 +112,8 @@ html {
 }
 .cat__eye span::after {
   content: "";
-  top: 8px;
-  left: 8px;
+  top: 2px;
+  left: 10px;
   position: absolute;
   width: 10px;
   height: 10px;
@@ -122,8 +122,8 @@ html {
 }
 .cat__eye span::before {
   content: "";
-  top: 20px;
-  left: 8px;
+  top: 11px;
+  left: 5px;
   position: absolute;
   width: 6px;
   height: 6px;
@@ -138,6 +138,13 @@ html {
   position: absolute;
   left: 154px;
 }
+/* .cat__eye-left span::after {
+  left: 20px;
+}
+.cat__eye-left span::before {
+  left: 29px;
+} */
+
 .cat__nose {
   position: absolute;
   top: 115px;
