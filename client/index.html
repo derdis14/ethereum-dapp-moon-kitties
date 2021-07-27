@@ -76,6 +76,7 @@
                   <b>Home</b>
                 </button>
                 <button
+                  onclick="showMyKittiesStartTab()"
                   class="nav-link active"
                   id="nav-my-kitties-tab"
                   data-bs-toggle="pill"
@@ -132,10 +133,135 @@
               <p>Your kitties</p>
             </div>
             <div align="center" class="container">
-              <div
-                id="kitties-collection"
-                class="row g-5 justify-content-center m-2"
-              ></div>
+              <nav id="menu-my-kitties">
+                <div
+                  class="nav nav-tabs justify-content-center"
+                  id="nav-tab"
+                  role="tablist"
+                >
+                  <button
+                    class="nav-link active"
+                    id="nav-show-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-show"
+                    type="button"
+                    role="tab"
+                  >
+                    <b>Show</b>
+                  </button>
+                  <button
+                    class="nav-link"
+                    id="nav-breed-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-breed"
+                    type="button"
+                    role="tab"
+                  >
+                    <b>Breed</b>
+                  </button>
+                  <button
+                    class="nav-link"
+                    id="nav-sell-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-sell"
+                    type="button"
+                    role="tab"
+                  >
+                    <b>Sell</b>
+                  </button>
+                </div>
+              </nav>
+              <div class="tab-content">
+                <!-- Show -->
+                <div
+                  class="tab-pane fade show active"
+                  id="nav-show"
+                  role="tabpanel"
+                >
+                  <div
+                    id="kitties-collection"
+                    class="row g-5 justify-content-center m-2"
+                  ></div>
+                </div>
+                <!-- Breed -->
+                <div class="tab-pane fade" id="nav-breed" role="tabpanel">
+                  <div class="row g-5 justify-content-center m-2">
+                    <div class="col">
+                      <div
+                        class="card catCard bg-light text-dark"
+                        style="width: 18rem"
+                      >
+                        <div
+                          id="breedFemale"
+                          class="catContainer catBackground female"
+                        ></div>
+                        <div class="card-body">
+                          ID: <span class="catId"></span> GEN:
+                          <span class="catGen"></span>
+                          <br />
+                          DNA: <span class="catDna"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div
+                        class="card catCard bg-light text-dark"
+                        style="width: 18rem"
+                      >
+                        <div
+                          id="breedMale"
+                          class="catContainer catBackground male"
+                        ></div>
+                        <div class="card-body">
+                          ID: <span class="catId"></span> GEN:
+                          <span class="catGen"></span>
+                          <br />
+                          DNA: <span class="catDna"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div
+                        class="card catCard bg-light text-dark"
+                        style="width: 18rem"
+                      >
+                        <div
+                          id="breedChild"
+                          class="catContainer catBackground question"
+                        ></div>
+                        <div class="card-body">
+                          ID: <span class="catId"></span> GEN:
+                          <span class="catGen"></span>
+                          <br />
+                          DNA: <span class="catDna"></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row g-5 justify-content-center m-2">
+                    <div class="col d-flex justify-content-center">
+                      <button
+                        type="button"
+                        class="btn btn-secondary light-b-shadow m-2"
+                        onclick=""
+                      >
+                        <b>Reset</b>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-primary light-b-shadow m-2 disabled"
+                        onclick=""
+                      >
+                        <b>Multiply</b>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <!-- Sell -->
+                <div class="tab-pane fade" id="nav-sell" role="tabpanel">
+                  ...
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -151,3 +151,9 @@ $(document).ready(function () {
     }
   });
 });
+
+function showMyKittiesStartTab() {
+  const tabEl = document.querySelector("#nav-show-tab");
+  const tab = new bootstrap.Tab(tabEl);
+  tab.show();
+}

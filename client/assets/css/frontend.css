@@ -10,7 +10,7 @@
   font-weight: 700;
 }
 
-.nav-pills .nav-link.active {
+#menu .nav-pills .nav-link.active {
   background-color: transparent;
 }
 
@@ -25,6 +25,45 @@
   background-color: #f8f9fa;
   border-color: #dee2e6 #dee2e6 #f8f9fa;
 }
+
+#menu-my-kitties .nav-link {
+  width: 156px;
+}
+
+/* tabs in style of navbar-dark in --bs-gray-dark color context */
+#menu-my-kitties .nav-link {
+  color: rgba(255, 255, 255, 0.55);
+}
+#menu-my-kitties .nav-link:focus,
+#menu-my-kitties .nav-link:hover {
+  color: rgba(255, 255, 255, 0.75);
+}
+#menu-my-kitties .nav-tabs .nav-item.show .nav-link,
+#menu-my-kitties .nav-tabs .nav-link.active {
+  color: #fff;
+  background-color: #343a40;
+  border-color: #dee2e6 #dee2e6 #343a40;
+}
+
+/* tabs in style of navbar-dark in bg-light color context */
+.nav-link {
+  color: rgba(73, 80, 87, 0.55);
+}
+.nav-link:focus,
+.nav-link:hover {
+  color: rgba(73, 80, 87, 0.75);
+}
+
+/* yellow highlighting of navbar text */
+/*
+#menu .navbar-dark .navbar-nav .nav-link b:focus,
+#menu .navbar-dark .navbar-nav .nav-link b:hover,
+#menu .navbar-brand:hover,
+#menu-my-kitties .nav-link b:hover,
+#menu-my-kitties .nav-link b:focus {
+  color: var(--bs-warning);
+}
+*/
 
 .catGroup {
   margin-top: 120px;
@@ -112,11 +151,21 @@ footer {
   border-color: #a7a7ad;
 }
 
-.egg {
-  width: 150px;
-  height: 150px;
-  background: url("../images/egg.png") no-repeat;
-  background-size: contain;
+.catBackground.female {
+  background: url("../img/gender-female.svg");
+}
+.catBackground.male {
+  background: url("../img/gender-male.svg");
+}
+.catBackground.question {
+  background: url("../img/question.svg");
+}
+.catContainer.catBackground {
+  min-width: 261px;
+  min-height: 304px;
+  background-size: 40%;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 /* BUTTONS */
