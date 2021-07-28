@@ -96,6 +96,7 @@ body {
   height: 100vh;
   padding-top: 106px;
   background: #343a40;
+  padding-right: 0 !important;
 }
 
 @media (max-width: 992px) {
@@ -151,14 +152,8 @@ footer {
   border-color: #a7a7ad;
 }
 
-.catBackground.female {
-  background: url("../img/gender-female.svg");
-}
-.catBackground.male {
-  background: url("../img/gender-male.svg");
-}
-.catBackground.question {
-  background: url("../img/question.svg");
+.card {
+  margin: auto;
 }
 .catContainer.catBackground {
   min-width: 261px;
@@ -166,6 +161,15 @@ footer {
   background-size: 40%;
   background-repeat: no-repeat;
   background-position: center;
+}
+.catBackground.female {
+  background-image: url("../img/gender-female.svg");
+}
+.catBackground.male {
+  background-image: url("../img/gender-male.svg");
+}
+.catBackground.question {
+  background-image: url("../img/question.svg");
 }
 
 /* BUTTONS */

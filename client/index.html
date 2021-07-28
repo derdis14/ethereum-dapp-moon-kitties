@@ -193,7 +193,10 @@
                       >
                         <div
                           id="breedFemale"
-                          class="catContainer catBackground female"
+                          class="catContainer catBackground female pointer"
+                          data-bs-toggle="modal"
+                          data-bs-target="#breedModal"
+                          onclick="fillBreedModal(this.id)"
                         ></div>
                         <div class="card-body">
                           ID: <span class="catId"></span> GEN:
@@ -210,7 +213,10 @@
                       >
                         <div
                           id="breedMale"
-                          class="catContainer catBackground male"
+                          class="catContainer catBackground male pointer"
+                          data-bs-toggle="modal"
+                          data-bs-target="#breedModal"
+                          onclick="fillBreedModal(this.id)"
                         ></div>
                         <div class="card-body">
                           ID: <span class="catId"></span> GEN:
@@ -243,11 +249,12 @@
                       <button
                         type="button"
                         class="btn btn-secondary light-b-shadow m-2"
-                        onclick=""
+                        onclick="resetBreed()"
                       >
                         <b>Reset</b>
                       </button>
                       <button
+                        id="breedMultiplyBtn"
                         type="button"
                         class="btn btn-primary light-b-shadow m-2 disabled"
                         onclick=""
@@ -261,6 +268,28 @@
                 <div class="tab-pane fade" id="nav-sell" role="tabpanel">
                   ...
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BREED MODAL -->
+        <div class="modal text-dark" id="breedModal" tabindex="-1">
+          <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Select Kitty</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div
+                  id="breed-collection"
+                  class="row g-5 justify-content-center m-2"
+                ></div>
               </div>
             </div>
           </div>
@@ -540,6 +569,7 @@
 
     <script src="assets/js/catFactory.js"></script>
     <script src="assets/js/cats.js"></script>
+    <script src="assets/js/breed.js"></script>
     <script src="assets/js/catSettings.js"></script>
     <script src="index.js"></script>
   </body>

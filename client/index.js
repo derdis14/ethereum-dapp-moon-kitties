@@ -4,23 +4,37 @@ const KITTIES_CONTRACT_ADDRESS = "0xc6A42C7dfbB9BF8eD2F86b59117Bb550eE65160C";
 
 let userAddress;
 let kittiesContract;
+let userKitties;
 
 $(document).ready(function () {
+  // TODO: remove (this is for development only)
+  loadKitties(true);
+
+  // close collapsed navbar on any click
+  document.addEventListener("click", function () {
+    if ($("#navbarNavAltMarkup").hasClass("show") && window.innerWidth < 992) {
+      $(".navbar-toggler").click();
+    }
+  });
+  // reset 'Breed' tab before showing
+  const breedTab = document.getElementById("nav-breed-tab");
+  breedTab.addEventListener("shown.bs.tab", function (event) {
+    resetBreed();
+  });
+
+  // set up MetaMask event listener
   if (typeof window.ethereum !== "undefined") {
     console.log("MetaMask is installed.");
+    ethereum.on("accountsChanged", function (accounts) {
+      userAddress = undefined;
+      console.warn(
+        "MetaMask account has been changed. Please reconnect MetaMask."
+      );
+      resetMetamaskBtn();
+    });
   } else {
     console.error("MetaMask is inaccessible.");
-    return;
   }
-
-  // set up MetaMask event listeners
-  ethereum.on("accountsChanged", function (accounts) {
-    userAddress = undefined;
-    console.warn(
-      "MetaMask account has been changed. Please reconnect MetaMask."
-    );
-    resetMetamaskBtn();
-  });
 });
 
 function resetMetamaskBtn() {
@@ -143,17 +157,77 @@ function showNavHomeTab() {
   tab.show();
 }
 
-// close collapsed navbar on any click
-$(document).ready(function () {
-  document.addEventListener("click", function () {
-    if ($("#navbarNavAltMarkup").hasClass("show") && window.innerWidth < 992) {
-      $(".navbar-toggler").click();
-    }
-  });
-});
-
 function showMyKittiesStartTab() {
   const tabEl = document.querySelector("#nav-show-tab");
   const tab = new bootstrap.Tab(tabEl);
   tab.show();
+}
+
+async function loadKitties(useTestKitties = false) {
+  if (useTestKitties) {
+    userKitties = getTestKitties();
+  } else {
+    // TODO: get kitties from blockchain
+  }
+
+  // add kitties to user collection in 'My Kitties' tab
+  userKitties.forEach((kitty) => {
+    appendKittiesCollection(kitty.kittyId, kitty.generation, kitty.genes);
+  });
+}
+
+function getTestKitties() {
+  testKitties = [
+    new Kitty("1", "60842070003200", "0", "0", "0", "0"),
+    new Kitty("2", "15873571102911", "0", "0", "0", "1"),
+    new Kitty("3", "20842670103720", "0", "0", "0", "0"),
+    new Kitty("4", "60492871002232", "0", "0", "0", "2"),
+    new Kitty("5", "11072791113921", "0", "0", "0", "3"),
+    new Kitty("6", "30843570011201", "0", "0", "0", "2"),
+    new Kitty("7", "70841290111002", "0", "0", "0", "1"),
+  ];
+  return testKitties;
+}
+
+class Kitty {
+  constructor(kittyId, genes, birthTime, mumId, dadId, generation) {
+    this.kittyId = kittyId;
+    this.genes = genes;
+    this.birthTime = birthTime;
+    this.mumId = mumId;
+    this.dadId = dadId;
+    this.generation = generation;
+  }
+}
+
+async function fillBreedModal(domId) {
+  const breedMumId = $("#breedFemale ~ * .catId").html();
+  const breedDadId = $("#breedMale ~ * .catId").html();
+  userKitties.forEach((kitty) => {
+    if (kitty.kittyId != breedMumId && kitty.kittyId != breedDadId)
+      appendBreedModal(domId, kitty.kittyId);
+  });
+}
+
+function selectForBreeding(domId, kittyId) {
+  const selectedKitty = userKitties.find((kitty) => kitty.kittyId == kittyId);
+  if (!selectedKitty) {
+    console.error("selectForBreeding: 'selectedKitty' not found");
+    return;
+  }
+
+  renderBreedCatInfo(
+    domId,
+    selectedKitty.kittyId,
+    selectedKitty.generation,
+    selectedKitty.genes
+  );
+  $("#" + domId).empty();
+  $("#" + domId).append($("#cat" + kittyId).clone());
+
+  $("#breedModal").modal("hide");
+
+  if ($("#breedFemale").html() != "" && $("#breedMale").html() != "") {
+    $("#breedMultiplyBtn").removeClass("disabled");
+  }
 }

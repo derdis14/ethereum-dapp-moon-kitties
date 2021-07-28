@@ -1,14 +1,3 @@
-// test content for 'My kitties' tab:
-$(document).ready(function () {
-  appendKittiesCollection("1", 0, "60842070003200");
-  appendKittiesCollection("2", 1, "15873571102911");
-  appendKittiesCollection("3", 0, "20842670013720");
-  appendKittiesCollection("4", 2, "60492871002232");
-  appendKittiesCollection("5", 3, "11072791113911");
-  appendKittiesCollection("6", 2, "30843570101211");
-  appendKittiesCollection("7", 1, "70841290111002");
-});
-
 function appendKittiesCollection(kittyId, kittyGen, dnaString) {
   // add new cat HTML with new ids to 'My Kitties' tab
   const html = newCatColumnHtml(kittyId);
