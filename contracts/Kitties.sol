@@ -18,9 +18,13 @@ contract Kitties is ERC721Enumerable, Ownable {
   uint8 private _gen0Counter;
   // Price to create generation 0 kitty.
   uint256 public gen0Price;
+  uint256 public breedCost;
 
-  constructor(uint256 gen0Price_) ERC721("Kitties", "KITS") {
+  constructor(uint256 gen0Price_, uint256 breedCost_)
+    ERC721("Kitties", "KITS")
+  {
     gen0Price = gen0Price_;
+    breedCost = breedCost_;
   }
 
   event Birth(
@@ -32,13 +36,15 @@ contract Kitties is ERC721Enumerable, Ownable {
   );
 
   // Breads a new kitty from two other kitties.
-  function breed(uint256 mumId, uint256 dadId) public {
+  function breed(uint256 mumId, uint256 dadId) public payable {
     // '_isApprovedOrOwner' includes check whether token exists
     require(
       _isApprovedOrOwner(msg.sender, mumId) &&
         _isApprovedOrOwner(msg.sender, dadId),
       "Unauthorized"
     );
+    require(mumId != dadId, "Breeding requires two parents.");
+    require(msg.value == breedCost, "Tx value doesn't match breeding cost.");
 
     Kitty storage mum = _kitties[mumId];
     Kitty storage dad = _kitties[dadId];
@@ -62,6 +68,12 @@ contract Kitties is ERC721Enumerable, Ownable {
   // Sets price for a generation 0 kitty.
   function setGen0Price(uint256 price) public onlyOwner {
     gen0Price = price;
+  }
+
+  // Sets cost for breeding a new kitty.
+  function setBreedCost(uint256 cost) public onlyOwner {
+    require(cost <= 0.1 ether, "Breed cost exceeds limit.");
+    breedCost = cost;
   }
 
   // Withdraws ether balance of this smart contract.
