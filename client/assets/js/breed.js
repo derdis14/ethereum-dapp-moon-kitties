@@ -37,7 +37,7 @@ function resetBreed() {
   $("#breedMale + .card-body").html(emptyCardBody);
   $("#breedChild + .card-body").html(emptyCardBody);
 
-  $("#breedMultiplyBtn").addClass("disabled");
+  $("#breedBtn").addClass("disabled");
 
   $("#breedFemale").addClass("pointer");
   $("#breedMale").addClass("pointer");

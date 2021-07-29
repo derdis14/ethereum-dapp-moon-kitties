@@ -1,14 +1,14 @@
 const web3 = new Web3(Web3.givenProvider);
 
-const KITTIES_CONTRACT_ADDRESS = "0xc6A42C7dfbB9BF8eD2F86b59117Bb550eE65160C";
+const KITTIES_CONTRACT_ADDRESS = "0x1DD40f7056b0762c1FaB96009635DFca7bF9d29C";
 
-let userAddress;
+let userAddress = undefined;
 let kittiesContract;
-let userKitties;
+let userKitties = [];
 
 $(document).ready(function () {
-  // TODO: remove (this is for development only)
-  loadKitties(true);
+  // for off-chain development only:
+  //loadKitties(true);
 
   // close collapsed navbar on any click
   document.addEventListener("click", function () {
@@ -26,25 +26,20 @@ $(document).ready(function () {
   if (typeof window.ethereum !== "undefined") {
     console.log("MetaMask is installed.");
     ethereum.on("accountsChanged", function (accounts) {
-      userAddress = undefined;
-      console.warn(
-        "MetaMask account has been changed. Please reconnect MetaMask."
-      );
-      resetMetamaskBtn();
+      if (userAddress !== undefined) {
+        //alert("MetaMask account changed. Website will reload.");
+        // reload website
+        window.location.reload();
+      }
     });
   } else {
     console.error("MetaMask is inaccessible.");
   }
 });
 
-function resetMetamaskBtn() {
-  $("#connect-metamask-btn").show();
-  $(window).scrollTop(0);
-}
-
 async function connectMetamask() {
-  if (typeof window.ethereum == "undefined") {
-    alert("MetaMask is inaccessible.");
+  if (typeof window.ethereum === "undefined") {
+    alert("This action requires the MetaMask browser extension.");
     return;
   }
 
@@ -74,7 +69,7 @@ async function connectMetamask() {
   // set up contract event listeners
   kittiesContract.events
     .Birth({ filter: { owner: userAddress } })
-    .on("data", function (event) {
+    .on("data", async (event) => {
       console.log("Birth data!", event);
       const kittyId = event.returnValues.kittyId;
       const genes = event.returnValues.genes;
@@ -84,9 +79,17 @@ async function connectMetamask() {
       const transactionHash = event.transactionHash;
       onchainAlertMsgSuccess(
         `<strong>Birth successful.</strong>
-        kittyId: ${kittyId}, genes: ${genes}, mumId: ${mumId}, dadId: ${dadId}, owner: ${owner},
+        kittyId: ${kittyId}, mumId: ${mumId}, dadId: ${dadId}, genes: ${genes}, owner: ${owner},
         transactionHash: ${transactionHash}`
       );
+
+      // update 'userKitties'
+      const kitty = await getKitty(kittyId);
+      userKitties.push(kitty);
+
+      // update 'My Kitties' and 'Breed' tab
+      appendKittiesCollection(kitty.kittyId, kitty.generation, kitty.genes);
+      renderBreedCatCol("breedChild", kittyId);
     })
     .on("connected", function (subscriptionId) {
       console.log("Birth connected!", subscriptionId);
@@ -97,13 +100,18 @@ async function connectMetamask() {
     .on("error", function (error, receipt) {
       console.error("Birth error!", error);
     });
+
+  // load kitties
+  await loadKitties();
 }
 
 async function createKitty() {
   $("#onchain-alert").empty();
+
   try {
     let price = "0";
-    const owner = await kittiesContract.methods.owner().call();
+    const owner = (await kittiesContract.methods.owner().call()).toLowerCase();
+    console.log(userAddress, owner);
     if (userAddress != owner) {
       price = await kittiesContract.methods.gen0Price().call();
     }
@@ -111,7 +119,6 @@ async function createKitty() {
     const res = await kittiesContract.methods
       .createKittyGen0(getDNAString())
       .send({ value: price });
-    return res;
   } catch (err) {
     console.error(err);
     onchainAlertMsgDanger(
@@ -122,7 +129,6 @@ async function createKitty() {
       }`
     );
   }
-  $(window).scrollTop(0);
 }
 
 function onchainAlertMsgSuccess(msg) {
@@ -147,8 +153,8 @@ function onchainAlertMsg(type, msg) {
     ></button>
     </div>
   `;
-
   $("#onchain-alert").html(alertHtml);
+  $(window).scrollTop(0);
 }
 
 function showNavHomeTab() {
@@ -164,16 +170,44 @@ function showMyKittiesStartTab() {
 }
 
 async function loadKitties(useTestKitties = false) {
+  // clear 'userKitties'
+  userKitties.length = 0;
+  $("#kitties-collection").empty();
+
   if (useTestKitties) {
     userKitties = getTestKitties();
   } else {
-    // TODO: get kitties from blockchain
+    // get kitties from blockchain
+    const totalTokens = parseInt(
+      await kittiesContract.methods.balanceOf(userAddress).call()
+    );
+    for (let i = 0; i < totalTokens; i++) {
+      const tokenId = await kittiesContract.methods
+        .tokenOfOwnerByIndex(userAddress, i)
+        .call();
+      const kitty = await getKitty(tokenId);
+      userKitties.push(kitty);
+    }
+    console.log(userKitties);
   }
 
   // add kitties to user collection in 'My Kitties' tab
   userKitties.forEach((kitty) => {
     appendKittiesCollection(kitty.kittyId, kitty.generation, kitty.genes);
   });
+}
+
+async function getKitty(kittyId) {
+  const token = await kittiesContract.methods.getKitty(kittyId).call();
+  const kitty = new Kitty(
+    kittyId,
+    token.genes,
+    token.birthTime,
+    token.mumId,
+    token.dadId,
+    token.generation
+  );
+  return kitty;
 }
 
 function getTestKitties() {
@@ -210,24 +244,59 @@ async function fillBreedModal(domId) {
 }
 
 function selectForBreeding(domId, kittyId) {
-  const selectedKitty = userKitties.find((kitty) => kitty.kittyId == kittyId);
-  if (!selectedKitty) {
-    console.error("selectForBreeding: 'selectedKitty' not found");
-    return;
-  }
-
-  renderBreedCatInfo(
-    domId,
-    selectedKitty.kittyId,
-    selectedKitty.generation,
-    selectedKitty.genes
-  );
-  $("#" + domId).empty();
-  $("#" + domId).append($("#cat" + kittyId).clone());
+  renderBreedCatCol(domId, kittyId);
 
   $("#breedModal").modal("hide");
 
   if ($("#breedFemale").html() != "" && $("#breedMale").html() != "") {
-    $("#breedMultiplyBtn").removeClass("disabled");
+    $("#breedBtn").removeClass("disabled");
+  }
+}
+
+function renderBreedCatCol(domId, kittyId) {
+  const breedCat = userKitties.find((kitty) => kitty.kittyId == kittyId);
+  const breedCatEl = $("#cat" + kittyId);
+  if (!breedCat || breedCatEl.length == 0) {
+    console.error("renderBreedCatCol: 'breedCat' or 'breedCatEl' not found");
+    return;
+  }
+
+  $("#" + domId).empty();
+  $("#" + domId).append(breedCatEl.clone());
+  renderBreedCatInfo(
+    domId,
+    breedCat.kittyId,
+    breedCat.generation,
+    breedCat.genes
+  );
+}
+
+async function breedKitty() {
+  $("#onchain-alert").empty();
+  const breedMumId = $("#breedFemale ~ * .catId").html();
+  const breedDadId = $("#breedMale ~ * .catId").html();
+
+  try {
+    const breedCost = await kittiesContract.methods.breedCost().call();
+    const res = await kittiesContract.methods
+      .breed(breedMumId, breedDadId)
+      .send({ value: breedCost });
+
+    $("#breedBtn").addClass("disabled");
+    $("#breedFemale").removeClass("pointer");
+    $("#breedMale").removeClass("pointer");
+    $("#breedFemale").removeAttr("data-bs-toggle");
+    $("#breedMale").removeAttr("data-bs-toggle");
+    $("#breedFemale").removeAttr("onclick");
+    $("#breedMale").removeAttr("onclick");
+  } catch (err) {
+    console.error(err);
+    onchainAlertMsgDanger(
+      `<strong>Action failed.</strong> ${
+        userAddress === undefined
+          ? "Please connect MetaMask!"
+          : "See console log for details!"
+      }`
+    );
   }
 }
