@@ -1,6 +1,17 @@
 const abiKitties = [
   {
-    inputs: [],
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "gen0Price_",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "breedCost_",
+        type: "uint256",
+      },
+    ],
     stateMutability: "nonpayable",
     type: "constructor",
   },
@@ -147,7 +158,6 @@ const abiKitties = [
     ],
     stateMutability: "view",
     type: "function",
-    constant: true,
   },
   {
     inputs: [
@@ -185,7 +195,32 @@ const abiKitties = [
     ],
     stateMutability: "view",
     type: "function",
-    constant: true,
+  },
+  {
+    inputs: [],
+    name: "breedCost",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "gen0Price",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
   },
   {
     inputs: [
@@ -205,7 +240,6 @@ const abiKitties = [
     ],
     stateMutability: "view",
     type: "function",
-    constant: true,
   },
   {
     inputs: [
@@ -230,7 +264,6 @@ const abiKitties = [
     ],
     stateMutability: "view",
     type: "function",
-    constant: true,
   },
   {
     inputs: [],
@@ -244,7 +277,6 @@ const abiKitties = [
     ],
     stateMutability: "view",
     type: "function",
-    constant: true,
   },
   {
     inputs: [],
@@ -258,7 +290,6 @@ const abiKitties = [
     ],
     stateMutability: "view",
     type: "function",
-    constant: true,
   },
   {
     inputs: [
@@ -278,7 +309,6 @@ const abiKitties = [
     ],
     stateMutability: "view",
     type: "function",
-    constant: true,
   },
   {
     inputs: [],
@@ -374,7 +404,6 @@ const abiKitties = [
     ],
     stateMutability: "view",
     type: "function",
-    constant: true,
   },
   {
     inputs: [],
@@ -388,7 +417,6 @@ const abiKitties = [
     ],
     stateMutability: "view",
     type: "function",
-    constant: true,
   },
   {
     inputs: [
@@ -408,7 +436,6 @@ const abiKitties = [
     ],
     stateMutability: "view",
     type: "function",
-    constant: true,
   },
   {
     inputs: [
@@ -433,7 +460,6 @@ const abiKitties = [
     ],
     stateMutability: "view",
     type: "function",
-    constant: true,
   },
   {
     inputs: [
@@ -453,7 +479,6 @@ const abiKitties = [
     ],
     stateMutability: "view",
     type: "function",
-    constant: true,
   },
   {
     inputs: [],
@@ -467,7 +492,6 @@ const abiKitties = [
     ],
     stateMutability: "view",
     type: "function",
-    constant: true,
   },
   {
     inputs: [
@@ -509,11 +533,62 @@ const abiKitties = [
     inputs: [
       {
         internalType: "uint256",
+        name: "mumId",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "dadId",
+        type: "uint256",
+      },
+    ],
+    name: "breed",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
         name: "genes",
         type: "uint256",
       },
     ],
     name: "createKittyGen0",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "price",
+        type: "uint256",
+      },
+    ],
+    name: "setGen0Price",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "cost",
+        type: "uint256",
+      },
+    ],
+    name: "setBreedCost",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "withdrawBalance",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -530,7 +605,6 @@ const abiKitties = [
     ],
     stateMutability: "view",
     type: "function",
-    constant: true,
   },
   {
     inputs: [
@@ -570,6 +644,5 @@ const abiKitties = [
     ],
     stateMutability: "view",
     type: "function",
-    constant: true,
   },
 ];
