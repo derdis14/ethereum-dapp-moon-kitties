@@ -72,16 +72,23 @@ function shiningStars(kittyId = "") {
   $(`#head-dots${kittyId} > .star3`).addClass("shiningStarV3");
 }
 
-function shiningAndRotatingStars(kittyId = "") {
-  $(`#head-dots${kittyId} > .star1`).addClass("shiningStarV1Rotating");
-  $(`#head-dots${kittyId} > .star2`).addClass("shiningStarV2Rotating");
-  $(`#head-dots${kittyId} > .star3`).addClass("shiningStarV3Rotating");
+function rotatingStars(kittyId = "") {
+  $(`#head-dots${kittyId} > .star1`).addClass("rotatingStar");
+  $(`#head-dots${kittyId} > .star2`).addClass("rotatingStar");
+  $(`#head-dots${kittyId} > .star3`).addClass("rotatingStar");
+}
+
+function rotatingShiningStars(kittyId = "") {
+  $(`#head-dots${kittyId} > .star1`).addClass("rotatingShiningStarV1");
+  $(`#head-dots${kittyId} > .star2`).addClass("rotatingShiningStarV2");
+  $(`#head-dots${kittyId} > .star3`).addClass("rotatingShiningStarV3");
 }
 
 function removeAnimationsDecorations(kittyId = "") {
   $(`#head-dots${kittyId} > *`).removeClass(`
     shiningStarV1 shiningStarV2 shiningStarV3
-    shiningStarV1Rotating shiningStarV2Rotating shiningStarV3Rotating
+    rotatingStar
+    rotatingShiningStarV1 rotatingShiningStarV2 rotatingShiningStarV3
   `);
 }
 
@@ -158,7 +165,11 @@ function animationDecorations(code, kittyId = "") {
       break;
 
     case 2:
-      shiningAndRotatingStars(kittyId);
+      rotatingStars(kittyId);
+      break;
+
+    case 3:
+      rotatingShiningStars(kittyId);
       break;
 
     default:

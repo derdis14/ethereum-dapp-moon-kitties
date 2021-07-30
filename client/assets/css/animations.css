@@ -9,14 +9,19 @@
   animation: shineStarV3 7s infinite;
 }
 
+/* Rotating stars*/
+.rotatingStar {
+  animation: rotateStar 20s linear infinite;
+}
+
 /* Shining stars rotating*/
-.shiningStarV1Rotating {
+.rotatingShiningStarV1 {
   animation: shineStarV1 8s infinite, rotateStar 20s linear infinite;
 }
-.shiningStarV2Rotating {
+.rotatingShiningStarV2 {
   animation: shineStarV2 9s infinite, rotateStar 20s linear infinite;
 }
-.shiningStarV3Rotating {
+.rotatingShiningStarV3 {
   animation: shineStarV3 7s infinite, rotateStar 20s linear infinite;
 }
 
