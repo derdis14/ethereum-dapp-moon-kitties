@@ -133,7 +133,7 @@
               <h1>Kitties-Collection</h1>
               <p>Your kitties</p>
             </div>
-            <div align="center" class="container">
+            <div align="center" class="container text-dark">
               <nav id="menu-my-kitties">
                 <div
                   class="nav nav-tabs justify-content-center"
@@ -250,7 +250,63 @@
                 </div>
                 <!-- Sell -->
                 <div class="tab-pane fade" id="nav-sell" role="tabpanel">
-                  ...
+                  <div class="row g-5 justify-content-center m-2 mb-0">
+                    <div class="col">
+                      <div
+                        class="card catCard bg-light text-dark"
+                        style="width: 18rem"
+                      >
+                        <div
+                          id="sellCat"
+                          class="catContainer catBackground paw pointer"
+                          data-bs-toggle="modal"
+                          data-bs-target="#selectCatModal"
+                          onclick="fillSelectCatModal(this.id)"
+                        ></div>
+                        <div class="card-body">
+                          ID: <span class="catId"></span> GEN:
+                          <span class="catGen"></span>
+                          <br />
+                          DNA: <span class="catDna"></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row g-0 justify-content-center m-2 mt-0">
+                    <div class="col">
+                      <div class="input-group" style="width: 18rem">
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="sellPrice"
+                          step="any"
+                          placeholder="Set Price"
+                        />
+                        <span class="input-group-text">ETH</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row g-5 justify-content-center m-2">
+                    <div class="col d-flex justify-content-center">
+                      <div>
+                        <button
+                          type="button"
+                          class="btn btn-secondary light-b-shadow m-2"
+                          onclick="resetSell()"
+                        >
+                          <b>Reset</b>
+                        </button>
+                        <button
+                          id="sellBtn"
+                          type="button"
+                          class="btn btn-primary light-b-shadow m-2 disabled"
+                          onclick="sellKitty()"
+                        >
+                          <b>Offer</b>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

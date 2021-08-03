@@ -16,10 +16,11 @@ $(document).ready(function () {
       $(".navbar-toggler").click();
     }
   });
-  // reset 'Breed' tab before showing
-  const breedTab = document.getElementById("nav-breed-tab");
-  breedTab.addEventListener("shown.bs.tab", function (event) {
+  // reset tabs before showing a new tab
+  const myKittiesMenu = document.getElementById("menu-my-kitties");
+  myKittiesMenu.addEventListener("hidden.bs.tab", function (event) {
     resetBreed();
+    resetSell();
   });
 
   // set up MetaMask event listener
@@ -239,14 +240,19 @@ class Kitty {
 async function fillSelectCatModal(domId) {
   const breedMumId = $("#breedFemale ~ * .catId").html();
   const breedDadId = $("#breedMale ~ * .catId").html();
+  const sellCatId = $("#sellCat ~ * .catId").html();
   userKitties.forEach((kitty) => {
-    if (kitty.kittyId != breedMumId && kitty.kittyId != breedDadId)
+    if (
+      kitty.kittyId != breedMumId &&
+      kitty.kittyId != breedDadId &&
+      kitty.kittyId != sellCatId
+    )
       appendSelectCatModal(domId, kitty.kittyId);
   });
 }
 
 function selectForBreeding(domId, kittyId) {
-  renderBreedCatCol(domId, kittyId);
+  renderSelectedCatCol(domId, kittyId);
 
   $("#selectCatModal").modal("hide");
 
@@ -255,25 +261,27 @@ function selectForBreeding(domId, kittyId) {
   }
 }
 
-function renderBreedCatCol(domId, kittyId) {
-  const breedCat = userKitties.find((kitty) => kitty.kittyId == kittyId);
-  const breedCatEl = $("#cat" + kittyId);
-  if (!breedCat || breedCatEl.length == 0) {
-    console.error("renderBreedCatCol: 'breedCat' or 'breedCatEl' not found");
+function renderSelectedCatCol(domId, kittyId) {
+  const selectedCat = userKitties.find((kitty) => kitty.kittyId == kittyId);
+  const selectedCatEl = $("#cat" + kittyId);
+  if (!selectedCat || selectedCatEl.length == 0) {
+    console.error(
+      "renderSelectedCatCol: 'selectedCat' or 'selectedCatEl' not found"
+    );
     return;
   }
   $("#" + domId).empty();
-  $("#" + domId).append(breedCatEl.clone());
+  $("#" + domId).append(selectedCatEl.clone());
 
-  const dnaObject = getDnaFromString(breedCat.genes);
+  const dnaObject = getDnaFromString(selectedCat.genes);
   const awardClass = calcCattributesAward(kittyId, dnaObject);
   $("#" + domId).addClass(awardClass);
 
-  renderBreedCatInfo(
+  renderSelectedCatInfo(
     domId,
-    breedCat.kittyId,
-    breedCat.generation,
-    breedCat.genes
+    selectedCat.kittyId,
+    selectedCat.generation,
+    selectedCat.genes
   );
 }
 
@@ -305,4 +313,19 @@ async function breedKitty() {
       }`
     );
   }
+}
+
+function selectForSale(domId, kittyId) {
+  renderSelectedCatCol(domId, kittyId);
+  $("#selectCatModal").modal("hide");
+
+  const sellPrice = $("#sellPrice").val();
+  const tokenId = $("#sellCat ~ * .catId").html();
+  if (tokenId != "" && sellPrice != "" && sellPrice >= 0) {
+    $("#sellBtn").removeClass("disabled");
+  }
+}
+
+async function sellKitty() {
+  console.log("selling ...");
 }
