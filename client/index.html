@@ -196,8 +196,8 @@
                           id="breedFemale"
                           class="catContainer catBackground paw pointer"
                           data-bs-toggle="modal"
-                          data-bs-target="#breedModal"
-                          onclick="fillBreedModal(this.id)"
+                          data-bs-target="#selectCatModal"
+                          onclick="fillSelectCatModal(this.id)"
                         ></div>
                         <div class="card-body">
                           ID: <span class="catId"></span> GEN:
@@ -216,8 +216,8 @@
                           id="breedMale"
                           class="catContainer catBackground paw pointer"
                           data-bs-toggle="modal"
-                          data-bs-target="#breedModal"
-                          onclick="fillBreedModal(this.id)"
+                          data-bs-target="#selectCatModal"
+                          onclick="fillSelectCatModal(this.id)"
                         ></div>
                         <div class="card-body">
                           ID: <span class="catId"></span> GEN:
@@ -256,9 +256,8 @@
             </div>
           </div>
         </div>
-
-        <!-- BREED MODAL -->
-        <div class="modal text-dark" id="breedModal" tabindex="-1">
+        <!-- Select Cat Modal -->
+        <div class="modal text-dark" id="selectCatModal" tabindex="-1">
           <div class="modal-dialog modal-xl">
             <div class="modal-content">
               <div class="modal-header">
@@ -271,7 +270,7 @@
               </div>
               <div class="modal-body">
                 <div
-                  id="breed-collection"
+                  id="select-cat-collection"
                   class="row g-5 justify-content-center m-2"
                 ></div>
               </div>

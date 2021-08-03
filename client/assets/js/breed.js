@@ -1,11 +1,11 @@
 $(document).ready(function () {
-  const breedModal = document.getElementById("breedModal");
-  breedModal.addEventListener("hidden.bs.modal", function (event) {
-    $("#breed-collection").empty();
+  const selectCatModal = document.getElementById("selectCatModal");
+  selectCatModal.addEventListener("hidden.bs.modal", function (event) {
+    $("#select-cat-collection").empty();
   });
 });
 
-function appendBreedModal(domId, kittyId) {
+function appendSelectCatModal(domId, kittyId) {
   const kittyCopy = $("#catCol" + kittyId).clone();
   const kittyCopyCatContainer = kittyCopy.find(".catContainer");
   kittyCopyCatContainer.addClass("pointer");
@@ -13,7 +13,7 @@ function appendBreedModal(domId, kittyId) {
     "onclick",
     `selectForBreeding("${domId}", "${kittyId}")`
   );
-  kittyCopy.appendTo("#breed-collection");
+  kittyCopy.appendTo("#select-cat-collection");
 }
 
 function renderBreedCatInfo(domId, kittyId, kittyGen, dnaString) {
@@ -44,6 +44,6 @@ function resetBreed() {
   $("#breedMale").addClass("pointer");
   $("#breedFemale").attr("data-bs-toggle", "modal");
   $("#breedMale").attr("data-bs-toggle", "modal");
-  $("#breedFemale").attr("onclick", "fillBreedModal(this.id)");
-  $("#breedMale").attr("onclick", "fillBreedModal(this.id)");
+  $("#breedFemale").attr("onclick", "fillSelectCatModal(this.id)");
+  $("#breedMale").attr("onclick", "fillSelectCatModal(this.id)");
 }

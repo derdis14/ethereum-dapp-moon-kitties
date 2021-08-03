@@ -236,19 +236,19 @@ class Kitty {
   }
 }
 
-async function fillBreedModal(domId) {
+async function fillSelectCatModal(domId) {
   const breedMumId = $("#breedFemale ~ * .catId").html();
   const breedDadId = $("#breedMale ~ * .catId").html();
   userKitties.forEach((kitty) => {
     if (kitty.kittyId != breedMumId && kitty.kittyId != breedDadId)
-      appendBreedModal(domId, kitty.kittyId);
+      appendSelectCatModal(domId, kitty.kittyId);
   });
 }
 
 function selectForBreeding(domId, kittyId) {
   renderBreedCatCol(domId, kittyId);
 
-  $("#breedModal").modal("hide");
+  $("#selectCatModal").modal("hide");
 
   if ($("#breedFemale").html() != "" && $("#breedMale").html() != "") {
     $("#breedBtn").removeClass("disabled");
