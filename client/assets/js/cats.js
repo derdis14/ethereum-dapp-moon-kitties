@@ -142,13 +142,14 @@ function renderCatInfo(kittyId, kittyGen, dnaString) {
 
 function awardCattributes(kittyId, dnaObject) {
   let awardClass = "";
-  if (dnaObject.animationCat != "0" && dnaObject.animationDecorations != "0") {
+  if (
+    dnaObject.decoration1 != "0" &&
+    dnaObject.decoration2 != "0" &&
+    dnaObject.decoration3 != "0" &&
+    dnaObject.animationCat != "0"
+  ) {
     awardClass = "silverBorder";
-    if (
-      dnaObject.decoration1 != "0" &&
-      dnaObject.decoration2 != "0" &&
-      dnaObject.decoration3 != "0"
-    ) {
+    if (dnaObject.animationDecorations != "0") {
       awardClass = "goldBorder";
     }
   }
