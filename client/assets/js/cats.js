@@ -11,7 +11,8 @@ function appendKittiesCollection(kittyId, kittyGen, dnaString) {
   renderCatInfo(kittyId, kittyGen, dnaString);
 
   // set border color according to number of cattributes
-  awardCattributes(kittyId, dnaObject);
+  const awardClass = calcCattributesAward(kittyId, dnaObject);
+  $(`#catCol${kittyId} .catContainer`).addClass(awardClass);
 }
 
 function newCatColumnHtml(kittyId) {
@@ -140,7 +141,7 @@ function renderCatInfo(kittyId, kittyGen, dnaString) {
   $(`#catCol${kittyId} .catDna`).html(dnaString);
 }
 
-function awardCattributes(kittyId, dnaObject) {
+function calcCattributesAward(kittyId, dnaObject) {
   let awardClass = "";
   if (
     dnaObject.decoration1 != "0" &&
@@ -153,5 +154,5 @@ function awardCattributes(kittyId, dnaObject) {
       awardClass = "goldBorder";
     }
   }
-  $(`#catCol${kittyId} .catContainer`).addClass(awardClass);
+  return awardClass;
 }

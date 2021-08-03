@@ -262,9 +262,13 @@ function renderBreedCatCol(domId, kittyId) {
     console.error("renderBreedCatCol: 'breedCat' or 'breedCatEl' not found");
     return;
   }
-
   $("#" + domId).empty();
   $("#" + domId).append(breedCatEl.clone());
+
+  const dnaObject = getDnaFromString(breedCat.genes);
+  const awardClass = calcCattributesAward(kittyId, dnaObject);
+  $("#" + domId).addClass(awardClass);
+
   renderBreedCatInfo(
     domId,
     breedCat.kittyId,

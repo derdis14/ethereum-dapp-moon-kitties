@@ -35,6 +35,8 @@ function resetBreed() {
   `;
   $("#breedFemale + .card-body").html(emptyCardBody);
   $("#breedMale + .card-body").html(emptyCardBody);
+  $("#breedFemale").removeClass("silverBorder goldBorder");
+  $("#breedMale").removeClass("silverBorder goldBorder");
 
   $("#breedBtn").addClass("disabled");
 
