@@ -162,14 +162,9 @@ footer {
   background-repeat: no-repeat;
   background-position: center;
 }
-.catBackground.female {
-  background-image: url("../img/gender-female.svg");
-}
-.catBackground.male {
-  background-image: url("../img/gender-male.svg");
-}
-.catBackground.question {
-  background-image: url("../img/question.svg");
+.catBackground.paw {
+  background-image: url("../img/paw.svg");
+  background-size: 30%;
 }
 
 /* BUTTONS */

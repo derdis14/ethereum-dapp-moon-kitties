@@ -25,7 +25,7 @@ function renderBreedCatInfo(domId, kittyId, kittyGen, dnaString) {
 function resetBreed() {
   $("#breedFemale").empty();
   $("#breedMale").empty();
-  $("#breedChild").empty();
+  $("#nav-breed > .row:first-child > .col:nth-child(3)").remove();
 
   const emptyCardBody = `
     ID: <span class="catId"></span> GEN:
@@ -35,7 +35,6 @@ function resetBreed() {
   `;
   $("#breedFemale + .card-body").html(emptyCardBody);
   $("#breedMale + .card-body").html(emptyCardBody);
-  $("#breedChild + .card-body").html(emptyCardBody);
 
   $("#breedBtn").addClass("disabled");
 

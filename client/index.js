@@ -89,7 +89,9 @@ async function connectMetamask() {
 
       // update 'My Kitties' and 'Breed' tab
       appendKittiesCollection(kitty.kittyId, kitty.generation, kitty.genes);
-      renderBreedCatCol("breedChild", kittyId);
+      $("#catCol" + kitty.kittyId)
+        .clone()
+        .appendTo("#nav-breed > .row:first-child");
     })
     .on("connected", function (subscriptionId) {
       console.log("Birth connected!", subscriptionId);
