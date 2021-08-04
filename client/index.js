@@ -157,6 +157,10 @@ function onchainAlertMsg(type, msg) {
     </div>
   `;
   $("#onchain-alert").html(alertHtml);
+  scrollToTop();
+}
+
+function scrollToTop() {
   $(window).scrollTop(0);
 }
 
