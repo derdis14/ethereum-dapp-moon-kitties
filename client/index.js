@@ -1,10 +1,16 @@
 const web3 = new Web3(Web3.givenProvider);
 
-const KITTIES_CONTRACT_ADDRESS = "0x1DD40f7056b0762c1FaB96009635DFca7bF9d29C";
+const KITTIES_CONTRACT_ADDRESS = "0x37a764B324977E05216E3876Ef86ebEeD16A98b9";
+const KITTY_MARKETPLACE_CONTRACT_ADDRESS =
+  "0x2434a5Ffe46f3C72c1D9EE30a3BEEE2073Cecd2A";
 
 let userAddress = undefined;
 let kittiesContract;
 let userKitties = [];
+let marketplaceContract;
+
+let lastBirthEvent = "";
+let lastMarketTransactionEvent = "";
 
 $(document).ready(function () {
   // for off-chain development only:
@@ -62,47 +68,91 @@ async function connectMetamask() {
 
   // load contracts
   kittiesContract = new web3.eth.Contract(
-    abiKitties,
+    abi.Kitties,
     KITTIES_CONTRACT_ADDRESS,
+    { from: userAddress }
+  );
+  marketplaceContract = new web3.eth.Contract(
+    abi.KittyMarketplace,
+    KITTY_MARKETPLACE_CONTRACT_ADDRESS,
     { from: userAddress }
   );
 
   // set up contract event listeners
-  kittiesContract.events
-    .Birth({ filter: { owner: userAddress } })
-    .on("data", async (event) => {
-      console.log("Birth data!", event);
+  kittiesContract.events.Birth(
+    { filter: { owner: userAddress }, fromBlock: "latest" },
+    async (error, event) => {
+      if (error) {
+        console.warn(error);
+        return;
+      }
+
+      if (isDuplicatedContractEvent("Birth", event.transactionHash)) {
+        return;
+      }
+
       const kittyId = event.returnValues.kittyId;
       const genes = event.returnValues.genes;
       const mumId = event.returnValues.mumId;
       const dadId = event.returnValues.dadId;
       const owner = event.returnValues.owner;
       const transactionHash = event.transactionHash;
-      onchainAlertMsgSuccess(
-        `<strong>Birth successful.</strong>
-        kittyId: ${kittyId}, mumId: ${mumId}, dadId: ${dadId}, genes: ${genes}, owner: ${owner},
+      onchainAlertMsg(
+        "success",
+        "New kitty born.",
+        `kittyId: ${kittyId}, mumId: ${mumId}, dadId: ${dadId}, genes: ${genes}, owner: ${owner},
         transactionHash: ${transactionHash}`
       );
 
       // update 'userKitties'
       const kitty = await getKitty(kittyId);
       userKitties.push(kitty);
-
-      // update 'My Kitties' and 'Breed' tab
+      // update 'My Kitties' tab
       appendKittiesCollection(kitty.kittyId, kitty.generation, kitty.genes);
-      $("#catCol" + kitty.kittyId)
-        .clone()
-        .appendTo("#nav-breed > .row:first-child");
-    })
-    .on("connected", function (subscriptionId) {
-      console.log("Birth connected!", subscriptionId);
-    })
-    .on("changed", function (event) {
-      console.log("Birth changed!", event);
-    })
-    .on("error", function (error, receipt) {
-      console.error("Birth error!", error);
-    });
+
+      // update 'Breed' tab if currently visible
+      if (
+        $("#nav-breed-tab").hasClass("active") &&
+        $("#nav-my-kitties-tab").hasClass("active")
+      ) {
+        $("#catCol" + kitty.kittyId)
+          .clone()
+          .appendTo("#nav-breed > .row:first-child");
+      }
+    }
+  );
+
+  marketplaceContract.events.MarketTransaction(
+    { filter: { caller: userAddress }, fromBlock: "latest" },
+    async (error, event) => {
+      if (error) {
+        console.warn(error);
+        return;
+      }
+
+      if (
+        isDuplicatedContractEvent("MarketTransaction", event.transactionHash)
+      ) {
+        return;
+      }
+
+      const txType = event.returnValues.txType;
+      const tokenId = event.returnValues.tokenId;
+
+      if (txType == "Create offer") {
+        const priceWei = (
+          await marketplaceContract.methods.getOffer(tokenId).call()
+        ).price;
+        const priceEther = web3.utils.fromWei(priceWei, "ether");
+
+        onchainAlertMsg(
+          "success",
+          "Sell offer created.",
+          `kittyId: ${tokenId} price: ${priceEther} ETH`
+        );
+      }
+    }
+  );
 
   // load kitties
   await loadKitties();
@@ -114,7 +164,6 @@ async function createKitty() {
   try {
     let price = "0";
     const owner = (await kittiesContract.methods.owner().call()).toLowerCase();
-    console.log(userAddress, owner);
     if (userAddress != owner) {
       price = await kittiesContract.methods.gen0Price().call();
     }
@@ -124,31 +173,25 @@ async function createKitty() {
       .send({ value: price });
   } catch (err) {
     console.error(err);
-    onchainAlertMsgDanger(
-      `<strong>Action failed.</strong> ${
-        userAddress === undefined
-          ? "Please connect MetaMask!"
-          : "See console log for details!"
-      }`
-    );
+    onchainAlertMsgDanger();
   }
 }
 
-function onchainAlertMsgSuccess(msg) {
-  onchainAlertMsg("success", msg);
+function onchainAlertMsgDanger() {
+  msgDetails =
+    userAddress === undefined
+      ? "Please connect MetaMask!"
+      : "See console log for details!";
+  onchainAlertMsg("danger", "Action failed.", msgDetails);
 }
 
-function onchainAlertMsgDanger(msg) {
-  onchainAlertMsg("danger", msg);
-}
-
-function onchainAlertMsg(type, msg) {
+function onchainAlertMsg(type, msgConcise, msgDetails) {
   const alertHtml = `
     <div
     class="alert alert-${type} alert-dismissible fade show text-start"
     role="alert"
     >
-    ${msg}
+    <strong>${msgConcise}</strong> ${msgDetails}
     <button
       type="button"
       class="btn-close"
@@ -195,7 +238,6 @@ async function loadKitties(useTestKitties = false) {
       const kitty = await getKitty(tokenId);
       userKitties.push(kitty);
     }
-    console.log(userKitties);
   }
 
   // add kitties to user collection in 'My Kitties' tab
@@ -309,13 +351,7 @@ async function breedKitty() {
     $("#breedMale").removeAttr("onclick");
   } catch (err) {
     console.error(err);
-    onchainAlertMsgDanger(
-      `<strong>Action failed.</strong> ${
-        userAddress === undefined
-          ? "Please connect MetaMask!"
-          : "See console log for details!"
-      }`
-    );
+    onchainAlertMsgDanger();
   }
 }
 
@@ -331,5 +367,69 @@ function selectForSale(domId, kittyId) {
 }
 
 async function sellKitty() {
-  console.log("selling ...");
+  $("#onchain-alert").empty();
+  const tokenId = $("#sellCat ~ * .catId").html();
+  const priceStr = $("#sellPrice").val();
+  const price = parseFloat(priceStr);
+  if (Number.isNaN(price)) {
+    console.error("sellKitty: NaN");
+    return;
+  }
+  const priceWeiStr = web3.utils.toWei(String(price), "ether");
+
+  try {
+    const marketplaceIsOperator = await kittiesContract.methods
+      .isApprovedForAll(userAddress, KITTY_MARKETPLACE_CONTRACT_ADDRESS)
+      .call();
+
+    if (!marketplaceIsOperator) {
+      onchainAlertMsg(
+        "info",
+        "Operator status requested.",
+        `In order to offer any of your kitties for sale on-chain,
+        you must first approve the marketplace smart contract as operator for you.
+        The address of that contract is: ${KITTY_MARKETPLACE_CONTRACT_ADDRESS}`
+      );
+      const res = await kittiesContract.methods
+        .setApprovalForAll(KITTY_MARKETPLACE_CONTRACT_ADDRESS, "true")
+        .send();
+      $("#onchain-alert").empty();
+    }
+
+    const res = await marketplaceContract.methods
+      .setOffer(priceWeiStr, tokenId)
+      .send();
+
+    $("#sellBtn").addClass("disabled");
+  } catch (err) {
+    console.error(err);
+    onchainAlertMsgDanger();
+  }
+}
+
+// work around for web3 bug firing duplicated events
+function isDuplicatedContractEvent(eventName, newTxHash) {
+  let lastTxHash;
+  switch (eventName) {
+    case "Birth":
+      lastTxHash = lastBirthEvent;
+      lastBirthEvent = newTxHash;
+      break;
+
+    case "MarketTransaction":
+      lastTxHash = lastMarketTransactionEvent;
+      lastMarketTransactionEvent = newTxHash;
+      break;
+
+    default:
+      console.error("isDuplicatedBirthEvent: eventName unknown.");
+      return false;
+  }
+
+  if (lastTxHash === newTxHash) {
+    //console.log(eventName, "event duplication handled.");
+    return true;
+  } else {
+    return false;
+  }
 }
