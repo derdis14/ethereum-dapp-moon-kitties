@@ -89,6 +89,16 @@
                 </button>
                 <button
                   class="nav-link"
+                  id="nav-marketplace-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#nav-marketplace"
+                  type="button"
+                  role="tab"
+                >
+                  <b>Marketplace</b>
+                </button>
+                <button
+                  class="nav-link"
                   id="nav-factory-tab"
                   data-bs-toggle="pill"
                   data-bs-target="#nav-factory"
@@ -131,9 +141,9 @@
           <div class="container p-5 mt-5">
             <div align="center" class="mb-4">
               <h1>Kitties-Collection</h1>
-              <p>Your kitties</p>
+              <p>Interact with your kitty NFTs</p>
             </div>
-            <div align="center" class="container text-dark">
+            <div align="center" class="text-dark">
               <nav id="menu-my-kitties">
                 <div
                   class="nav nav-tabs justify-content-center"
@@ -175,7 +185,7 @@
               <div class="tab-content">
                 <!-- Show -->
                 <div
-                  class="tab-pane fade show active"
+                  class="tab-pane fade active show"
                   id="nav-show"
                   role="tabpanel"
                 >
@@ -302,7 +312,7 @@
                           class="btn btn-primary light-b-shadow m-2 disabled"
                           onclick="sellKitty()"
                         >
-                          <b>Offer</b>
+                          <b>Create Offer</b>
                         </button>
                       </div>
                     </div>
@@ -334,15 +344,34 @@
           </div>
         </div>
 
+        <!-- MARKETPLACE PAGE -->
+        <div class="tab-pane fade" id="nav-marketplace" role="tabpanel">
+          <div class="container p-5 mt-5">
+            <div align="center" class="mb-4">
+              <h1>Kitties-Marketplace</h1>
+              <p>Buy kitty NFTs from others or cancel your own sales offers</p>
+            </div>
+            <div align="center" class="text-dark">
+              <div
+                id="marketplace-collection"
+                class="row g-5 justify-content-center m-2"
+              ></div>
+            </div>
+          </div>
+        </div>
+
         <!-- FACTORY PAGE -->
         <div class="tab-pane fade" id="nav-factory" role="tabpanel">
           <div class="container p-5 mt-5">
             <div align="center" class="mb-4">
               <h1>Kitties-Factory</h1>
-              <p>Design and get your very own gen-0 kitty</p>
-              <p>(Only 210 will ever be created)</p>
+              <p>
+                Design and create your very own gen-0 kitty NFT
+                <br />
+                (Only 210 will ever be created)
+              </p>
             </div>
-            <div class="row justify-content-center">
+            <div class="row justify-content-center mt-5">
               <!-- VISUALIZATION -->
               <div
                 class="
