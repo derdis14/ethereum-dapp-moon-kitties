@@ -1,8 +1,8 @@
 const web3 = new Web3(Web3.givenProvider);
 
-const KITTIES_CONTRACT_ADDRESS = "0x37a764B324977E05216E3876Ef86ebEeD16A98b9";
+const KITTIES_CONTRACT_ADDRESS = "0x9960d9D641f59D10914103DE046D3c08117885b2";
 const KITTY_MARKETPLACE_CONTRACT_ADDRESS =
-  "0x2434a5Ffe46f3C72c1D9EE30a3BEEE2073Cecd2A";
+  "0x9332d963B6149E15B74090319e91E8951D2fF272";
 
 let userAddress = undefined;
 let kittiesContract;
@@ -162,8 +162,8 @@ async function createKitty() {
 
   try {
     let price = "0";
-    const owner = (await kittiesContract.methods.owner().call()).toLowerCase();
-    if (userAddress != owner) {
+    const owner = await kittiesContract.methods.owner().call();
+    if (owner.toLowerCase() !== userAddress.toLowerCase()) {
       price = await kittiesContract.methods.gen0Price().call();
     }
 
@@ -437,3 +437,60 @@ function isDuplicatedContractEvent(eventName, newTxHash) {
     return false;
   }
 }
+
+async function loadMarketplace() {
+  $("#marketplace-collection").empty();
+
+  if (userAddress === undefined) {
+    return;
+  }
+
+  const marketplaceOffers = [];
+  try {
+    const offeredTokenIds = await marketplaceContract.methods
+      .getAllTokenOnSale()
+      .call();
+    for (tokenId of offeredTokenIds) {
+      const res = await marketplaceContract.methods.getOffer(tokenId).call();
+      const priceEther = web3.utils.fromWei(res.price, "ether");
+      const offer = {
+        kittyId: tokenId,
+        seller: res.seller,
+        price: priceEther,
+      };
+      marketplaceOffers.push(offer);
+    }
+  } catch (err) {
+    onchainAlertMsgDanger(err);
+  }
+
+  for (offer of marketplaceOffers) {
+    await appendMarketplaceCollection(offer.seller, offer.price, offer.kittyId);
+  }
+
+  if (marketplaceOffers.length == 0) {
+    $("#marketplace-collection").append(
+      "<p class='text-light'>Currently, there are no kitties for sale ...</p>"
+    );
+  }
+}
+
+async function appendMarketplaceCollection(seller, priceEther, kittyId) {
+  if (seller.toLowerCase() === userAddress.toLowerCase()) {
+    // handle offers that the current user owns
+    const catCol = $("#catCol" + kittyId);
+    if (catCol.length == 0) {
+      await loadKitties();
+    }
+    appendMarketplaceCollectionClone(seller, priceEther, kittyId);
+  } else {
+    const kitty = await getKitty(kittyId);
+    appendMarketplaceCollectionNew(
+      seller,
+      priceEther,
+      kittyId,
+      kitty.generation,
+      kitty.genes
+    );
+  }
+

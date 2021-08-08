@@ -3,16 +3,7 @@ function appendKittiesCollection(kittyId, kittyGen, dnaString) {
   const html = newCatColumnHtml(kittyId);
   $("#kitties-collection").append(html);
 
-  // set cat CSS according to 'dnaString'
-  const dnaObject = getDnaFromString(dnaString);
-  renderCat(kittyId, dnaObject);
-
-  // set information about the cat below cat HTML
-  renderCatInfo(kittyId, kittyGen, dnaString);
-
-  // set border color according to number of cattributes
-  const awardClass = calcCattributesAward(kittyId, dnaObject);
-  $(`#catCol${kittyId} .catContainer`).addClass(awardClass);
+  renderCatColumn(kittyId, kittyGen, dnaString);
 }
 
 function newCatColumnHtml(kittyId) {
@@ -101,6 +92,19 @@ function newCatHtml(kittyId = "") {
     </div>
   `;
   return catHtml;
+}
+
+function renderCatColumn(kittyId, kittyGen, dnaString) {
+  // set cat CSS according to 'dnaString'
+  const dnaObject = getDnaFromString(dnaString);
+  renderCat(kittyId, dnaObject);
+
+  // set information about the cat below cat HTML
+  renderCatInfo(kittyId, kittyGen, dnaString);
+
+  // set border color according to number of cattributes
+  const awardClass = calcCattributesAward(kittyId, dnaObject);
+  $(`#catCol${kittyId} .catContainer`).addClass(awardClass);
 }
 
 function getDnaFromString(dnaString) {
