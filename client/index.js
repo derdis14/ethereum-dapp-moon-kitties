@@ -59,12 +59,14 @@ async function connectMetamask() {
   userAddress = accounts[0];
 
   if (accounts.length > 0) {
-    console.log("Connected MetaMask.");
+    console.log("MetaMask connected.");
     $("#connect-metamask-btn").hide();
   } else {
     // user canceled connection request
     return;
   }
+
+  $("#createKittyBtn").removeClass("disabled");
 
   // load contracts
   kittiesContract = new web3.eth.Contract(
@@ -169,17 +171,16 @@ async function createKitty() {
       .createKittyGen0(getDNAString())
       .send({ value: price });
   } catch (err) {
-    console.error(err);
-    onchainAlertMsgDanger();
+    onchainAlertMsgDanger(err);
   }
 }
 
-function onchainAlertMsgDanger() {
-  msgDetails =
-    userAddress === undefined
-      ? "Please connect MetaMask!"
-      : "See console log for details!";
-  onchainAlertMsg("danger", "Action failed.", msgDetails);
+function onchainAlertMsgDanger(error) {
+  if (error.message === undefined) {
+    console.error(error);
+  } else {
+    onchainAlertMsg("danger", "Action failed.", error.message);
+  }
 }
 
 function onchainAlertMsg(type, msgConcise, msgDetails) {
@@ -224,6 +225,10 @@ async function loadKitties(useTestKitties = false) {
   // clear 'userKitties'
   userKitties.length = 0;
   $("#kitties-collection").empty();
+
+  if (userAddress === undefined) {
+    return;
+  }
 
   if (useTestKitties) {
     userKitties = getTestKitties();
@@ -351,8 +356,7 @@ async function breedKitty() {
     $("#breedFemale").removeAttr("onclick");
     $("#breedMale").removeAttr("onclick");
   } catch (err) {
-    console.error(err);
-    onchainAlertMsgDanger();
+    onchainAlertMsgDanger(err);
   }
 }
 
@@ -403,8 +407,7 @@ async function sellKitty() {
 
     $("#sellBtn").addClass("disabled");
   } catch (err) {
-    console.error(err);
-    onchainAlertMsgDanger();
+    onchainAlertMsgDanger(err);
   }
 }
 
