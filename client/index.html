@@ -67,7 +67,7 @@
                 role="tablist"
               >
                 <button
-                  class="nav-link"
+                  class="nav-link active"
                   id="nav-home-tab"
                   data-bs-toggle="pill"
                   data-bs-target="#nav-home"
@@ -77,8 +77,8 @@
                   <b>Home</b>
                 </button>
                 <button
-                  onclick="showMyKittiesStartTab()"
-                  class="nav-link active"
+                  onclick="myKittiesTabClicked()"
+                  class="nav-link"
                   id="nav-my-kitties-tab"
                   data-bs-toggle="pill"
                   data-bs-target="#nav-my-kitties"
@@ -120,16 +120,14 @@
 
       <div class="tab-content">
         <!-- HOME PAGE -->
-        <div class="tab-pane fade" id="nav-home" role="tabpanel">
-          <p>Content Home</p>
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel">
+          <div class="container p-5 mt-5">
+            <p>Content Home</p>
+          </div>
         </div>
 
         <!-- MY KITTIES PAGE -->
-        <div
-          class="tab-pane fade show active"
-          id="nav-my-kitties"
-          role="tabpanel"
-        >
+        <div class="tab-pane fade" id="nav-my-kitties" role="tabpanel">
           <div class="container p-5 mt-5">
             <div align="center" class="mb-4">
               <h1>Kitties-Collection</h1>

@@ -153,9 +153,6 @@ async function connectMetamask() {
       }
     }
   );
-
-  // load kitties
-  await loadKitties();
 }
 
 async function createKitty() {
@@ -213,10 +210,14 @@ function showNavHomeTab() {
   tab.show();
 }
 
-function showMyKittiesStartTab() {
+function myKittiesTabClicked() {
+  // set active sub-tab
   const tabEl = document.querySelector("#nav-show-tab");
   const tab = new bootstrap.Tab(tabEl);
   tab.show();
+
+  // asynchronously load kitties of current user from blockchain
+  loadKitties();
 }
 
 async function loadKitties(useTestKitties = false) {
