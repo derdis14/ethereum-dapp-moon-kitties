@@ -229,16 +229,13 @@ function myKittiesTabClicked() {
 }
 
 async function loadKitties(useTestKitties = false) {
-  // clear 'userKitties'
-  userKitties.length = 0;
-  $("#kitties-collection").empty();
-
   if (userAddress === undefined) {
     return;
   }
 
+  const userKittiesBackend = [];
   if (useTestKitties) {
-    userKitties = getTestKitties();
+    userKittiesBackend = getTestKitties();
   } else {
     // get kitties from blockchain
     const totalTokens = parseInt(
@@ -249,14 +246,29 @@ async function loadKitties(useTestKitties = false) {
         .tokenOfOwnerByIndex(userAddress, i)
         .call();
       const kitty = await getKitty(tokenId);
-      userKitties.push(kitty);
+      userKittiesBackend.push(kitty);
     }
   }
 
-  // add kitties to user collection in 'My Kitties' tab
-  userKitties.forEach((kitty) => {
-    appendKittiesCollection(kitty.kittyId, kitty.generation, kitty.genes);
-  });
+  if (
+    userKitties.length !== userKittiesBackend.length ||
+    !userKitties.every(
+      (value, index) => value.kittyId === userKittiesBackend[index].kittyId
+    )
+  ) {
+    console.log("User kitties updated.");
+
+    // clear 'userKitties'
+    userKitties.length = 0;
+    $("#kitties-collection").empty();
+
+    // add kitties to user collection in 'My Kitties' tab
+    userKittiesBackend.forEach((kitty) => {
+      appendKittiesCollection(kitty.kittyId, kitty.generation, kitty.genes);
+    });
+
+    userKitties = userKittiesBackend;
+  }
 }
 
 async function getKitty(kittyId) {
