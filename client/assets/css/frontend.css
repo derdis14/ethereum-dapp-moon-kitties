@@ -99,6 +99,13 @@ body {
   padding-right: 0 !important;
 }
 
+.absoluteBelowNavbar {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  top: 106px;
+}
+
 @media (max-width: 992px) {
   /* #menu .fixed-top {
     position: absolute;
@@ -106,6 +113,10 @@ body {
 
   body {
     padding-top: 88px;
+  }
+
+  .absoluteBelowNavbar {
+    top: 88px;
   }
 
   #menu .nav-link {
