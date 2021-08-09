@@ -232,6 +232,20 @@ function showNavHomeTab() {
   tab.show();
 }
 
+function showNavMyKittiesTab() {
+  const tabEl = document.querySelector("#nav-my-kitties-tab");
+  const tab = new bootstrap.Tab(tabEl);
+  tab.show();
+
+  myKittiesTabClicked();
+}
+
+function showNavMarketplaceTab() {
+  const tabEl = document.querySelector("#nav-marketplace-tab");
+  const tab = new bootstrap.Tab(tabEl);
+  tab.show();
+}
+
 function myKittiesTabClicked() {
   // set active sub-tab
   const tabEl = document.querySelector("#nav-show-tab");

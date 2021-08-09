@@ -12,7 +12,6 @@ function newCatColumnHtml(kittyId) {
     <div id="catCol${kittyId}" class="col">
       <div
         class="card catCard bg-light text-dark"
-        style="width: 18rem"
       >
         <div class="catContainer">
           ${catHtml}

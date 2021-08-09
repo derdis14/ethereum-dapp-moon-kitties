@@ -165,6 +165,10 @@ footer {
   border-color: #a7a7ad;
 }
 
+.catCard {
+  width: 18rem;
+}
+
 .card {
   margin: auto;
 }
@@ -182,6 +186,25 @@ footer {
 .catBackground.paw {
   background-image: url("../img/paw.svg");
   background-size: 30%;
+}
+
+.moonlightImg {
+  width: 100%;
+}
+
+.featureCard {
+  max-width: 300px;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  transition: 0.5s ease-in-out;
+}
+
+.featureCard:hover {
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+}
+
+.featureCardImg {
+  height: 100px;
 }
 
 /* BUTTONS */
