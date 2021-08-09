@@ -155,6 +155,13 @@ async function connectMetamask() {
       }
     }
   );
+
+  const currentNavbarTab = $("#menu .nav-link.active").attr("id");
+  if (currentNavbarTab == "nav-my-kitties-tab") {
+    await loadKitties();
+  } else if (currentNavbarTab == "nav-marketplace-tab") {
+    await loadMarketplace();
+  }
 }
 
 async function createKitty() {
