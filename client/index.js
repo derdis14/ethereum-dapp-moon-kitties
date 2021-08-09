@@ -1,8 +1,8 @@
 const web3 = new Web3(Web3.givenProvider);
 
-const KITTIES_CONTRACT_ADDRESS = "0x9960d9D641f59D10914103DE046D3c08117885b2";
+const KITTIES_CONTRACT_ADDRESS = "0xab257ca9F96192CFc33AcD15C81491E8Bf4c7E49";
 const KITTY_MARKETPLACE_CONTRACT_ADDRESS =
-  "0x9332d963B6149E15B74090319e91E8951D2fF272";
+  "0x45fb0F5741d714FB017905438FaacEda781579Ef";
 
 let userAddress = undefined;
 let kittiesContract;
@@ -101,7 +101,7 @@ async function connectMetamask() {
       const transactionHash = event.transactionHash;
       onchainAlertMsg(
         "success",
-        "New kitty born.",
+        "Kitty born.",
         `kittyId: ${kittyId}, mumId: ${mumId}, dadId: ${dadId}, genes: ${genes}, owner: ${owner},
         transactionHash: ${transactionHash}`
       );
@@ -132,14 +132,16 @@ async function connectMetamask() {
         return;
       }
 
+      const txType = event.returnValues.txType;
+      const tokenId = event.returnValues.tokenId;
+      const transactionHash = event.transactionHash;
+
       if (
+        txType == "Remove offer" ||
         isDuplicatedContractEvent("MarketTransaction", event.transactionHash)
       ) {
         return;
       }
-
-      const txType = event.returnValues.txType;
-      const tokenId = event.returnValues.tokenId;
 
       if (txType == "Create offer") {
         const priceWei = (
@@ -149,8 +151,20 @@ async function connectMetamask() {
 
         onchainAlertMsg(
           "success",
-          "Sell offer created.",
-          `kittyId: ${tokenId} price: ${priceEther} ETH`
+          "Sales offer created.",
+          `kittyId: ${tokenId}, price: ${priceEther} ETH, transactionHash: ${transactionHash}`
+        );
+      } else if (txType == "Cancel offer") {
+        onchainAlertMsg(
+          "success",
+          "Sales offer canceled.",
+          `kittyId: ${tokenId}, transactionHash: ${transactionHash}`
+        );
+      } else if (txType == "Buy") {
+        onchainAlertMsg(
+          "success",
+          "Kitty bought.",
+          `kittyId: ${tokenId}, transactionHash: ${transactionHash}`
         );
       }
     }
@@ -512,4 +526,31 @@ async function appendMarketplaceCollection(seller, priceEther, kittyId) {
       kitty.genes
     );
   }
+}
 
+async function cancelKittyOffer(kittyId) {
+  $("#onchain-alert").empty();
+
+  try {
+    const res = await marketplaceContract.methods.removeOffer(kittyId).send();
+
+    removeMarketplaceKitty(kittyId);
+  } catch (err) {
+    onchainAlertMsgDanger(err);
+  }
+}
+
+async function buyKitty(kittyId, priceEther) {
+  $("#onchain-alert").empty();
+  const priceWei = web3.utils.toWei(String(priceEther), "ether");
+
+  try {
+    const res = await marketplaceContract.methods
+      .buyKitty(kittyId)
+      .send({ value: priceWei });
+
+    removeMarketplaceKitty(kittyId);
+  } catch (err) {
+    onchainAlertMsgDanger(err);
+  }
+}
