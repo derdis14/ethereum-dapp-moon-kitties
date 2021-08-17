@@ -22,9 +22,10 @@
   "homepage": "https://github.com/derdis14/ethereum-dapp-crypto-kitties#readme",
   "dependencies": {
     "@openzeppelin/contracts": "^4.2.0",
-    "@truffle/hdwallet-provider": "^1.4.1"
+    "@truffle/hdwallet-provider": "^1.4.3"
   },
   "devDependencies": {
+    "dotenv": "^10.0.0",
     "prettier-plugin-solidity": "^1.0.0-beta.15"
   }
 }
