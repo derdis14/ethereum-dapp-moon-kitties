@@ -393,19 +393,20 @@ async function breedKitty() {
   const breedMumId = $("#breedFemale ~ * .catId").html();
   const breedDadId = $("#breedMale ~ * .catId").html();
 
+  // freeze interface after sent transaction while waiting for the on-chain event
+  $("#breedBtn").addClass("disabled");
+  $("#breedFemale").removeClass("pointer");
+  $("#breedMale").removeClass("pointer");
+  $("#breedFemale").removeAttr("data-bs-toggle");
+  $("#breedMale").removeAttr("data-bs-toggle");
+  $("#breedFemale").removeAttr("onclick");
+  $("#breedMale").removeAttr("onclick");
+
   try {
     const breedCost = await kittiesContract.methods.breedCost().call();
     const res = await kittiesContract.methods
       .breed(breedMumId, breedDadId)
       .send({ value: breedCost });
-
-    $("#breedBtn").addClass("disabled");
-    $("#breedFemale").removeClass("pointer");
-    $("#breedMale").removeClass("pointer");
-    $("#breedFemale").removeAttr("data-bs-toggle");
-    $("#breedMale").removeAttr("data-bs-toggle");
-    $("#breedFemale").removeAttr("onclick");
-    $("#breedMale").removeAttr("onclick");
   } catch (err) {
     onchainAlertMsgDanger(err);
   }
@@ -433,6 +434,13 @@ async function sellKitty() {
   }
   const priceWeiStr = web3.utils.toWei(String(price), "ether");
 
+  // freeze interface after sent transaction while waiting for the on-chain event
+  $("#sellPrice").attr("disabled", "");
+  $("#sellBtn").addClass("disabled");
+  $("#sellCat").removeClass("pointer");
+  $("#sellCat").removeAttr("data-bs-toggle");
+  $("#sellCat").removeAttr("onclick");
+
   try {
     const marketplaceIsOperator = await kittiesContract.methods
       .isApprovedForAll(userAddress, KITTY_MARKETPLACE_CONTRACT_ADDRESS)
@@ -455,8 +463,6 @@ async function sellKitty() {
     const res = await marketplaceContract.methods
       .setOffer(priceWeiStr, tokenId)
       .send();
-
-    $("#sellBtn").addClass("disabled");
   } catch (err) {
     onchainAlertMsgDanger(err);
   }

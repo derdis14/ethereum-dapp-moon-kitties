@@ -73,6 +73,7 @@ function resetSell() {
   $("#sellCat").removeClass("silverBorder goldBorder");
 
   $("#sellBtn").addClass("disabled");
+  $("#sellPrice").removeAttr("disabled");
 
   $("#sellCat").addClass("pointer");
   $("#sellCat").attr("data-bs-toggle", "modal");
