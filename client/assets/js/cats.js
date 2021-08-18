@@ -150,10 +150,13 @@ function calcCattributesAward(kittyId, dnaObject) {
     dnaObject.decoration1 != "0" &&
     dnaObject.decoration2 != "0" &&
     dnaObject.decoration3 != "0" &&
-    dnaObject.animationCat != "0"
+    (dnaObject.animationCat != "0" || dnaObject.animationDecorations != "0")
   ) {
     awardClass = "silverBorder";
-    if (dnaObject.animationDecorations != "0") {
+    if (
+      dnaObject.animationCat != "0" &&
+      dnaObject.animationDecorations != "0"
+    ) {
       awardClass = "goldBorder";
     }
   }
