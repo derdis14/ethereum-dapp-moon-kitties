@@ -78,7 +78,7 @@ function newMarketplaceActionHtml(
     </div>
     <div class="row-cols-2 p-2 rounded d-flex align-items-center">
       <div class="col text-${color} fw-bold">
-        <span>${priceEther} ETH</span>
+        <span class="offerPrice">${priceEther}</span> ETH
       </div>
       <button
         type="button"

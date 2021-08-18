@@ -148,16 +148,31 @@ async function connectMetamask() {
       }
 
       if (txType == "Create offer") {
-        const priceWei = (
-          await marketplaceContract.methods.getOffer(tokenId).call()
-        ).price;
-        const priceEther = web3.utils.fromWei(priceWei, "ether");
+        const offer = await marketplaceContract.methods
+          .getOffer(tokenId)
+          .call();
 
+        const priceEther = web3.utils.fromWei(offer.price, "ether");
         onchainAlertMsg(
           "success",
           "Sales offer created.",
           `kittyId: ${tokenId}, price: ${priceEther} ETH, transactionHash: ${transactionHash}`
         );
+
+        const currentNavbarTab = $("#menu .nav-link.active").attr("id");
+        if (currentNavbarTab == "nav-marketplace-tab") {
+          // update marketplace
+          const kittyEl = $("#marketplace-collection #catCol" + tokenId);
+          if (kittyEl.length != 0) {
+            kittyEl.find("span.offerPrice").html(priceEther);
+          } else {
+            await appendMarketplaceCollection(
+              offer.seller,
+              priceEther,
+              tokenId
+            );
+          }
+        }
       } else if (txType == "Cancel offer") {
         onchainAlertMsg(
           "success",
