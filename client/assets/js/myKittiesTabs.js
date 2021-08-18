@@ -70,8 +70,7 @@ function resetSell() {
   $("#sellPrice").val("");
 
   $("#sellCat + .card-body").html(EMPTY_CARD_BODY);
-  $("#breedFemale").removeClass("silverBorder goldBorder");
-  $("#breedMale").removeClass("silverBorder goldBorder");
+  $("#sellCat").removeClass("silverBorder goldBorder");
 
   $("#sellBtn").addClass("disabled");
 
