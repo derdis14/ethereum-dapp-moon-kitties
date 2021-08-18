@@ -51,7 +51,7 @@ function newMarketplaceActionHtml(
     color = "secondary";
   }
 
-  const ownerTrimmed = owner.slice(0, 6) + "..." + owner.slice(-4);
+  const ownerTrimmed = owner.slice(0, 5) + "..." + owner.slice(-3);
 
   const html = `
     <div

@@ -102,8 +102,8 @@ async function connectMetamask() {
       onchainAlertMsg(
         "success",
         "Kitty born.",
-        `kittyId: ${kittyId}, mumId: ${mumId}, dadId: ${dadId}, genes: ${genes}, owner: ${owner},
-        transactionHash: ${transactionHash}`
+        `kittyId: ${kittyId}, mumId: ${mumId}, dadId: ${dadId}, genes: ${genes}, owner: ${owner},`,
+        transactionHash
       );
 
       // update 'userKitties'
@@ -156,7 +156,8 @@ async function connectMetamask() {
         onchainAlertMsg(
           "success",
           "Sales offer created.",
-          `kittyId: ${tokenId}, price: ${priceEther} ETH, transactionHash: ${transactionHash}`
+          `kittyId: ${tokenId}, price: ${priceEther} ETH,`,
+          transactionHash
         );
 
         const currentNavbarTab = $("#menu .nav-link.active").attr("id");
@@ -177,13 +178,15 @@ async function connectMetamask() {
         onchainAlertMsg(
           "success",
           "Sales offer canceled.",
-          `kittyId: ${tokenId}, transactionHash: ${transactionHash}`
+          `kittyId: ${tokenId},`,
+          transactionHash
         );
       } else if (txType == "Buy") {
         onchainAlertMsg(
           "success",
           "Kitty bought.",
-          `kittyId: ${tokenId}, transactionHash: ${transactionHash}`
+          `kittyId: ${tokenId},`,
+          transactionHash
         );
       }
     }
@@ -223,13 +226,31 @@ function onchainAlertMsgDanger(error) {
   }
 }
 
-function onchainAlertMsg(type, msgConcise, msgDetails) {
+function onchainAlertMsg(type, msgConcise, msgDetails, txHash = "") {
+  let txHashMsg = "";
+  if (txHash.length > 0) {
+    const txHashTrimmed = txHash.slice(0, 5) + "..." + txHash.slice(-3);
+    txHashMsg = `
+    transactionHash:
+    <a
+      class="alert-link"
+      href="https://ropsten.etherscan.io/tx/${txHash}"
+      target="_blank"
+      rel="noopener noreferrer"
+      >
+      ${txHashTrimmed}
+    </a>
+    `;
+  }
+
   const alertHtml = `
     <div
     class="alert alert-${type} alert-dismissible fade show text-start"
     role="alert"
     >
-    <strong>${msgConcise}</strong> ${msgDetails}
+    <strong>${msgConcise}</strong>
+    ${msgDetails}
+    ${txHashMsg}
     <button
       type="button"
       class="btn-close"
@@ -462,12 +483,24 @@ async function sellKitty() {
       .call();
 
     if (!marketplaceIsOperator) {
+      const contractLink = `
+        <a
+          class="alert-link"
+          href="https://ropsten.etherscan.io/address/${KITTY_MARKETPLACE_CONTRACT_ADDRESS}"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="font-size: 0px;"
+          >
+          <span class="fs-6">Moon-Kitties marketplace smart contract</span>
+        </a>
+      `;
+
       onchainAlertMsg(
-        "info",
+        "warning",
         "Operator status requested.",
-        `In order to offer any of your kitties for sale on-chain,
-        you must first approve the marketplace smart contract as operator for you.
-        The address of that contract is: ${KITTY_MARKETPLACE_CONTRACT_ADDRESS}`
+        `In order to create any sales offers on-chain,
+        you must first approve the ${contractLink}
+        &nbsp;as operator for your Moon-Kitties NFTs.`
       );
       const res = await kittiesContract.methods
         .setApprovalForAll(KITTY_MARKETPLACE_CONTRACT_ADDRESS, "true")
