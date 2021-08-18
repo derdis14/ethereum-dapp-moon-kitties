@@ -112,10 +112,14 @@ async function connectMetamask() {
       // update 'My Kitties' tab
       appendKittiesCollection(kitty.kittyId, kitty.generation, kitty.genes);
 
-      // update 'Breed' tab if currently visible
+      // update 'Breed' tab if currently visible and unchanged
+      const breedMumId = $("#breedFemale ~ * .catId").html();
+      const breedDadId = $("#breedMale ~ * .catId").html();
       if (
         $("#nav-breed-tab").hasClass("active") &&
-        $("#nav-my-kitties-tab").hasClass("active")
+        $("#nav-my-kitties-tab").hasClass("active") &&
+        breedMumId == mumId &&
+        breedDadId == dadId
       ) {
         $("#catCol" + kitty.kittyId)
           .clone()
