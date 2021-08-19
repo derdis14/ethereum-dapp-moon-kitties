@@ -6,6 +6,14 @@ const EMPTY_CARD_BODY = `
 `;
 
 $(document).ready(function () {
+  // reset sub-tabs before showing a new sub-tab
+  const myKittiesMenu = document.getElementById("menu-my-kitties");
+  myKittiesMenu.addEventListener("hidden.bs.tab", function (event) {
+    resetBreed();
+    resetSell();
+  });
+
+  // remove modal content on modal close
   const selectCatModal = document.getElementById("selectCatModal");
   selectCatModal.addEventListener("hidden.bs.modal", function (event) {
     $("#select-cat-collection").empty();

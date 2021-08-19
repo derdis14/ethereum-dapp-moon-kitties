@@ -22,11 +22,11 @@ $(document).ready(function () {
       $(".navbar-toggler").click();
     }
   });
-  // reset tabs before showing a new tab
-  const myKittiesMenu = document.getElementById("menu-my-kitties");
-  myKittiesMenu.addEventListener("hidden.bs.tab", function (event) {
-    resetBreed();
-    resetSell();
+
+  // close alert box on menu tab change
+  const menu = document.getElementById("menu");
+  menu.addEventListener("hide.bs.tab", function (event) {
+    $("#onchain-alert").empty();
   });
 
   // set up MetaMask event listeners
@@ -92,7 +92,7 @@ async function connectMetamask() {
     { filter: { owner: userAddress }, fromBlock: "latest" },
     async (error, event) => {
       if (error) {
-        console.warn(error);
+        onchainAlertMsgDanger(error);
         return;
       }
 
@@ -139,7 +139,7 @@ async function connectMetamask() {
     { filter: { caller: userAddress }, fromBlock: "latest" },
     async (error, event) => {
       if (error) {
-        console.warn(error);
+        onchainAlertMsgDanger(error);
         return;
       }
 
@@ -155,9 +155,13 @@ async function connectMetamask() {
       }
 
       if (txType == "Create offer") {
-        const offer = await marketplaceContract.methods
-          .getOffer(tokenId)
-          .call();
+        let offer;
+        try {
+          offer = await marketplaceContract.methods.getOffer(tokenId).call();
+        } catch (err) {
+          onchainAlertMsgDanger(err);
+          return;
+        }
 
         const priceEther = web3.utils.fromWei(offer.price, "ether");
         onchainAlertMsg(
@@ -195,6 +199,12 @@ async function connectMetamask() {
           `kittyId: ${tokenId},`,
           transactionHash
         );
+      } else {
+        console.warn(
+          "Unhandled MarketTransaction event with 'txType' =",
+          txType
+        );
+        $("#onchain-alert").empty();
       }
     }
   );
@@ -208,9 +218,9 @@ async function connectMetamask() {
 }
 
 async function createKitty() {
-  $("#onchain-alert").empty();
-
   try {
+    onchainAlertMsgPending();
+
     let price = "0";
     const owner = await kittiesContract.methods.owner().call();
     if (owner.toLowerCase() !== userAddress.toLowerCase()) {
@@ -223,6 +233,17 @@ async function createKitty() {
   } catch (err) {
     onchainAlertMsgDanger(err);
   }
+}
+
+function onchainAlertMsgPending() {
+  const msgConcise = `
+    <div class="spinner-border spinner-border-sm text-dark" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  `;
+  const msgDetails = "Pending ...";
+
+  onchainAlertMsg("dark", msgConcise, msgDetails);
 }
 
 function onchainAlertMsgDanger(error) {
@@ -308,20 +329,27 @@ async function loadKitties(useTestKitties = false) {
     return;
   }
 
+  onchainAlertMsgPending();
+
   const userKittiesBackend = [];
   if (useTestKitties) {
     userKittiesBackend = getTestKitties();
   } else {
     // get kitties from blockchain
-    const totalTokens = parseInt(
-      await kittiesContract.methods.balanceOf(userAddress).call()
-    );
-    for (let i = 0; i < totalTokens; i++) {
-      const tokenId = await kittiesContract.methods
-        .tokenOfOwnerByIndex(userAddress, i)
-        .call();
-      const kitty = await getKitty(tokenId);
-      userKittiesBackend.push(kitty);
+    try {
+      const totalTokens = parseInt(
+        await kittiesContract.methods.balanceOf(userAddress).call()
+      );
+      for (let i = 0; i < totalTokens; i++) {
+        const tokenId = await kittiesContract.methods
+          .tokenOfOwnerByIndex(userAddress, i)
+          .call();
+        const kitty = await getKitty(tokenId);
+        userKittiesBackend.push(kitty);
+      }
+    } catch (err) {
+      onchainAlertMsgDanger(err);
+      return;
     }
   }
 
@@ -331,8 +359,6 @@ async function loadKitties(useTestKitties = false) {
       (value, index) => value.kittyId === userKittiesBackend[index].kittyId
     )
   ) {
-    console.log("User kitties updated.");
-
     // clear 'userKitties'
     userKitties.length = 0;
     $("#kitties-collection").empty();
@@ -343,20 +369,28 @@ async function loadKitties(useTestKitties = false) {
     });
 
     userKitties = userKittiesBackend;
+
+    console.log("User kitties updated.");
   }
+
+  $("#onchain-alert").empty();
 }
 
 async function getKitty(kittyId) {
-  const token = await kittiesContract.methods.getKitty(kittyId).call();
-  const kitty = new Kitty(
-    kittyId,
-    token.genes,
-    token.birthTime,
-    token.mumId,
-    token.dadId,
-    token.generation
-  );
-  return kitty;
+  try {
+    const token = await kittiesContract.methods.getKitty(kittyId).call();
+    const kitty = new Kitty(
+      kittyId,
+      token.genes,
+      token.birthTime,
+      token.mumId,
+      token.dadId,
+      token.generation
+    );
+    return kitty;
+  } catch (err) {
+    onchainAlertMsgDanger(err);
+  }
 }
 
 function getTestKitties() {
@@ -432,7 +466,6 @@ function renderSelectedCatCol(domId, kittyId) {
 }
 
 async function breedKitty() {
-  $("#onchain-alert").empty();
   const breedMumId = $("#breedFemale ~ * .catId").html();
   const breedDadId = $("#breedMale ~ * .catId").html();
 
@@ -446,6 +479,8 @@ async function breedKitty() {
   $("#breedMale").removeAttr("onclick");
 
   try {
+    onchainAlertMsgPending();
+
     const breedCost = await kittiesContract.methods.breedCost().call();
     const res = await kittiesContract.methods
       .breed(breedMumId, breedDadId)
@@ -467,7 +502,6 @@ function selectForSale(domId, kittyId) {
 }
 
 async function sellKitty() {
-  $("#onchain-alert").empty();
   const tokenId = $("#sellCat ~ * .catId").html();
   const priceStr = $("#sellPrice").val();
   const price = parseFloat(priceStr);
@@ -485,6 +519,8 @@ async function sellKitty() {
   $("#sellCat").removeAttr("onclick");
 
   try {
+    onchainAlertMsgPending();
+
     const marketplaceIsOperator = await kittiesContract.methods
       .isApprovedForAll(userAddress, KITTY_MARKETPLACE_CONTRACT_ADDRESS)
       .call();
@@ -512,9 +548,9 @@ async function sellKitty() {
       const res = await kittiesContract.methods
         .setApprovalForAll(KITTY_MARKETPLACE_CONTRACT_ADDRESS, "true")
         .send();
-      $("#onchain-alert").empty();
     }
 
+    onchainAlertMsgPending();
     const res = await marketplaceContract.methods
       .setOffer(priceWeiStr, tokenId)
       .send();
@@ -557,6 +593,8 @@ async function loadMarketplace() {
     return;
   }
 
+  onchainAlertMsgPending();
+
   const marketplaceOffers = [];
   try {
     const offeredTokenIds = await marketplaceContract.methods
@@ -574,6 +612,7 @@ async function loadMarketplace() {
     }
   } catch (err) {
     onchainAlertMsgDanger(err);
+    return;
   }
 
   for (offer of marketplaceOffers) {
@@ -585,6 +624,8 @@ async function loadMarketplace() {
       "<p class='text-light'>Currently, there are no kitties for sale ...</p>"
     );
   }
+
+  $("#onchain-alert").empty();
 }
 
 async function appendMarketplaceCollection(seller, priceEther, kittyId) {
@@ -608,9 +649,9 @@ async function appendMarketplaceCollection(seller, priceEther, kittyId) {
 }
 
 async function cancelKittyOffer(kittyId) {
-  $("#onchain-alert").empty();
-
   try {
+    onchainAlertMsgPending();
+
     const res = await marketplaceContract.methods.removeOffer(kittyId).send();
 
     removeMarketplaceKitty(kittyId);
@@ -620,10 +661,11 @@ async function cancelKittyOffer(kittyId) {
 }
 
 async function buyKitty(kittyId, priceEther) {
-  $("#onchain-alert").empty();
   const priceWei = web3.utils.toWei(String(priceEther), "ether");
 
   try {
+    onchainAlertMsgPending();
+
     const res = await marketplaceContract.methods
       .buyKitty(kittyId)
       .send({ value: priceWei });
