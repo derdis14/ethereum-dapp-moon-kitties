@@ -29,20 +29,27 @@ $(document).ready(function () {
     resetSell();
   });
 
-  // set up MetaMask event listener
+  // set up MetaMask event listeners
   if (typeof window.ethereum !== "undefined") {
     console.log("MetaMask is installed.");
+
     ethereum.on("accountsChanged", function (accounts) {
-      if (userAddress !== undefined) {
-        //alert("MetaMask account changed. Website will reload.");
-        // reload website
-        window.location.reload();
-      }
+      restartApp();
+    });
+    ethereum.on("chainChanged", function (accounts) {
+      restartApp();
     });
   } else {
     console.error("MetaMask is inaccessible.");
   }
 });
+
+function restartApp() {
+  if (userAddress !== undefined) {
+    // reload website
+    window.location.reload();
+  }
+}
 
 async function connectMetamask() {
   if (typeof window.ethereum === "undefined") {
