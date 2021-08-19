@@ -99,6 +99,7 @@
                   <b>Marketplace</b>
                 </button>
                 <button
+                  onclick="updateGen0Count()"
                   class="nav-link"
                   id="nav-factory-tab"
                   data-bs-toggle="pill"
@@ -447,7 +448,10 @@
               <p>
                 Design and create your very own gen-0 kitty NFT
                 <br />
-                (Only 210 will ever be created)
+                <span id="gen0CountText" class="hidden">
+                  (<span id="gen0Count">?</span> out of a total of 210
+                  minted)</span
+                >
               </p>
             </div>
             <div class="row justify-content-center mt-5">

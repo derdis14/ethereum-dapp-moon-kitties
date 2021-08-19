@@ -73,8 +73,6 @@ async function connectMetamask() {
     return;
   }
 
-  $("#createKittyBtn").removeClass("disabled");
-
   // load contracts
   kittiesContract = new web3.eth.Contract(
     abi.Kitties,
@@ -209,11 +207,17 @@ async function connectMetamask() {
     }
   );
 
+  $("#createKittyBtn").removeClass("disabled");
+  $("#gen0CountText").removeClass("hidden");
+  await updateGen0Count();
+
   const currentNavbarTab = $("#menu .nav-link.active").attr("id");
   if (currentNavbarTab == "nav-my-kitties-tab") {
     await loadKitties();
   } else if (currentNavbarTab == "nav-marketplace-tab") {
     await loadMarketplace();
+  } else if (currentNavbarTab == "nav-factory-tab") {
+    await updateGen0Count();
   }
 }
 
@@ -230,6 +234,8 @@ async function createKitty() {
     const res = await kittiesContract.methods
       .createKittyGen0(getDNAString())
       .send({ value: price });
+
+    await updateGen0Count();
   } catch (err) {
     onchainAlertMsgDanger(err);
   }
@@ -672,6 +678,19 @@ async function buyKitty(kittyId, priceEther) {
       .send({ value: priceWei });
 
     removeMarketplaceKitty(kittyId);
+  } catch (err) {
+    onchainAlertMsgDanger(err);
+  }
+}
+
+async function updateGen0Count() {
+  if (userAddress === undefined) {
+    return;
+  }
+
+  try {
+    const count = await kittiesContract.methods.countKittiesGen0().call();
+    $("#gen0Count").html(count);
   } catch (err) {
     onchainAlertMsgDanger(err);
   }
