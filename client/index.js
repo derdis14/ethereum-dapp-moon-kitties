@@ -300,28 +300,29 @@ function showNavHomeTab() {
   tab.show();
 }
 
-function showNavMyKittiesTab() {
+async function showNavMyKittiesTab() {
   const tabEl = document.querySelector("#nav-my-kitties-tab");
   const tab = new bootstrap.Tab(tabEl);
   tab.show();
 
-  myKittiesTabClicked();
+  await myKittiesTabClicked();
 }
 
-function showNavMarketplaceTab() {
+async function showNavMarketplaceTab() {
   const tabEl = document.querySelector("#nav-marketplace-tab");
   const tab = new bootstrap.Tab(tabEl);
   tab.show();
+
+  await loadMarketplace();
 }
 
-function myKittiesTabClicked() {
+async function myKittiesTabClicked() {
   // set active sub-tab
   const tabEl = document.querySelector("#nav-show-tab");
   const tab = new bootstrap.Tab(tabEl);
   tab.show();
 
-  // asynchronously load kitties of current user from blockchain
-  loadKitties();
+  await loadKitties();
 }
 
 async function loadKitties(useTestKitties = false) {
