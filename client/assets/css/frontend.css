@@ -122,6 +122,12 @@ body {
   #menu .nav-link {
     padding: 8px 0;
   }
+
+  .catCard,
+  .centerBelowBreakpointLg {
+    margin-left: 50% !important;
+    transform: translateX(-50%);
+  }
 }
 
 .topBar {
