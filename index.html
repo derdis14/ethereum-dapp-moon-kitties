@@ -1,0 +1,755 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Moon-Kitties DApp</title>
+    <!-- https://freesvg.org/1402164743 -->
+    <link href="favicon.ico" rel="icon" type="image/x-icon" />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <script src="assets/js/web3.min.js">
+      /* v1.4.0 */
+    </script>
+    <script src="assets/js/abis.js"></script>
+
+    <link rel="stylesheet" href="assets/css/mystyle.css" />
+    <link rel="stylesheet" href="assets/css/cats.css" />
+    <link rel="stylesheet" href="assets/css/animations.css" />
+    <link rel="stylesheet" href="assets/css/factory.css" />
+    <link rel="stylesheet" href="assets/css/frontend.css" />
+  </head>
+
+  <body>
+    <div id="menu">
+      <nav class="navbar navbar-expand-lg fixed-top p-4 navbar-dark bg-dark">
+        <div class="container">
+          <a class="navbar-brand" type="button" onclick="showNavHomeTab()"
+            >Moon-Kitties</a
+          >
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNavAltMarkup"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div
+            class="collapse navbar-collapse"
+            id="navbarNavAltMarkup"
+            role="tablist"
+          >
+            <div class="navbar-nav ms-auto">
+              <div
+                class="
+                  nav nav-pills
+                  align-items-end
+                  flex-column flex-lg-row
+                  mt-3 mt-lg-0
+                "
+                id="nav-tab"
+                role="tablist"
+              >
+                <button
+                  class="nav-link active"
+                  id="nav-home-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#nav-home"
+                  type="button"
+                  role="tab"
+                >
+                  <b>Home</b>
+                </button>
+                <button
+                  onclick="myKittiesTabClicked()"
+                  class="nav-link"
+                  id="nav-my-kitties-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#nav-my-kitties"
+                  type="button"
+                  role="tab"
+                >
+                  <b>My Kitties</b>
+                </button>
+                <button
+                  onclick="loadMarketplace()"
+                  class="nav-link"
+                  id="nav-marketplace-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#nav-marketplace"
+                  type="button"
+                  role="tab"
+                >
+                  <b>Marketplace</b>
+                </button>
+                <button
+                  onclick="updateGen0Count()"
+                  class="nav-link"
+                  id="nav-factory-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#nav-factory"
+                  type="button"
+                  role="tab"
+                >
+                  <b>Factory</b>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <main class="text-light">
+      <div class="absoluteBelowNavbar container">
+        <button
+          id="connect-metamask-btn"
+          type="button"
+          class="btn btn-primary light-b-shadow topBar"
+          onclick="connectMetamask()"
+        >
+          <div class="lead">Enter Web 3.0</div>
+        </button>
+        <!-- On-chain Alert Message -->
+        <div id="onchain-alert" class="topBar"></div>
+      </div>
+
+      <div class="tab-content">
+        <!-- HOME PAGE -->
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel">
+          <div class="container p-5 mt-5">
+            <div align="center" class="mb-2">
+              <h1>Portal for the Moon-Kitties NFTs</h1>
+            </div>
+            <img
+              src="./assets/img/undraw_moonlight_5ksn_bs-colors_default-kitty.svg"
+              alt="moonlight scenery"
+              class="moonlightImg mt-5"
+              draggable="false"
+            />
+            <div align="center" class="mt-5 mb-4">
+              <h2>Features</h2>
+            </div>
+            <div align="center">
+              <div
+                class="d-flex flex-column flex-lg-row justify-content-center"
+              >
+                <div class="m-4 mt-0">
+                  <div
+                    class="card featureCard h-100 bg-dark"
+                    onclick="showNavMyKittiesTab()"
+                  >
+                    <div class="featureCardImg m-4 mb-0">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="100%"
+                        height="100%"
+                        fill="currentColor"
+                        class="bi bi-heart-fill"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
+                        />
+                      </svg>
+                    </div>
+                    <div class="card-body p-4">
+                      <h5 class="card-title">Collect & Breed</h5>
+                      <p class="card-text">
+                        Collect kitty NFTs with unique traits and combine two
+                        kitties to breed a new one
+                      </p>
+                      <p>What traits will you unlock?</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="m-4 mt-0">
+                  <div
+                    class="card featureCard h-100 bg-dark"
+                    onclick="showNavMarketplaceTab()"
+                  >
+                    <div class="featureCardImg m-4 mb-0">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="100%"
+                        height="100%"
+                        fill="currentColor"
+                        class="bi bi-currency-dollar"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718H4zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73l.348.086z"
+                        />
+                      </svg>
+                    </div>
+                    <div class="card-body p-4">
+                      <h5 class="card-title">Trade</h5>
+                      <p class="card-text">
+                        Buy or sell kitty NFTs in a non-custodial marketplace
+                        using cryptocurrency (ETH)
+                      </p>
+                      <p>Will you make a bargain?</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MY KITTIES PAGE -->
+        <div class="tab-pane fade" id="nav-my-kitties" role="tabpanel">
+          <div class="container p-5 mt-5">
+            <div align="center" class="mb-4">
+              <h1>Kitties-Collection</h1>
+              <p>Interact with your kitty NFTs</p>
+            </div>
+            <div align="center" class="text-dark mt-5">
+              <nav id="menu-my-kitties" class="pt-2">
+                <div
+                  class="nav nav-tabs justify-content-center"
+                  id="nav-tab"
+                  role="tablist"
+                >
+                  <button
+                    class="nav-link active"
+                    id="nav-show-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-show"
+                    type="button"
+                    role="tab"
+                  >
+                    <b>Show</b>
+                  </button>
+                  <button
+                    class="nav-link"
+                    id="nav-breed-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-breed"
+                    type="button"
+                    role="tab"
+                  >
+                    <b>Breed</b>
+                  </button>
+                  <button
+                    class="nav-link"
+                    id="nav-sell-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-sell"
+                    type="button"
+                    role="tab"
+                  >
+                    <b>Sell</b>
+                  </button>
+                </div>
+              </nav>
+              <div class="tab-content">
+                <!-- Show -->
+                <div
+                  class="tab-pane fade active show"
+                  id="nav-show"
+                  role="tabpanel"
+                >
+                  <div
+                    id="kitties-collection"
+                    class="row g-5 justify-content-center m-2"
+                  ></div>
+                </div>
+                <!-- Breed -->
+                <div class="tab-pane fade" id="nav-breed" role="tabpanel">
+                  <div class="row g-5 justify-content-center m-2">
+                    <div class="col">
+                      <div
+                        class="card catCard bg-light text-dark"
+                        style="width: 18rem"
+                      >
+                        <div
+                          id="breedFemale"
+                          class="catContainer catBackground paw pointer"
+                          data-bs-toggle="modal"
+                          data-bs-target="#selectCatModal"
+                          onclick="fillSelectCatModal(this.id)"
+                        ></div>
+                        <div class="card-body">
+                          ID: <span class="catId"></span> GEN:
+                          <span class="catGen"></span>
+                          <br />
+                          DNA: <span class="catDna"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div
+                        class="card catCard bg-light text-dark"
+                        style="width: 18rem"
+                      >
+                        <div
+                          id="breedMale"
+                          class="catContainer catBackground paw pointer"
+                          data-bs-toggle="modal"
+                          data-bs-target="#selectCatModal"
+                          onclick="fillSelectCatModal(this.id)"
+                        ></div>
+                        <div class="card-body">
+                          ID: <span class="catId"></span> GEN:
+                          <span class="catGen"></span>
+                          <br />
+                          DNA: <span class="catDna"></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row g-5 justify-content-center m-2">
+                    <div class="col d-flex justify-content-center">
+                      <button
+                        type="button"
+                        class="btn btn-secondary light-b-shadow m-2"
+                        onclick="resetBreed()"
+                      >
+                        <b>Reset</b>
+                      </button>
+                      <button
+                        id="breedBtn"
+                        type="button"
+                        class="btn btn-primary light-b-shadow m-2 disabled"
+                        onclick="breedKitty()"
+                      >
+                        <b>Breed</b>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <!-- Sell -->
+                <div class="tab-pane fade" id="nav-sell" role="tabpanel">
+                  <div class="row g-5 justify-content-center m-2 mb-0">
+                    <div class="col">
+                      <div
+                        class="card catCard bg-light text-dark"
+                        style="width: 18rem"
+                      >
+                        <div
+                          id="sellCat"
+                          class="catContainer catBackground paw pointer"
+                          data-bs-toggle="modal"
+                          data-bs-target="#selectCatModal"
+                          onclick="fillSelectCatModal(this.id)"
+                        ></div>
+                        <div class="card-body">
+                          ID: <span class="catId"></span> GEN:
+                          <span class="catGen"></span>
+                          <br />
+                          DNA: <span class="catDna"></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row g-0 justify-content-center m-2 mt-0">
+                    <div class="col">
+                      <div
+                        class="input-group centerBelowBreakpointLg"
+                        style="width: 18rem"
+                      >
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="sellPrice"
+                          step="any"
+                          placeholder="Set Price"
+                        />
+                        <span class="input-group-text">ETH</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row g-5 justify-content-center m-2">
+                    <div class="col d-flex justify-content-center">
+                      <div>
+                        <button
+                          type="button"
+                          class="btn btn-secondary light-b-shadow m-2"
+                          onclick="resetSell()"
+                        >
+                          <b>Reset</b>
+                        </button>
+                        <button
+                          id="sellBtn"
+                          type="button"
+                          class="btn btn-primary light-b-shadow m-2 disabled"
+                          onclick="sellKitty()"
+                        >
+                          <b>Create Offer</b>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Select Cat Modal -->
+        <div class="modal text-dark" id="selectCatModal" tabindex="-1">
+          <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Select Kitty</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div
+                  id="select-cat-collection"
+                  class="row g-5 justify-content-center m-2"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MARKETPLACE PAGE -->
+        <div class="tab-pane fade" id="nav-marketplace" role="tabpanel">
+          <div class="container p-5 mt-5">
+            <div align="center">
+              <h1>Kitties-Marketplace</h1>
+              <p class="mb-0">
+                Buy kitty NFTs from others or cancel your own sales offers
+              </p>
+            </div>
+            <div align="center" class="text-dark">
+              <div
+                id="marketplace-collection"
+                class="row g-5 justify-content-center m-2"
+              ></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FACTORY PAGE -->
+        <div class="tab-pane fade" id="nav-factory" role="tabpanel">
+          <div class="container p-5 mt-5">
+            <div align="center" class="mb-4">
+              <h1>Kitties-Factory</h1>
+              <p>
+                Design and create your very own gen-0 kitty NFT
+                <br />
+                <span id="gen0CountText" class="hidden">
+                  (<span id="gen0Count">?</span> out of a total of 210
+                  minted)</span
+                >
+              </p>
+            </div>
+            <div class="row justify-content-center mt-5">
+              <!-- VISUALIZATION -->
+              <div
+                class="
+                  col-lg-4
+                  catBox
+                  m-2
+                  light-b-shadow
+                  position-relative
+                  d-flex
+                  justify-content-center
+                  text-center
+                  bg-light
+                  text-dark
+                "
+              >
+                <!-- Cat -->
+                <div id="factoryCatContainer"></div>
+                <!-- Dna -->
+                <div
+                  class="dnaDiv position-absolute bottom-0 start-0 px-1"
+                  id="catDNA"
+                >
+                  <b>
+                    DNA:
+                    <!-- Colors -->
+                    <span id="dnaouter"></span>
+                    <span id="dnainner"></span>
+                    <span id="dnaeyes"></span>
+                    <!-- Cattributes -->
+                    <span id="dnadecoration1"></span>
+                    <span id="dnadecoration2"></span>
+                    <span id="dnadecoration3"></span>
+                    <span id="dnadecorationsrotation"></span>
+                    <span id="dnaanimationcat"></span>
+                    <span id="dnaanimationdecorations"></span>
+                  </b>
+                </div>
+              </div>
+              <!-- DNA SETTER -->
+              <div
+                class="
+                  col-lg-6
+                  cattributes
+                  m-2
+                  light-b-shadow
+                  bg-light
+                  text-dark
+                "
+              >
+                <!-- Tabs -->
+                <nav>
+                  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <button
+                      class="nav-link active"
+                      id="catColors-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#catColors"
+                      type="button"
+                      role="tab"
+                    >
+                      <b>Colors</b>
+                    </button>
+                    <button
+                      class="nav-link"
+                      id="cattributes-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#cattributes"
+                      type="button"
+                      role="tab"
+                    >
+                      <b>Cattributes</b>
+                    </button>
+                  </div>
+                </nav>
+                <!-- Tabs content -->
+                <div class="tab-content mt-3">
+                  <!-- Set colors -->
+                  <div
+                    id="catColors"
+                    class="tab-pane fade show active"
+                    role="tabpanel"
+                  >
+                    <div class="mb-3">
+                      <label for="outercolor"
+                        ><b>Outer Color</b
+                        ><span class="badge bg-dark ms-2" id="outercode"></span
+                      ></label>
+                      <input
+                        type="range"
+                        min="10"
+                        max="90"
+                        class="form-range"
+                        id="outercolor"
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="innercolor"
+                        ><b>Inner Color</b
+                        ><span class="badge bg-dark ms-2" id="innercode"></span
+                      ></label>
+                      <input
+                        type="range"
+                        min="10"
+                        max="90"
+                        class="form-range"
+                        id="innercolor"
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="eyescolor"
+                        ><b>Eyes Color</b
+                        ><span class="badge bg-dark ms-2" id="eyescode"></span
+                      ></label>
+                      <input
+                        type="range"
+                        min="100"
+                        max="460"
+                        class="form-range"
+                        id="eyescolor"
+                      />
+                    </div>
+                  </div>
+                  <!-- Set cattributes -->
+                  <div id="cattributes" class="tab-pane fade" role="tabpanel">
+                    <div class="mb-3">
+                      <label for="decorationsVisibility">
+                        <b>Decorations Visibility</b>
+                        <span class="badge bg-dark ms-2">
+                          <span>code: </span>
+                          <span id="decorationscode1"></span>
+                          <span id="decorationscode2"></span>
+                          <span id="decorationscode3"></span>
+                        </span>
+                      </label>
+                      <div id="decorationsVisibility">
+                        <div class="form-check form-check-inline">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="decoration1"
+                          />
+                          <label class="form-check-label" for="decoration1"
+                            >Star 1</label
+                          >
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="decoration2"
+                          />
+                          <label class="form-check-label" for="decoration2"
+                            >Star 2</label
+                          >
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="decoration3"
+                          />
+                          <label class="form-check-label" for="decoration3"
+                            >Star 3</label
+                          >
+                        </div>
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="decorationsrotation"
+                        ><b>Decorations Rotation</b
+                        ><span
+                          class="badge bg-dark ms-2"
+                          id="decorationsrotationcode"
+                        ></span
+                      ></label>
+                      <input
+                        type="range"
+                        min="10"
+                        max="55"
+                        class="form-range"
+                        id="decorationsrotation"
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <div class="row">
+                        <label for="animationcat"><b>Animations</b></label>
+                        <div class="col">
+                          <label for="animationcat"
+                            ><b>Cat</b
+                            ><span
+                              class="badge bg-dark ms-2"
+                              id="animationcatcode"
+                            ></span
+                          ></label>
+                          <input
+                            type="range"
+                            min="0"
+                            max="3"
+                            class="form-range animation"
+                            id="animationcat"
+                          />
+                        </div>
+                        <div class="col">
+                          <label for="animationdecorations"
+                            ><b>Decorations</b
+                            ><span
+                              class="badge bg-dark ms-2"
+                              id="animationdecorationscode"
+                            ></span
+                          ></label>
+                          <input
+                            type="range"
+                            min="0"
+                            max="3"
+                            class="form-range animation"
+                            id="animationdecorations"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Buttons -->
+            <div class="row justify-content-center">
+              <div class="col-lg-4 m-2 d-flex justify-content-between">
+                <button
+                  type="button"
+                  class="btn btn-secondary light-b-shadow"
+                  onclick="defaultKitty()"
+                >
+                  <b>Default Kitty</b>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-secondary light-b-shadow"
+                  onclick="randomKitty()"
+                >
+                  <b>Random Kitty</b>
+                </button>
+              </div>
+              <div class="col-lg-6 m-2 d-flex justify-content-end">
+                <button
+                  id="createKittyBtn"
+                  type="button"
+                  class="btn btn-primary light-b-shadow disabled"
+                  onclick="createKitty()"
+                >
+                  <b>Create Kitty</b>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="bg-dark text-light">
+      <div class="container d-flex justify-content-between align-items-center">
+        <a
+          href="https://github.com/derdis14/ethereum-dapp-moon-kitties"
+          class="link-light"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img src="./assets/img/github_mark.svg" alt="Github" />
+        </a>
+        <span> Copyright &copy; 2021</span>
+        <a type="button" class="btn btn-outline-light" onclick="scrollToTop()">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-arrow-up"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"
+            />
+          </svg>
+        </a>
+      </div>
+    </footer>
+
+    <script src="assets/js/catFactory.js"></script>
+    <script src="assets/js/cats.js"></script>
+    <script src="assets/js/myKittiesTabs.js"></script>
+    <script src="assets/js/catSettings.js"></script>
+    <script src="assets/js/marketplace.js"></script>
+    <script src="index.js"></script>
+  </body>
+</html>

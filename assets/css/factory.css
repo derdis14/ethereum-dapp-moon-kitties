@@ -1,0 +1,19 @@
+.catBox {
+  border-radius: 10px;
+  padding-top: 25px;
+  padding-bottom: 50px;
+}
+
+.cattributes {
+  padding: 25px;
+  border-radius: 10px;
+}
+
+.cat__ {
+  /* border: 1px solid red; */
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 30px;
+  padding-bottom: 80px;
+  margin: auto;
+}
