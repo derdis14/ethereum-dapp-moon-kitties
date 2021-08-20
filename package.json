@@ -1,5 +1,5 @@
 {
-  "name": "crypto-kitties-dapp",
+  "name": "moon-kitties-dapp",
   "version": "1.0.0",
   "description": "",
   "main": "truffle-config.js",
@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/derdis14/ethereum-dapp-crypto-kitties.git"
+    "url": "git+https://github.com/derdis14/ethereum-dapp-moon-kitties.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/derdis14/ethereum-dapp-crypto-kitties/issues"
+    "url": "https://github.com/derdis14/ethereum-dapp-moon-kitties/issues"
   },
-  "homepage": "https://github.com/derdis14/ethereum-dapp-crypto-kitties#readme",
+  "homepage": "https://github.com/derdis14/ethereum-dapp-moon-kitties#readme",
   "dependencies": {
     "@openzeppelin/contracts": "^4.2.0",
     "@truffle/hdwallet-provider": "^1.4.3"
